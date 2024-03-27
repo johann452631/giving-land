@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Noto Sans", sans-serif;
+    font-style: normal;
+}
+
+.texto-verde {
+    color: #167250;
+}
+
+.texto-gris {
+    color: #707070;
+}
+
+.texto-gris-claro{
+    color: #F1F0F8;
+}
+
+.verde-blanco {
+    background-color: #167250;
+    color: white;
+}
+
+.blanco-gris {
+    background-color: white;
+    color: #707070;
+}
+
+.gris-blanco {
+    background-color: #707070;
+    color: white;
+}
+
+.bg-gris-claro {
+    background-color: #F1F0F8;
+}
+
+.bg-gris {
+    background-color: #707070;
+}
+
+.link {
+    color: #707070;
+    cursor: pointer;
+}
+
+.link:hover {
+    color: #181818;
+}
+
+.boton-base {
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.img-icono-sm {
+    width: 16px;
+    height: 16px;
+}
+
+.img-icono-md {
+    width: 24px;
+    height: 24px;
+}
+
+.img-icono-lg {
+    width: 32px;
+    height: 32px;
+}
+
+.cierre-modal {
+    top: 2%;
+    width: auto;
+    left: 93%;
+    cursor: pointer;
+}
+
+
+
+.div-insercion-datos input {
+    outline: none;
+    border: none;
+    background: none;
+    padding-top: 4px;
+    border-bottom: 1.5px solid #167250;
+}
+
+.div-insercion-datos label {
+    color: #167250;
+}
+
+.div-codigo input {
+    width: 32px;
+    text-align: center;
+    padding: 0;
+    font-size: 40px;
+}
+

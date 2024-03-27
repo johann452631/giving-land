@@ -1,0 +1,110 @@
+.header {
+    height: 100px;
+    padding: 16px 36px;
+}
+
+.header a svg {
+    fill: #167250;
+}
+
+.buscador {
+    height: 44px;
+    width: 492px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: white;
+    padding: 0 16px;
+    gap: 8px;
+    /* border: 1px solid black; */
+}
+
+.buscador input {
+    outline: none;
+    border: none;
+    background: none;
+    font-size: 18px;
+}
+
+.div-usuario svg {
+    fill: #707070;
+    width: 32px;
+    height: 32px;
+}
+
+.div-usuario img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.publicidad-lateral {
+    background-color: #EFECFC;
+    width: 136px;
+    height: 500px;
+}
+
+
+.filtro-lateral ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.filtro-lateral input[type='radio'] {
+    display: none;
+}
+
+.filtro-lateral input[type='radio']:checked+label {
+    background-color: #707070;
+    color: white;
+}
+
+.filtro-lateral label {
+    width: 100%;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.tarjeta {
+    height: fit-content;
+    width: 280px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 28px;
+}
+
+.foto-tarjeta {
+    height: 280px;
+    width: 100%;
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.foto-tarjeta img {
+    height: 120%;
+}
+
+.texto-tarjeta p {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    height: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.boton-favorito input[type='checkbox'] {
+    display: none;
+}
+
+.boton-favorito input[type='checkbox']:checked+label svg {
+    fill-rule: nonzero;
+}
+
+.footer {
+    padding: 40px 80px;
+}
+
+.footer svg {
+    fill: #F1F0F8;
+}
