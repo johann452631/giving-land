@@ -3,18 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ValidationMailable;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
     public function create(Request $request)
     {
-        $modelUser = new User();
-        $modelUser->name = $request->name;
-        $modelUser->email = $request->email;
-        $modelUser->password = $request->password;
-        $modelUser->save();
+        $aux = $request->all();
+        $aux['password'] = Hash::make($request->password);
+        User::create($aux);
         return to_route('home');
     }
     
@@ -22,7 +23,9 @@ class UserController extends Controller
         $request->validate([
             'email' => 'required|email:rfc,dns'
         ]);
-        return $this->viewCode($request->email);
+        $email = $request->email;
+        Mail::to($email)->send(new ValidationMailable);
+        return $this->viewCode($email);
     }
 
     public function viewCode($email)

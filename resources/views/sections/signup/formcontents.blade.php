@@ -47,11 +47,11 @@
         </div>
         <div class="div-insercion-datos pb-4">
             <label for="">Apellidos:</label>
-            <input class="w-100" type="text" name="apellidos">
+            <input class="w-100" type="text" name="surname">
         </div>
         <div class="div-insercion-datos pb-4">
             <label for="">Fecha de nacimiento:</label>
-            <input class="w-100" type="date" name="fecha-nacimiento">
+            <input class="w-100" type="date" name="birthday">
         </div>
         <div class="div-insercion-datos pb-4">
             <label for="">Correo electrónico:</label>
