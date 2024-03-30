@@ -3,9 +3,9 @@
 @section('email')
     <div class="div-insercion-datos d-flex flex-column mb-4">
         <label for="email">Correo electrónico:</label>
-        <input class="w-100" type="text" name="email" value={{old('email')}}>
+        <input class="w-100" type="text" name="email" value={{ old('email') }}>
         @error('email')
-            <span class="text-danger">* {{$message}}</span>
+            <span class="text-danger">* {{ $message }}</span>
         @enderror
         <span class="texto-gris mt-2">Se enviará un código de verificación</span>
     </div>
@@ -21,20 +21,23 @@
 <!-- código -->
 @section('code')
     <div class="mb-3">
-        <label class="texto-gris" for="email">Ingrese el código que se envió a:</label>
-        <input class="bg-gris-claro border-0" type="text" readonly value={{ $email }} name="email" id="inputEmailMuestra">
+        <span class="texto-gris" for="email">Ingrese el código que se envió a:</span>
+        <span class="bg-gris-claro border-0">{{ $email }}</span>
     </div>
     <div class="div-insercion-datos d-flex flex-column mb-4">
         <label class="" for="">Código de verificación:</label>
         <div class="div-codigo d-flex justify-content-between">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
+            <input type="text" maxlength="1" name="char1">
+            <input type="text" maxlength="1" name="char2">
+            <input type="text" maxlength="1" name="char3">
+            <input type="text" maxlength="1" name="char4">
+            <input type="text" maxlength="1" name="char5">
+            <input type="text" maxlength="1" name="char6">
         </div>
     </div>
+    @if (session('errorVerificacion'))
+        <span class="text-danger">* {{session('errorVerificacion')}}</span>
+    @endif
     <button class="boton-base verde-blanco fs-5 pt-1 pb-1 w-100 mb-4 fw-bold" type="submit">Verificar</button>
 @endsection
 

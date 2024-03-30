@@ -23,10 +23,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        $yo = new User();
-        $yo->name = "Alejandro Imbachí Hoyos";
-        $yo->email = "alejoimbachihoyos@gmail.com";
-        $yo->password = "hello";
     }
 
     /**

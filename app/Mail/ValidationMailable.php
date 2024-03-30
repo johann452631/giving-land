@@ -17,10 +17,10 @@ class ValidationMailable extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        protected $code
+    )
+    {}
 
     /**
      * Get the message envelope.
@@ -40,6 +40,7 @@ class ValidationMailable extends Mailable
     {
         return new Content(
             view: 'sections.signup.validationmail',
+            with:['codigo'=>$this->code]
         );
     }
 

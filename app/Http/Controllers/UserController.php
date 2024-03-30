@@ -13,41 +13,36 @@ class UserController extends Controller
 {
     public function create(Request $request)
     {
+        session()->invalidate();
         $aux = $request->all();
         $aux['password'] = Hash::make($request->password);
         User::create($aux);
         return to_route('home');
     }
-    
-    public function sendCode(Request $request){
+
+    public function sendCode(Request $request)
+    {
         $request->validate([
-            'email' => 'required|email:rfc,dns'
+            'email' => 'required|email:rfc,dns|unique:App\Models\User,email'
         ]);
         $email = $request->email;
-        Mail::to($email)->send(new ValidationMailable);
-        return $this->viewCode($email);
+        session(['email'=>$email]);
+        $permitted_chars = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $code = substr(str_shuffle($permitted_chars), 0, 6);
+        session(['code'=>$code]);
+        Mail::to($email)->send(new ValidationMailable($code));
+        return to_route('signup.code');
     }
 
-    public function viewCode($email)
+    public function verifyCode(Request $request)
     {
-        return view('sections.signup.formcontents')->with([
-            'titulo' => 'Verificación de código',
-            'rutaSiguiente' => 'signup.data',
-            'yield' => 'code',
-            'email' => $email
-        ]);
-    }
+        $code = $request->session()->get('code');
+        $codeform = implode("", $request->except('_token'));
 
-    public function verifyCode(Request $request){
-        return $this->viewData($request->email);
-    }
-
-    public function viewData($email){
-        return view('sections.signup.formcontents')->with([
-            'titulo' => 'Registro de datos',
-            'rutaSiguiente' => 'signup.create',
-            'yield' => 'data',
-            'email' => $email
-        ]);
+        if ($code == $codeform) {
+            return to_route('signup.data');
+        }
+        return back()->with('errorVerificacion',"El código no coincide");
+        // return session()->all();
     }
 }
