@@ -50,7 +50,8 @@
     {{-- Filtro lateral --}}
     <nav class="filtro-lateral">
         @auth
-            <a class="btn-publicar boton-base d-block pt-2 pb-2 gris-blanco text-center hover-verde" href={{route('user.newpost')}}>
+            <a class="btn-publicar boton-base d-block pt-2 pb-2 gris-blanco text-center hover-verde"
+                href={{ route('user.newpost') }}>
                 Publicar artículo
             </a>
         @endauth
@@ -96,15 +97,13 @@
                 {{ session('alert')['message'] }}
             </div>
             @php
-                // session()->invalidate();
                 session()->forget('alert');
-                // session()->regenerate();
             @endphp
             <script>
-                alert = document.getElementById('divAlert');
+                divAlert = document.getElementById('divAlert');
                 setTimeout(function() {
-                    alert.remove();
-                }, 4000);
+                    divAlert.remove();
+                }, 3500);
             </script>
         @endsession
 

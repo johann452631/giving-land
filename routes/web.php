@@ -3,7 +3,6 @@
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use App\Utilities\Alert;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +25,12 @@ Route::get('p', function () {
     // Auth::attempt($credentials);
     // Auth::logout();
     // return session()->invalidate();
+    // session(['hola'=>'valor']);
+    // session(['hola_timeout'=>now()->addSeconds(10)]);
+    if (now() > session('hola_timeout')) {
+        session()->forget('hola');
+        session()->forget('hola_timeout');
+    }
     return session()->all();
 });
 

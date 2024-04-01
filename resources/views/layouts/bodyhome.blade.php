@@ -48,10 +48,7 @@
                 <path
                     d="M221.8 175.94c-5.55-9.56-13.8-36.61-13.8-71.94a80 80 0 1 0-160 0c0 35.34-8.26 62.38-13.81 71.94A16 16 0 0 0 48 200h40.81a40 40 0 0 0 78.38 0H208a16 16 0 0 0 13.8-24.06M128 216a24 24 0 0 1-22.62-16h45.24A24 24 0 0 1 128 216" />
             </svg>
-            {{-- <img src="" alt="" id="imgPerfil"> --}}
-            {{-- <div class="user-options"></div> --}}
             <div class="dropdown z-4">
-                {{-- <img class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="imgPerfil"></img> --}}
                 <svg class="dropdown-toggle" data-bs-toggle="dropdown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="svgPerfil">
                     <path
                         d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2S7.5 4.019 7.5 6.5M20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1z" />
@@ -72,7 +69,7 @@
     @endguest
 @endsection
 
-{{-- fotter --}}
+{{-- footer --}}
 @section('footer')
     <div class="footer bg-gris w-100 d-flex flex-column align-items-center texto-gris-claro">
         <div class="w-100 border-bottom border-light d-flex justify-content-between">
