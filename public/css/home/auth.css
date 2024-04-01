@@ -1,0 +1,22 @@
+.dropdown-menu a{
+    text-decoration: none;
+    padding: 4px 12px;
+}
+
+.dropdown-menu a:hover{
+    background-color: #167250;
+    color: white !important;
+}
+.div-usuario svg {
+    fill: #707070;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+#svgPerfil {
+    fill: #252525;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}

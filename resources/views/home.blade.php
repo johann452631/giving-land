@@ -1,11 +1,17 @@
 @include('layouts.head', ['titulo' => 'Giving-Land - Home'])
-<link rel="stylesheet" href={{ asset('css/home.css') }}>
+<link rel="stylesheet" href={{ asset('css/home/home.css') }}>
+@auth
+    <link rel="stylesheet" href={{ asset('css/home/auth.css') }}>
+@endauth
+@guest
+    <link rel="stylesheet" href={{ asset('css/home/guest.css') }}>
+@endguest
 </head>
 
 <body>
     @include('layouts.popup', [
+        'id' => 'Login',
         'content' => 'form-login',
-        'titulo' => 'Inicio de sesión',
     ])
     {{-- header --}}
     <div class="header bg-gris-claro d-flex w-100 align-items-center justify-content-between">
@@ -30,60 +36,82 @@
         <!-- Buscador -->
         <div class="buscador d-flex align-items-center">
             <label for="txtbuscador">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray" class="bi bi-search"
-                    viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gray"
+                    class="bi bi-search" viewBox="0 0 16 16">
                     <path
                         d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                 </svg>
             </label>
             <input class="w-100" type="text" name="txtbuscador" placeholder="Buscar">
         </div>
-        @yield('botones-log')
+        @yield('auth')
     </div>
 
-    {{-- main --}}
-    <div class="w-100 d-flex justify-content-between p-5">
-        {{-- Filtro lateral --}}
-        <div class="filtro-lateral d-flex flex-column">
-            <nav>
-                <a class="boton-base gris-blanco d-block text-center pt-2 pb-2 ps-3 pe-3 cliqueable" id="aPublicar">
-                    Publicar artículo
-                </a>
-                <div class="bg-gris-claro mt-3 ps-2 d-flex align-items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                        class="bi bi-filter" viewBox="0 0 16 16">
-                        <path
-                            d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
-                    </svg>
-                    <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
-                </div>
-                <ul class="text-decoration-none">
-                    <li>
-                        <input type="radio" name="filtro-categoria" id="radioElectronica">
-                        <label for="radioElectronica">Electrónica</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="filtro-categoria" id="radioelectrodomesticos">
-                        <label for="radioelectrodomesticos">Electrodomésticos</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="filtro-categoria" id="radioVehiculos">
-                        <label for="radioVehiculos">Vehículos</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="filtro-categoria" id="radioJojasRelojes">
-                        <label for="radioJojasRelojes">Joyas y relojes</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="filtro-categoria" id="radioRopaCalzado">
-                        <label for="radioRopaCalzado">Ropa y calzado</label>
-                    </li>
-                </ul>
-            </nav>
+    {{-- Filtro lateral --}}
+    <nav class="filtro-lateral">
+        @auth
+            <a class="btn-publicar boton-base d-block pt-2 pb-2 gris-blanco text-center hover-verde" href={{route('user.newpost')}}>
+                Publicar artículo
+            </a>
+        @endauth
+        <div class="bg-gris-claro mt-3 ps-2 d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-filter" viewBox="0 0 16 16">
+                <path
+                    d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
+            </svg>
+            <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
         </div>
+        <ul class="text-decoration-none">
+            <li>
+                <input type="radio" name="filtro-categoria" id="radioElectronica">
+                <label for="radioElectronica">Electrónica</label>
+            </li>
+            <li>
+                <input type="radio" name="filtro-categoria" id="radioelectrodomesticos">
+                <label for="radioelectrodomesticos">Electrodomésticos</label>
+            </li>
+            <li>
+                <input type="radio" name="filtro-categoria" id="radioVehiculos">
+                <label for="radioVehiculos">Vehículos</label>
+            </li>
+            <li>
+                <input type="radio" name="filtro-categoria" id="radioJojasRelojes">
+                <label for="radioJojasRelojes">Joyas y relojes</label>
+            </li>
+            <li>
+                <input type="radio" name="filtro-categoria" id="radioRopaCalzado">
+                <label for="radioRopaCalzado">Ropa y calzado</label>
+            </li>
+        </ul>
+    </nav>
 
-        <!-- Artículos -->
-        <div class="articulos w-75 d-flex flex-wrap justify-content-around" id="divArticulos">
+    {{-- publicidad lateral --}}
+    <div class="publicidad-lateral"></div>
+
+    {{-- main --}}
+    <div class="contenido-main position-relative w-100">
+        @session('alert')
+            <div class="alerta alert alert-{{ session('alert')['type'] }}" id="divAlert">
+                {{ session('alert')['message'] }}
+            </div>
+            @php
+                // session()->invalidate();
+                session()->forget('alert');
+                // session()->regenerate();
+            @endphp
+            <script>
+                alert = document.getElementById('divAlert');
+                setTimeout(function() {
+                    alert.remove();
+                }, 4000);
+            </script>
+        @endsession
+
+
+        {{-- artículos --}}
+        <div class="articulos w-100 d-flex flex-wrap justify-content-around" id="divArticulos">
+            <div class="info-main w-100 m-2 rounded"></div>
             @foreach ($products as $product)
                 <div class="tarjeta bg-gris-claro ${articulos[i].categoria}">
                     <div class="foto-tarjeta bg-gris">
@@ -107,8 +135,8 @@
                         <div class="boton-favorito position-absolute top-0 end-0">
                             <input type="checkbox" name="" id="checkCorazon{{ $product->id }}"
                                 class="inhabilitable">
-                            <label for="checkCorazon{{ $product->id }}"
-                                class="bg-light rounded-circle p-1 cliqueable" id="labelCorazon">
+                            <label for="checkCorazon{{ $product->id }}" class="bg-light rounded-circle p-1 cliqueable"
+                                id="labelCorazon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="#167250" fill-rule="evenodd">
                                     <path
@@ -120,13 +148,15 @@
                 </div>
             @endforeach
         </div>
-
-        <!-- publicidad lateral -->
-        <div class="publicidad-lateral"></div>
     </div>
 
     {{-- footer --}}
     @yield('footer')
-    <script src={{ asset('js/home.js') }}></script>
+    @auth
+        <script src={{ asset('js/home/auth.js') }}></script>
+    @endauth
+    @guest
+        <script src={{ asset('js/home/guest.js') }}></script>
+    @endguest
 
     @include('layouts.foot')

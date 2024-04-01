@@ -1,40 +1,30 @@
 @extends('home')
-<!-- botones login y registro -->
-@section('botones-log')
-    <div class="d-flex">
-        <button class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" data-bs-toggle="modal" data-bs-target="#modaljum">Inicio sesion</button>
-        <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{route('signup')}}>Registro</a>
-    </div>
-@endsection
 
-<!-- div usuario -->
-@section('div-usuario')
-    <div class="div-usuario d-flex" id="divUsuario">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="me-3">
-            <path
-                d="M3 0C2.20435 0 1.44129 0.32982 0.87868 0.916903C0.316071 1.50399 0 2.30024 0 3.1305L0 15.6525C0 16.4828 0.316071 17.279 0.87868 17.8661C1.44129 18.4532 2.20435 18.783 3 18.783H6.75C6.98287 18.783 7.21254 18.8396 7.42082 18.9483C7.6291 19.0569 7.81028 19.2147 7.95 19.4091L10.8 23.3739C10.9397 23.5683 11.1209 23.7261 11.3292 23.8348C11.5375 23.9434 11.7671 24 12 24C12.2329 24 12.4625 23.9434 12.6708 23.8348C12.8791 23.7261 13.0603 23.5683 13.2 23.3739L16.05 19.4091C16.1897 19.2147 16.3709 19.0569 16.5792 18.9483C16.7875 18.8396 17.0171 18.783 17.25 18.783H21C21.7956 18.783 22.5587 18.4532 23.1213 17.8661C23.6839 17.279 24 16.4828 24 15.6525V3.1305C24 2.30024 23.6839 1.50399 23.1213 0.916903C22.5587 0.32982 21.7956 0 21 0L3 0Z" />
-        </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="me-3">
-            <path
-                d="M221.8 175.94c-5.55-9.56-13.8-36.61-13.8-71.94a80 80 0 1 0-160 0c0 35.34-8.26 62.38-13.81 71.94A16 16 0 0 0 48 200h40.81a40 40 0 0 0 78.38 0H208a16 16 0 0 0 13.8-24.06M128 216a24 24 0 0 1-22.62-16h45.24A24 24 0 0 1 128 216" />
-        </svg>
-        <img src="" alt="">
-    </div>
-@endsection
-
+{{-- login --}}
 @section('form-login')
-    <form class="w-100 flex-column" action="" id="formLogin">
+    <form class="w-100 flex-column p-5" action={{ route('login') }} method="POST">
+        <h2 class="text-center texto-verde pb-2">Inicio de sesión</h2>
         @csrf
-        <div class="sign-cajas-texto d-flex flex-column mb-4">
-            <div class="div-insercion-datos pb-5">
-                <label for="">Correo electrónico:</label>
-                <input class="w-100" type="text" placeholder="">
-            </div>
-            <div class="div-insercion-datos d-flex flex-column">
-                <label for="">Contraseña:</label>
-                <input class="w-100 mb-2" type="password">
-                <span class="w-100 text-end link">¿Olvidaste la contraseña?</span>
-            </div>
+        <div class="div-insercion-datos pb-5">
+            <label for="">Correo electrónico:</label>
+            <input class="w-100" type="text" name="email" id="emailLogin" value="{{ old('email') }}">
+            @error('email')
+                <script>
+                    document.getElementById('modalBase').style.display = 'flex';
+                </script>
+                <span class="text-danger">* {{ $message }}</span>
+            @enderror
+        </div>
+        <div class="div-insercion-datos d-flex flex-column">
+            <label for="">Contraseña:</label>
+            <input class="w-100 mb-2" type="password" name="password">
+            @error('password')
+                <script>
+                    document.getElementById('modalBase').style.display = 'flex';
+                </script>
+                <span class="text-danger">* {{ $message }}</span>
+            @enderror
+            <span class="w-100 text-end link">¿Olvidaste la contraseña?</span>
         </div>
         <div class="d-flex flex-column">
             <button type="submit" class="boton-base verde-blanco pt-1 pb-1 fs-5 w-100 mb-4 fw-bold">Ingresar</button>
@@ -46,6 +36,43 @@
     </form>
 @endsection
 
+<!-- botones login y registro -->
+@section('auth')
+    @auth
+        <div class="d-flex div-usuario position-relative align-items-center">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="me-4">
+                <path
+                    d="M3 0C2.20435 0 1.44129 0.32982 0.87868 0.916903C0.316071 1.50399 0 2.30024 0 3.1305L0 15.6525C0 16.4828 0.316071 17.279 0.87868 17.8661C1.44129 18.4532 2.20435 18.783 3 18.783H6.75C6.98287 18.783 7.21254 18.8396 7.42082 18.9483C7.6291 19.0569 7.81028 19.2147 7.95 19.4091L10.8 23.3739C10.9397 23.5683 11.1209 23.7261 11.3292 23.8348C11.5375 23.9434 11.7671 24 12 24C12.2329 24 12.4625 23.9434 12.6708 23.8348C12.8791 23.7261 13.0603 23.5683 13.2 23.3739L16.05 19.4091C16.1897 19.2147 16.3709 19.0569 16.5792 18.9483C16.7875 18.8396 17.0171 18.783 17.25 18.783H21C21.7956 18.783 22.5587 18.4532 23.1213 17.8661C23.6839 17.279 24 16.4828 24 15.6525V3.1305C24 2.30024 23.6839 1.50399 23.1213 0.916903C22.5587 0.32982 21.7956 0 21 0L3 0Z" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="me-4">
+                <path
+                    d="M221.8 175.94c-5.55-9.56-13.8-36.61-13.8-71.94a80 80 0 1 0-160 0c0 35.34-8.26 62.38-13.81 71.94A16 16 0 0 0 48 200h40.81a40 40 0 0 0 78.38 0H208a16 16 0 0 0 13.8-24.06M128 216a24 24 0 0 1-22.62-16h45.24A24 24 0 0 1 128 216" />
+            </svg>
+            {{-- <img src="" alt="" id="imgPerfil"> --}}
+            {{-- <div class="user-options"></div> --}}
+            <div class="dropdown z-4">
+                {{-- <img class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="imgPerfil"></img> --}}
+                <svg class="dropdown-toggle" data-bs-toggle="dropdown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="svgPerfil">
+                    <path
+                        d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2S7.5 4.019 7.5 6.5M20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1z" />
+                </svg>
+                <ul class="dropdown-menu bg-gris-claro border-0 rounded-top-0 mt-3">
+                    <a class="d-block text-dark" href={{ route('user.profile') }}>Perfil</a>
+                    <a class="d-block text-dark" href={{ route('user.settings') }}>Configuración</a>
+                    <a class="d-block text-dark" href={{ route('logout') }}>Logout</a>
+                </ul>
+            </div>
+        </div>
+    @endauth
+    @guest
+        <div class="d-flex">
+            <button class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" id="buttonLogin">Inicio sesion</button>
+            <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('signup') }}>Registro</a>
+        </div>
+    @endguest
+@endsection
+
+{{-- fotter --}}
 @section('footer')
     <div class="footer bg-gris w-100 d-flex flex-column align-items-center texto-gris-claro">
         <div class="w-100 border-bottom border-light d-flex justify-content-between">

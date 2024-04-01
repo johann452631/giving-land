@@ -29,4 +29,7 @@
             'yield' => $yield
         ])
     </div>
+    @session('code')
+        <script src={{asset('js/signup/code.js')}}></script>
+    @endsession
 @include('layouts.foot')
