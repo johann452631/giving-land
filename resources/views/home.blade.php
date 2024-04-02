@@ -51,7 +51,7 @@
     <nav class="filtro-lateral">
         @auth
             <a class="btn-publicar boton-base d-block pt-2 pb-2 gris-blanco text-center hover-verde"
-                href={{ route('user.newpost') }}>
+                href={{ route('users.showNewPost',auth()->user()->name) }}>
                 Publicar artículo
             </a>
         @endauth

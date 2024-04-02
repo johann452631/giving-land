@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\UserController;
 use App\Models\Product;
-use App\Utilities\Alert;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::view('/', 'welcome');
+
 Route::get('p', function () {
     // $credentials = array(
     //     'email' => 'alejoimbachihoyos@gmail.com',
@@ -27,64 +27,40 @@ Route::get('p', function () {
     // return session()->invalidate();
     // session(['hola'=>'valor']);
     // session(['hola_timeout'=>now()->addSeconds(10)]);
-    if (now() > session('hola_timeout')) {
-        session()->forget('hola');
-        session()->forget('hola_timeout');
-    }
+    // if (now() > session('hola_timeout')) {
+    //     session()->forget('hola');
+    //     session()->forget('hola_timeout');
+    // }
     return session()->all();
 });
 
 Route::view('vp', 'prueba');
 
-Route::view('/', 'layouts.bodyhome', ['products' => Product::all()])->name('home');
-
-Route::view('/user/profile', 'sections.autenticado.navigationsections',[
-    'titulo' => 'Perfil',
-    'yield' => 'profile'
-])->name('user.profile');
-
-Route::view('/user/settings', 'sections.autenticado.navigationsections',[
-    'titulo' => 'Configuración',
-    'yield' => 'settings'
-])->name('user.settings');
-
-Route::view('/user/newpost', 'sections.autenticado.navigationsections',[
-    'titulo' => 'New post',
-    'yield' => 'newpost'
-])->name('user.newpost');
-
-Route::view('signup', 'sections.signup.formcontents', [
-    'titulo' => 'Registro',
-    'rutaSiguiente' => 'signup.sendCode',
-    'yield' => 'email',
-])->name('signup');
-
-Route::view('signup/code', 'sections.signup.formcontents', [
-    'titulo' => 'Verificación de código',
-    'rutaSiguiente' => 'signup.verifyCode',
-    'yield' => 'code',
-])->name('signup.code');
-
-Route::view('signup/data', 'sections.signup.formcontents', [
-    'titulo' => 'Registro',
-    'rutaSiguiente' => 'signup.store',
-    'yield' => 'data',
-])->name('signup.data');
+Route::view('/home', 'layouts.bodyhome', ['products' => Product::all()])->name('home');
 
 Route::controller(UserController::class)->group(function () {
-    Route::post('/', 'login')->name('login');
+    Route::post('/users/login', 'login')->name('login');
 
-    Route::post('signup/code', 'sendCode')->name('signup.sendCode');
+    Route::get('/users/{user}/profile', 'showProfile')->name('users.showProfile');
 
-    Route::post('signup/data', 'verifyCode')->name('signup.verifyCode');
+    Route::get('/users/{user}/settings', 'showSettings')->name('users.showSettings');
 
-    Route::post('signup/store/', 'store')->name('signup.store');
+    Route::get('/users/{user}/newpost', 'showNewPost')->name('users.showNewPost');
+
+    Route::get('/users/signup', 'showSignup')->name('users.showSignup');
+
+    Route::post('/users/signup', 'signupSendCode')->name('users.signupSendCode');
+
+    Route::get('/users/signup/code', 'showSignupCode')->name('users.showSignupCode');
+
+    Route::post('users/signup/code', 'signupVerifyCode')->name('users.signupVerifyCode');
+
+    Route::get('/users/signup/data', 'showSignupData')->name('users.showSignupData');
+
+    Route::post('users/signup/data', 'store')->name('users.store');
+
+    Route::get('users/logout', 'logout')->name('users.logout');
 });
 
-Route::get('/logout', function () {
-    Auth::logout();
-    session()->invalidate();
-    session()->regenerateToken();
-    Alert::mostrar('danger','Se cerró sesión.');
-    return to_route('home');
-})->name('logout');
+Route::resource('users', UserController::class);
+

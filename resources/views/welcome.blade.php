@@ -1,0 +1,1 @@
+<a href={{route('home')}}>Giving-land</a>
