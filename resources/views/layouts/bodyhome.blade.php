@@ -2,7 +2,7 @@
 
 {{-- login --}}
 @section('form-login')
-    <form class="w-100 flex-column p-5" action={{ route('login') }} method="POST">
+    <form class="w-100 flex-column p-5" action={{ route('app.login') }} method="POST">
         <h2 class="text-center texto-verde pb-2">Inicio de sesión</h2>
         @csrf
         <div class="div-insercion-datos pb-5">
@@ -54,9 +54,9 @@
                         d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2S7.5 4.019 7.5 6.5M20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1z" />
                 </svg>
                 <ul class="dropdown-menu bg-gris-claro border-0 rounded-top-0 mt-3">
-                    <a class="d-block text-dark" href={{ route('users.showProfile',auth()->user()->name) }}>Perfil</a>
-                    <a class="d-block text-dark" href={{ route('users.showSettings',auth()->user()->name) }}>Configuración</a>
-                    <a class="d-block text-dark" href={{ route('users.logout') }}>Logout</a>
+                    <a class="d-block text-dark" href={{ route('users.show',auth()->user()->username) }}>Perfil</a>
+                    <a class="d-block text-dark" href={{ route('app.settings') }}>Configuración</a>
+                    <a class="d-block text-dark" href={{ route('app.logout') }}>Logout</a>
                 </ul>
             </div>
         </div>
@@ -64,7 +64,7 @@
     @guest
         <div class="d-flex">
             <button class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" id="buttonLogin">Inicio sesion</button>
-            <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('users.showSignup') }}>Registro</a>
+            <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('app.showSignup') }}>Registro</a>
         </div>
     @endguest
 @endsection

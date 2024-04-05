@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
 
 Route::get('p', function () {
     // $credentials = array(
@@ -36,31 +37,24 @@ Route::get('p', function () {
 
 Route::view('vp', 'prueba');
 
-Route::view('/home', 'layouts.bodyhome', ['products' => Product::all()])->name('home');
+Route::controller(AppController::class)->group(function(){
+    Route::get('/','init')->name('home');
 
-Route::controller(UserController::class)->group(function () {
-    Route::post('/users/login', 'login')->name('login');
+    Route::post('/login','login')->name('app.login');
 
-    Route::get('/users/{user}/profile', 'showProfile')->name('users.showProfile');
+    Route::get('/logout','logout')->name('app.logout');
 
-    Route::get('/users/{user}/settings', 'showSettings')->name('users.showSettings');
+    Route::get('/signup','showSignup')->name('app.showSignup');
 
-    Route::get('/users/{user}/newpost', 'showNewPost')->name('users.showNewPost');
+    Route::post('/signup','signupSendCode')->name('app.signupSendCode');
 
-    Route::get('/users/signup', 'showSignup')->name('users.showSignup');
+    Route::get('/signup/code','showSignupCode')->name('app.showSignupCode');
 
-    Route::post('/users/signup', 'signupSendCode')->name('users.signupSendCode');
+    Route::post('/signup/code','signupVerifyCode')->name('app.signupVerifyCode');
 
-    Route::get('/users/signup/code', 'showSignupCode')->name('users.showSignupCode');
-
-    Route::post('users/signup/code', 'signupVerifyCode')->name('users.signupVerifyCode');
-
-    Route::get('/users/signup/data', 'showSignupData')->name('users.showSignupData');
-
-    Route::post('users/signup/data', 'store')->name('users.store');
-
-    Route::get('users/logout', 'logout')->name('users.logout');
+    Route::get('/settings','settings')->name('app.settings');
 });
 
-Route::resource('users', UserController::class);
+Route::resource('products',ProductController::class);
 
+Route::resource('users', UserController::class);

@@ -23,7 +23,7 @@
         </a>
     </div>
     <div class="d-flex justify-content-center w-100 pt-5 pb-5">
-        @include('sections.signup.divform',[
+        @include('sections.divform',[
             'titulo' => $titulo,
             'rutaSiguiente' => $rutaSiguiente,
             'yield' => $yield

@@ -3,7 +3,7 @@ namespace App\Utilities;
 
 class Alert
 {
-    public static function mostrar($type,$message){
+    public static function send($type,$message){
         session(['alert'=>[
             'type' => $type,
             'message' => $message

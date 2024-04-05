@@ -1,4 +1,4 @@
-@extends('sections.autenticado.usernavigation')
+@extends('sections.authentication.usernavigation')
 @section('settings')
     <h1>Estás en la configuración</h1>
 @endsection
