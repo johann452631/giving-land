@@ -3,6 +3,8 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use App\Utilities\Utility;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +34,11 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
+    Utility::sendAlert('success','funciona');
+    return view('vp');
+});
+
+Route::get('/p2',function(){
     return session()->all();
 });
 
@@ -42,7 +49,7 @@ Route::controller(AppController::class)->group(function(){
 
     Route::post('/login','login')->name('app.login');
 
-    Route::get('/logout','logout')->name('app.logout');
+    Route::post('/logout','logout')->name('app.logout');
 
     Route::get('/signup','showSignup')->name('app.showSignup');
 
@@ -55,6 +62,6 @@ Route::controller(AppController::class)->group(function(){
     Route::get('/settings','settings')->name('app.settings');
 });
 
-Route::resource('products',ProductController::class);
+Route::resource('users.products',ProductController::class);
 
 Route::resource('users', UserController::class);

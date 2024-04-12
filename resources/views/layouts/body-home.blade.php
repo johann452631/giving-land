@@ -2,78 +2,55 @@
 
 {{-- login --}}
 @section('form-login')
-    <form class="w-100 flex-column p-5" action={{ route('app.login') }} method="POST">
-        <h2 class="text-center texto-verde pb-2">Inicio de sesión</h2>
+    <form class="form-auth flex flex-col" action={{ route('app.login') }} method="POST">
+        <h1 class="text-center texto-verde pb-2 text-2xl">Inicio de sesión</h1>
         @csrf
-        <div class="div-insercion-datos pb-5">
-            <label for="">Correo electrónico:</label>
-            <input class="w-100" type="text" name="email" id="emailLogin" value="{{ old('email') }}">
-            @error('email')
+
+        <x-forms.input type="email" name="email" label-text="Correo electrónico:" id="emailLogin" class="mb-5">
+            <x-slot:errorSlot>
                 <script>
                     document.getElementById('modalBase').style.display = 'flex';
                 </script>
-                <span class="text-danger">* {{ $message }}</span>
-            @enderror
-        </div>
-        <div class="div-insercion-datos d-flex flex-column">
-            <label for="">Contraseña:</label>
-            <input class="w-100 mb-2" type="password" name="password">
-            @error('password')
+            </x-slot:errorSlot>
+        </x-forms.input>
+
+        <x-forms.input type="password" name="password" label-text="Contraseña:" class="mb-8">
+            <x-slot:errorSlot>
                 <script>
                     document.getElementById('modalBase').style.display = 'flex';
                 </script>
-                <span class="text-danger">* {{ $message }}</span>
-            @enderror
-            <span class="w-100 text-end link">¿Olvidaste la contraseña?</span>
-        </div>
-        <div class="d-flex flex-column">
-            <button type="submit" class="boton-base verde-blanco pt-1 pb-1 fs-5 w-100 mb-4 fw-bold">Ingresar</button>
-            <a class="boton-base blanco-gris pt-2 pb-2 w-100 d-flex justify-content-center align-items-center">
-                <img class="img-icono-sm me-2" src="../icons/icono-google.png" alt="">
-                <span class="fs-6">Iniciar sesión con Google</span>
+            </x-slot:errorSlot>
+            <a href="" class="block text-right texto-gris hover-oscuro mt-2">¿Olvidaste la contraseña?</a>
+        </x-forms.input>
+
+        <div class="flex flex-col">
+            <button class="boton-base verde-blanco mb-4" type="submit">Iniciar sesión</button>
+            <a class="boton-base blanco-gris w-full flex justify-center items-center shadow-sm">
+                <svg class="icono-md" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
+                    <path fill="#fbc02d"
+                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z">
+                    </path>
+                    <path fill="#e53935"
+                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z">
+                    </path>
+                    <path fill="#4caf50"
+                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z">
+                    </path>
+                    <path fill="#1565c0"
+                        d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z">
+                    </path>
+                </svg>
+                <span class="text-base ml-2">Iniciar con Google</span>
             </a>
         </div>
     </form>
 @endsection
 
-<!-- botones login y registro -->
-@section('auth')
-    @auth
-        <div class="d-flex div-usuario position-relative align-items-center">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="me-4">
-                <path
-                    d="M3 0C2.20435 0 1.44129 0.32982 0.87868 0.916903C0.316071 1.50399 0 2.30024 0 3.1305L0 15.6525C0 16.4828 0.316071 17.279 0.87868 17.8661C1.44129 18.4532 2.20435 18.783 3 18.783H6.75C6.98287 18.783 7.21254 18.8396 7.42082 18.9483C7.6291 19.0569 7.81028 19.2147 7.95 19.4091L10.8 23.3739C10.9397 23.5683 11.1209 23.7261 11.3292 23.8348C11.5375 23.9434 11.7671 24 12 24C12.2329 24 12.4625 23.9434 12.6708 23.8348C12.8791 23.7261 13.0603 23.5683 13.2 23.3739L16.05 19.4091C16.1897 19.2147 16.3709 19.0569 16.5792 18.9483C16.7875 18.8396 17.0171 18.783 17.25 18.783H21C21.7956 18.783 22.5587 18.4532 23.1213 17.8661C23.6839 17.279 24 16.4828 24 15.6525V3.1305C24 2.30024 23.6839 1.50399 23.1213 0.916903C22.5587 0.32982 21.7956 0 21 0L3 0Z" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="me-4">
-                <path
-                    d="M221.8 175.94c-5.55-9.56-13.8-36.61-13.8-71.94a80 80 0 1 0-160 0c0 35.34-8.26 62.38-13.81 71.94A16 16 0 0 0 48 200h40.81a40 40 0 0 0 78.38 0H208a16 16 0 0 0 13.8-24.06M128 216a24 24 0 0 1-22.62-16h45.24A24 24 0 0 1 128 216" />
-            </svg>
-            <div class="dropdown z-4">
-                <svg class="dropdown-toggle" data-bs-toggle="dropdown" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="svgPerfil">
-                    <path
-                        d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2S7.5 4.019 7.5 6.5M20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1z" />
-                </svg>
-                <ul class="dropdown-menu bg-gris-claro border-0 rounded-top-0 mt-3">
-                    <a class="d-block text-dark" href={{ route('users.show',auth()->user()->username) }}>Perfil</a>
-                    <a class="d-block text-dark" href={{ route('app.settings') }}>Configuración</a>
-                    <a class="d-block text-dark" href={{ route('app.logout') }}>Logout</a>
-                </ul>
-            </div>
-        </div>
-    @endauth
-    @guest
-        <div class="d-flex">
-            <button class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" id="buttonLogin">Inicio sesion</button>
-            <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('app.showSignup') }}>Registro</a>
-        </div>
-    @endguest
-@endsection
-
 {{-- footer --}}
 @section('footer')
-    <div class="footer bg-gris w-100 d-flex flex-column align-items-center texto-gris-claro">
-        <div class="w-100 border-bottom border-light d-flex justify-content-between">
-            <div class="d-flex flex-column align-items-center">
+    <div class="footer bg-gris w-full flex flex-col items-center texto-gris-claro">
+        <div class="w-full border-bottom border-light flex justify-between">
+            <div class="flex flex-col items-center">
                 <svg width="40" height="40" viewBox="0 0 94 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M0 28.1185C0.26525 21.1842 2.12917 14.4497 7.16891 9.12867C11.843 4.1925 17.6284 1.35809 24.3528 0.647642C31.5002 -0.107214 37.7587 2.05375 43.3289 6.64208C44.0745 7.25633 43.9311 7.56715 43.3576 8.15919C39.5652 12.0371 35.78 15.9298 32.0379 19.8595C28.9839 23.0639 28.7043 27.8224 31.1561 31.2637C34.1742 35.4968 40.3466 35.8816 44.01 32.211C47.0711 29.1471 50.1609 26.1055 53.1933 23.0047C53.8027 22.383 54.2042 22.2646 54.706 23.0121C54.7347 23.0491 54.7705 23.0787 54.8063 23.1157C62.9861 31.4783 71.1586 39.8409 79.3312 48.2035C80.1198 49.0176 80.9227 49.8465 81.0947 51.0528C81.3457 52.8141 80.6933 54.235 79.3599 54.938C77.9691 55.6707 76.3704 55.4265 75.1374 54.198C73.4025 52.4663 71.7106 50.6901 70.0044 48.9288C66.6852 45.5098 63.366 42.0833 60.0612 38.6568C59.5665 38.1388 59.036 37.7022 58.3836 37.4061C57.509 37.0065 56.8351 37.3469 56.2688 37.9834C55.681 38.6568 55.5591 39.4413 56.0896 40.2184C56.3548 40.6032 56.6918 40.9436 57.0215 41.284C61.9107 46.3386 66.8071 51.3858 71.6891 56.4403C72.7215 57.5134 73.5961 58.6605 73.3236 60.333C72.9079 62.9084 70.4991 64.1739 68.2982 62.901C67.7032 62.5532 67.1656 62.0648 66.6781 61.5615C61.9036 56.6624 57.1434 51.7484 52.3689 46.8492C51.8814 46.346 51.3509 45.8576 50.7631 45.4949C49.8741 44.9547 49.0999 45.2729 48.4188 46.0352C47.7665 46.7678 47.8382 47.5153 48.297 48.2627C48.512 48.618 48.8346 48.914 49.1286 49.2174C54.1468 54.4052 59.1794 59.5856 64.1905 64.7734C65.7031 66.3423 65.9898 68.4218 64.9504 69.8279C63.5022 71.7891 61.2799 71.9815 59.5235 70.272C58.6489 69.4135 57.8101 68.518 56.9499 67.6448C52.1825 62.8122 47.4152 57.9797 42.6479 53.1471C41.4937 51.9778 40.3036 51.8298 39.4935 52.7401C38.7265 53.5985 38.8985 54.7604 39.9667 55.8705C45.5369 61.7021 51.1144 67.5264 56.6846 73.3654C57.8603 74.5939 58.061 76.4884 57.1864 77.8205C56.1828 79.3672 54.6056 79.8705 52.9209 79.2266C52.4621 79.049 52.1252 78.753 51.7954 78.42C50.971 77.5763 50.1824 76.6882 49.315 75.8964C48.1894 74.8677 47.6159 73.8908 47.8668 72.0999C48.4332 68.0444 45.8739 64.7142 41.8091 63.8261C40.7123 63.5893 40.2176 63.2785 40.0025 62.0278C39.4147 58.6383 37.4146 56.4922 34.0667 55.8557C32.9698 55.6485 32.4107 55.2045 32.1741 53.9168C31.5289 50.4977 29.5144 48.322 26.0518 47.7965C25.1916 47.6633 24.7256 47.2489 24.5105 46.2794C23.7004 42.6531 21.7146 40.1888 17.9366 39.6633C15.5565 39.3303 13.5923 40.2332 11.8646 41.8243C10.4523 43.1342 9.06868 44.4811 7.68508 45.8206C7.29079 46.2054 7.0112 46.5458 6.46636 45.8946C2.27255 40.8918 0.0573513 35.1194 0 28.1185Z"
@@ -94,23 +71,23 @@
                         d="M40.5546 67.682C41.8307 67.7782 42.8702 68.3111 43.5082 69.4878C44.1606 70.6867 44.3685 72.0262 43.5369 73.1436C42.1604 74.9938 40.612 76.7181 38.6763 77.9762C37.2211 78.9235 35.8231 78.6718 34.5686 77.3249C33.4 76.0669 33.1133 74.3425 34.1169 73.04C35.4647 71.2861 37.0275 69.7024 38.7265 68.2963C39.2212 67.8893 39.852 67.6228 40.5474 67.6746L40.5546 67.682Z"
                         fill="#EFECFC" />
                 </svg>
-                <span class="fw-bold">Establece un vínculo</span>
+                <span class="font-bold">Establece un vínculo</span>
             </div>
-            <ul class="d-flex flex-column">
-                <span class="fw-bold fs-5">Contáctanos</span>
+            <ul class="flex flex-col">
+                <span class="font-bold fs-5">Contáctanos</span>
                 <a class="texto-gris-claro text-decoration-none">alejoimbachihoyos@gmail.com</a>
                 <a class="texto-gris-claro text-decoration-none">fercho...</a>
                 <a class="texto-gris-claro text-decoration-none">johann...</a>
             </ul>
-            <ul class="d-flex flex-column align-items-start">
-                <span class="fw-bold fs-5">Sobre nosotros</span>
+            <ul class="flex flex-col items-left">
+                <span class="font-bold fs-5">Sobre nosotros</span>
                 <a class="texto-gris-claro text-decoration-none">Misión</a>
                 <a class="texto-gris-claro text-decoration-none">Visión</a>
                 <a class="texto-gris-claro text-decoration-none">Desarrolladores</a>
             </ul>
 
         </div>
-        <div class="w-25 d-flex justify-content-between pt-3">
+        <div class="w-1/4 flex justify-between pt-3">
             <a href="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="bi bi-facebook"
                     viewBox="0 0 16 16">

@@ -27,27 +27,6 @@
     font-size: 18px;
 }
 
-#modalBase {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 55%);
-}
-
-.modal-base-content {
-    width: 450px;
-    border-radius: 8px;
-}
-
-#cerrarModal {
-    width: auto;
-    cursor: pointer;
-}
-
 .filtro-lateral{
     position: fixed;
     left: 24px;

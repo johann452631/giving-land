@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -10,6 +11,15 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            // ...
+            $user->username = str_replace(" ","_",strtolower($user->surname))."_".$user->id;
+            $user->save();
+        });
+    }
+
     /**
      * Define the model's default state.
      *
@@ -19,7 +29,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'username' => fake()->userName(),
+            // 'username' => fake()->unique()->userName(),
             'surname' => fake()->lastName(),
             'birthday' => fake()->date(),
             'email' => fake()->unique()->safeEmail(),

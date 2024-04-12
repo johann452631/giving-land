@@ -1,6 +1,6 @@
-<div class="align-items-center justify-content-center z-3" id="modalBase">
-    <div class="modal-base-content position-relative bg-gris-claro">
-        <span class="position-absolute m-3 top-0 end-0" id="cerrarModal">
+<div class="modal-base items-center justify-center z-10" id="modalBase">
+    <div class="modal-base-content relative">
+        <span class="cierre-modal absolute m-3 top-0 right-0" id="cerrarModal">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#707070" class="bi bi-x-lg"
                 viewBox="0 0 16 16">
                 <path

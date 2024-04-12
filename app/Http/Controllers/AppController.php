@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmailUserStore;
+use App\Http\Requests\LoginRequest;
 use App\Mail\ValidationMailable;
 use App\Models\Product;
-use App\Utilities\Alert;
+use App\Utilities\Utility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 class AppController extends Controller
 {
     public function init(){
-        return view('layouts.bodyhome')->with('products',Product::all());
+        return view('layouts.body-home')->with('products',Product::all());
     }
     public function settings()
     {
@@ -23,16 +24,13 @@ class AppController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email:rfc,dns',
-            'password' => 'required'
-        ]);
+        $credentials = $request->only(['email','password']);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            Alert::send('success', 'Se inició sesión.');
+            Utility::sendAlert('green', 'Se inició sesión.');
             return to_route('home');
         }
 
@@ -41,12 +39,12 @@ class AppController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout()
+    public static function logout()
     {
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        Alert::send('danger', 'Se cerró sesión.');
+        Utility::sendAlert('danger', 'Se cerró sesión.');
         return to_route('home');
     }
 
@@ -72,8 +70,7 @@ class AppController extends Controller
 
     public function showSignupCode()
     {
-        return view('sections.codevalidation.codeform')->with([
-            'extends' => 'sections.signup.signup',
+        return view('sections.signup.formcontents')->with([
             'titulo' => 'Verificación de código',
             'rutaSiguiente' => 'app.signupVerifyCode',
             'yield' => 'code',

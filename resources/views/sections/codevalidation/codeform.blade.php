@@ -1,13 +1,14 @@
 @extends($extends)
 <!-- código -->
 @section('code')
+    <h2 class="text-center texto-verde pb-2">{{ $titulo }}</h2>
     <div class="mb-3">
         <span class="texto-gris" for="email">Ingrese el código que se envió a:</span>
         <span class="bg-gris-claro border-0">{{ session('email') }}</span>
     </div>
     <div class="div-insercion-datos w-100 mb-5">
         <label class="" for="">Código de verificación:</label>
-        <div class="div-codigo">
+        <div class="div-codigo mb-1">
             <input autofocus type="text" maxlength="1" name="char1">
             <input type="text" maxlength="1" name="char2">
             <input type="text" maxlength="1" name="char3">

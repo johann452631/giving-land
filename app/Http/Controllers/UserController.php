@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUser;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use App\Utilities\Alert;
+use App\Utilities\Utility;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function store(StoreUser $request)
+    public function store(StoreUserRequest $request)
     {
         session()->forget(['email', 'code']);
         $aux = $request->except('_token');
         $aux['password'] = Hash::make($request->password);
         User::factory()->create($aux);
         Auth::attempt($request->only('email', 'password'));
-        Alert::send('success', 'Se registró y se inició sesión.');
+        Utility::sendAlert('success', 'Se registró y se inició sesión.');
         return to_route('home');
     }
 
