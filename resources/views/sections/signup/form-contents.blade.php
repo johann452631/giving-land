@@ -55,13 +55,8 @@
     <x-forms.input type="date" name="birthday" label-text="Fecha de nacimiento:" class="mb-5">
     </x-forms.input>
 
-    <x-forms.input type="text" name="email" label-text="Correo electrónico:" value="{{session('email')}}" readonly class="mb-5">
+    <x-forms.input type="text" name="email" label-text="Correo electrónico:" value="{{session('email')}}" readonly class="mb-5 input-read">
     </x-forms.input>
-
-    {{-- <div class="div-insercion-datos pb-4">
-        <label for="">Correo electrónico:</label>
-        <input class="w-100" type="text" name="email" value={{ session('email') }} readonly>
-    </div> --}}
 
     <x-forms.input type="password" name="password" label-text="Contraseña:" value="" is-required class="mb-8">
     </x-forms.input>

@@ -18,13 +18,13 @@ class UserController extends Controller
         $aux['password'] = Hash::make($request->password);
         User::factory()->create($aux);
         Auth::attempt($request->only('email', 'password'));
-        Utility::sendAlert('success', 'Se registró y se inició sesión.');
+        Utility::sendAlert('exito', 'Se registró y se inició sesión.');
         return to_route('home');
     }
 
     public function create()
     {
-        return view('sections.signup.formcontents')->with([
+        return view('sections.signup.form-contents')->with([
             'titulo' => 'Registro de datos',
             'rutaSiguiente' => 'users.store',
             'yield' => 'data',

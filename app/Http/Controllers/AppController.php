@@ -24,13 +24,21 @@ class AppController extends Controller
         ]);
     }
 
-    public function login(LoginRequest $request)
+    public function login(){
+        return view('sections.login.form-contents')->with([
+            'titulo' => 'Inicio de sesión',
+            'rutaSiguiente' => 'app.auth',
+            'yield' => 'login',
+        ]);
+    }
+
+    public function auth(LoginRequest $request)
     {
         $credentials = $request->only(['email','password']);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            Utility::sendAlert('green', 'Se inició sesión.');
+            Utility::sendAlert('exito', 'Se inició sesión.');
             return to_route('home');
         }
 
@@ -44,13 +52,13 @@ class AppController extends Controller
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        Utility::sendAlert('danger', 'Se cerró sesión.');
+        Utility::sendAlert('peligro', 'Se cerró sesión.');
         return to_route('home');
     }
 
-    public function showSignup()
+    public function signup()
     {
-        return view('sections.signup.formcontents')->with([
+        return view('sections.signup.form-contents')->with([
             'titulo' => 'Registro',
             'rutaSiguiente' => 'app.signupSendCode',
             'yield' => 'email',
@@ -65,12 +73,12 @@ class AppController extends Controller
         $code = substr(str_shuffle($permitted_chars), 0, 6);
         session(['code' => $code]);
         Mail::to($email)->send(new ValidationMailable($code));
-        return to_route('app.showSignupCode');
+        return to_route('app.signupCode');
     }
 
-    public function showSignupCode()
+    public function signupCode()
     {
-        return view('sections.signup.formcontents')->with([
+        return view('sections.signup.form-contents')->with([
             'titulo' => 'Verificación de código',
             'rutaSiguiente' => 'app.signupVerifyCode',
             'yield' => 'code',

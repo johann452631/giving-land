@@ -39,7 +39,7 @@ class ValidationMailable extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'sections.signup.validationmail',
+            view: 'sections.validation-mail',
             with:['codigo'=>$this->code]
         );
     }

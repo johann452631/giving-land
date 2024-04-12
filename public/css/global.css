@@ -13,6 +13,25 @@
     left: 60px;
 }
 
+.alerta-exito{
+    background-color: rgb(134 239 172);
+    border-color: rgb(34 197 94);
+    color: rgb(20 83 45);
+}
+
+.alerta-advertencia{
+    background-color: rgb(254 240 138);
+    border-color: rgb(234 179 8);
+    color: rgb(133 77 14);
+}
+
+.alerta-peligro{
+    background-color: rgb(252 165 165);
+    border-color: rgb(239 68 68);
+    color: rgb(127 29 29);
+
+}
+
 .texto-verde {
     color: #167250;
 }
@@ -130,4 +149,13 @@
     text-align: center;
     padding: 0;
     font-size: 40px;
+}
+
+.div-form{
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.input-read{
+    width: -webkit-fill-available;
 }

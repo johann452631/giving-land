@@ -14,8 +14,6 @@
         'content' => 'form-login',
     ])
     <x-header class="justify-between items-center">
-        <x-alert color="green"/>
-
         <!-- Buscador -->
         <div class="buscador flex items-center">
             <label for="txtbuscador">
@@ -76,8 +74,8 @@
         @endauth
         @guest
             <div class="d-flex">
-                <button class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" id="buttonLogin">Inicio sesion</button>
-                <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('app.showSignup') }}>Registro</a>
+                <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1 me-2" href={{ route('app.login') }}>Inicio sesion</a>
+                <a class="boton-base verde-blanco ps-3 pe-3 pt-1 pb-1" href={{ route('app.signup') }}>Registro</a>
             </div>
         @endguest
     </x-header>

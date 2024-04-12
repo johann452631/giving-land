@@ -5,9 +5,6 @@
         type={{ $type }} name={{ $name }} value={{ old($name) }}>
     @error($name)
         <span class="text-red-500">* {{ $message }}</span>
-        @if ($errorSlot->hasActualContent())
-            {{ $errorSlot }}
-        @endif
     @enderror
     @if ($slot->hasActualContent())
         {{ $slot }}

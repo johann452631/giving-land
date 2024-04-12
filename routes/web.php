@@ -34,7 +34,7 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
-    Utility::sendAlert('success','funciona');
+    Utility::sendAlert('advertencia','funciona por fin');
     return view('vp');
 });
 
@@ -47,15 +47,17 @@ Route::view('vp', 'prueba');
 Route::controller(AppController::class)->group(function(){
     Route::get('/','init')->name('home');
 
-    Route::post('/login','login')->name('app.login');
+    Route::get('/login','login')->name('app.login');
+
+    Route::post('/auth','auth')->name('app.auth');
 
     Route::post('/logout','logout')->name('app.logout');
 
-    Route::get('/signup','showSignup')->name('app.showSignup');
+    Route::get('/signup','signup')->name('app.signup');
 
     Route::post('/signup','signupSendCode')->name('app.signupSendCode');
 
-    Route::get('/signup/code','showSignupCode')->name('app.showSignupCode');
+    Route::get('/signup/code','signupCode')->name('app.signupCode');
 
     Route::post('/signup/code','signupVerifyCode')->name('app.signupVerifyCode');
 
