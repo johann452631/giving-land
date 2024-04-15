@@ -36,14 +36,14 @@
             @if ($profileImg == null)
                 <img class="profile-img dropdown-button" id="userOptionsButton" src="{{asset('storage\app_icons\user-solid.svg')}}">
             @else
-                <img src="{{ asset('storage/users_profile_images/' . $profile_img) }}" alt="">
+                <img src="{{$pfofileImg}}" alt="">
             @endif
 
             <div class="dropdown-menu absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
                 role="menu" aria-orientation="vertical" aria-labelledby="userOptionsButton" tabindex="-1"
                 id="userOptionsMenu">
                 <div class="py-1" role="none">
-                    <a href={{ route('users.show', auth()->user()->username) }}
+                    <a href={{ route('users.show', auth()->user()->id) }}
                         class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                         id="menu-item-0">Perfil</a>
                     <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"

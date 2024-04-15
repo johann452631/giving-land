@@ -14,6 +14,8 @@
             @else
                 <img src="{{ asset('storage/user_profile_images/' . $user->profile_img) }}" alt="" class="profile-img">
             @endif
+            <h1>{{$user->name}}</h1>
+            <p>{{$user->profile_img}}</p>
         </div>
     </div>
 @endsection

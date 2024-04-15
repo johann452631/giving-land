@@ -25,12 +25,12 @@
     {{-- Filtro lateral --}}
     <nav class="filtro-lateral">
         @auth
-            <a class="btn-publicar boton-base d-block pt-2 pb-2 gris-blanco text-center hover-verde"
-                href={{ route('users.products.create', auth()->user()->username) }}>
+            <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
+                href={{ route('users.products.create', auth()->user()->id) }}>
                 Publicar artículo
             </a>
         @endauth
-        <div class="bg-gris-claro mt-3 ps-2 d-flex align-items-center">
+        <div class="bg-gris-claro mt-3 ps-2 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-filter"
                 viewBox="0 0 16 16">
                 <path
@@ -66,21 +66,21 @@
     <div class="publicidad-lateral"></div>
 
     {{-- main --}}
-    <div class="contenido-main position-relative w-100">
+    <div class="contenido-main relative w-full">
         {{-- artículos --}}
-        <div class="articulos w-100 d-flex flex-wrap justify-content-around" id="divArticulos">
-            <div class="info-main w-100 m-2 rounded"></div>
+        <div class="articulos w-full flex flex-wrap justify-around" id="divArticulos">
+            <div class="info-main w-full m-2 rounded"></div>
             @foreach ($products as $product)
                 <div class="tarjeta bg-gris-claro ${articulos[i].categoria}">
                     <div class="foto-tarjeta bg-gris">
                         <img src={{ asset("img/{$product->images}") }} alt="">
                     </div>
-                    <div class="info-tarjeta position-relative">
+                    <div class="info-tarjeta relative">
                         <div class="texto-tarjeta ps-3 pt-2 pb-2">
                             <h5>{{ $product->name }}</h5>
-                            <p class="w-100">{{ $product->description }}</p>
-                            <span class="texto-verde fw-bold">{{ $product->purpose }}</span>
-                            <div class="d-flex align-items-center">
+                            <p class="w-full">{{ $product->description }}</p>
+                            <span class="texto-verde font-bold">{{ $product->purpose }}</span>
+                            <div class="flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-geo-alt" viewBox="0 0 16 16">
                                     <path
@@ -90,10 +90,10 @@
                                 <span>{{ $product->location }}</span>
                             </div>
                         </div>
-                        <div class="boton-favorito position-absolute top-0 end-0">
+                        <div class="boton-favorito absolute top-0 right-0">
                             <input type="checkbox" name="" id="checkCorazon{{ $product->id }}"
                                 class="inhabilitable">
-                            <label for="checkCorazon{{ $product->id }}" class="bg-light rounded-circle p-1 cliqueable"
+                            <label for="checkCorazon{{ $product->id }}" class="bg-light rounded p-1 cliqueable"
                                 id="labelCorazon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="#167250" fill-rule="evenodd">

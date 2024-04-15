@@ -7,7 +7,10 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +51,27 @@ Route::get('/invalidate', function () {
 });
 
 Route::view('vp', 'prueba');
+
+ 
+Route::get('/google-auth/redirect', function () {
+    return Socialite::driver('google')->redirect();
+});
+ 
+Route::get('/google-auth/callback', function () {
+    $user_google = Socialite::driver('google')->stateless()->user();
+    $user = User::updateOrCreate([
+        'google_id' => $user_google->id,
+    ],[
+        'name' => $user_google->name,
+        'email' => $user_google->email,
+        'profile_img' => $user_google->avatar,
+        'username' => $user_google->nickname, 
+    ]);
+    Auth::login($user);
+    Session()->regenerate();
+    return to_route('home');
+    // $user->token
+});
 
 Route::controller(AppController::class)->group(function () {
     Route::get('/', 'init')->name('home');

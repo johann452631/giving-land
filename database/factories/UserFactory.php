@@ -15,7 +15,7 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(function (User $user) {
             // ...
-            $user->username = str_replace(" ","_",strtolower($user->surname))."_".$user->id;
+            $user->username = str_replace(" ","_",strtolower($user->name))."_".$user->id;
             $user->save();
         });
     }
@@ -29,8 +29,6 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            // 'username' => fake()->unique()->userName(),
-            'surname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
