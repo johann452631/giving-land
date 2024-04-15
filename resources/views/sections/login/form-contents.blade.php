@@ -1,13 +1,15 @@
-@extends('sections.login.login')
+@extends('sections.login.index')
 
 @section('login')
     <h2 class="text-center texto-verde text-2xl pb-2">{{ $titulo }}</h2>
 
-    <x-forms.input type="email" name="email" label-text="Correo electrónico:" id="emailLogin" class="mb-5">
+    <x-forms.input type="email" name="email" label-text="Correo electrónico:" class="mb-5" autofocus>
     </x-forms.input>
 
     <x-forms.input type="password" name="password" label-text="Contraseña:" class="mb-8">
-        <a href="#" class="block text-right texto-gris hover-oscuro mt-2">¿Olvidaste la contraseña?</a>
+        <a href={{ route('resetPassword.emailResetPasswordForm') }} class="block text-right texto-gris hover-oscuro mt-2">¿Olvidaste
+            la
+            contraseña?</a>
     </x-forms.input>
 
     <div class="flex flex-col">
@@ -30,14 +32,4 @@
             <span class="text-base ml-2">Iniciar con Google</span>
         </a>
     </div>
-@endsection
-
-@section('code')
-    <h2 class="text-center texto-verde text-2xl pb-2">{{ $titulo }}</h2>
-    <div class="mb-3">
-        <span class="texto-gris" for="email">Ingrese el código que se envió a:</span>
-        <span class="bg-gris-claro border-0">{{ session('email') }}</span>
-    </div>
-    <x-forms.input-code class="mb-9" />
-    <button class="boton-base verde-blanco w-full" type="submit">Verificar</button>
 @endsection

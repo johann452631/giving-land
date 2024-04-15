@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\CodeValidationController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
-use App\Models\User;
-use App\Utilities\Utility;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,36 +36,50 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
-    Utility::sendAlert('advertencia','funciona por fin');
-    return view('vp');
+    session(['email' => 's@gmail.com']);
+    return to_route('users.create');
 });
 
-Route::get('/p2',function(){
+Route::get('/all', function () {
     return session()->all();
+});
+Route::get('/invalidate', function () {
+    return session()->invalidate();
 });
 
 Route::view('vp', 'prueba');
 
-Route::controller(AppController::class)->group(function(){
-    Route::get('/','init')->name('home');
+Route::controller(AppController::class)->group(function () {
+    Route::get('/', 'init')->name('home');
 
-    Route::get('/login','login')->name('app.login');
+    Route::post('/logout', 'logout')->name('app.logout');
 
-    Route::post('/auth','auth')->name('app.auth');
-
-    Route::post('/logout','logout')->name('app.logout');
-
-    Route::get('/signup','signup')->name('app.signup');
-
-    Route::post('/signup','signupSendCode')->name('app.signupSendCode');
-
-    Route::get('/signup/code','signupCode')->name('app.signupCode');
-
-    Route::post('/signup/code','signupVerifyCode')->name('app.signupVerifyCode');
-
-    Route::get('/settings','settings')->name('app.settings');
+    Route::get('/settings', 'settings')->name('app.settings');
 });
 
-Route::resource('users.products',ProductController::class);
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'index')->name('login.index');
+    Route::post('/login', 'authenticate')->name('login.authenticate');
+});
+
+Route::controller(SignupController::class)->group(function () {
+    Route::get('/signup', 'index')->name('signup.index');
+    Route::post('/signup/send-code', 'sendCode')->name('signup.sendCode');
+});
+
+Route::controller(CodeValidationController::class)->group(function () {
+    Route::get('/code-form', 'codeForm')->name('codeValidation.codeForm');
+    Route::post('/verify-code', 'verifyCode')->name('codeValidation.verifyCode');
+    Route::get('/cp','prueba')->name('codeValidation.prueba');
+});
+
+Route::controller(ResetPasswordController::class)->group(function () {
+    Route::get('/reset-password', 'emailResetPasswordForm')->name('resetPassword.emailResetPasswordForm');
+    Route::post('/reset-password/send-code', 'sendResetPasswordCode')->name('resetPassword.sendResetPasswordCode');
+    Route::get('/reset-password/new-password-form/{token}', 'newPasswordForm')->name('resetPassword.newPasswordForm');
+    Route::post('/reset-password/save-new-password', 'saveNewPassword')->name('resetPassword.saveNewPassword');
+});
+
+Route::resource('users.products', ProductController::class);
 
 Route::resource('users', UserController::class);

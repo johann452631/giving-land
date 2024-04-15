@@ -1,19 +1,7 @@
-.header {
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    height: 100px;
-    padding: 16px 36px;
-}
-
-.header a svg {
-    fill: #167250;
-}
-
 .buscador {
-    height: 44px;
+    height: 36px;
     width: 492px;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     background-color: white;
     padding: 0 16px;
@@ -116,14 +104,4 @@
     width: 136px;
     height: 500px;
     z-index: 1;
-}
-
-.footer {
-    position: relative;
-    padding: 40px 80px;
-    z-index: 1;
-}
-
-.footer svg {
-    fill: #F1F0F8;
 }

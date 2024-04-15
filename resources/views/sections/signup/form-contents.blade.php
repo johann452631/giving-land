@@ -1,5 +1,5 @@
-@extends('sections.signup.signup')
-<!-- correo -->
+@extends('sections.signup.index')
+
 @section('email')
     <h1 class="text-center text-2xl texto-verde pb-2">{{ $titulo }}</h1>
     <x-forms.input autofocus type="email" name="email" label-text="Correo electrónico:" class="mb-5">
@@ -26,40 +26,4 @@
             <span class="text-base ml-2">Registrarse con Google</span>
         </a>
     </div>
-@endsection
-
-{{-- Código --}}
-@section('code')
-    <h2 class="text-center texto-verde text-2xl pb-2">{{ $titulo }}</h2>
-    <div class="mb-3">
-        <span class="texto-gris" for="email">Ingrese el código que se envió a:</span>
-        <span class="bg-gris-claro border-0">{{ session('email') }}</span>
-    </div>
-    <x-forms.input-code class="mb-9"/>
-    <button class="boton-base verde-blanco w-full" type="submit">Verificar</button>
-@endsection
-
-<!-- datos -->
-@section('data')
-    <h2 class="text-center texto-verde text-2xl pb-2">{{ $titulo }}</h2>
-    <div class="mb-3">
-        <span class="text-red-500">* </span>
-        <span class="texto-gris">Indica que es obligatorio.</span>
-    </div>
-    <x-forms.input autofocus type="text" name="name" label-text="Nombres:" is-required class="mb-5">
-    </x-forms.input>
-
-    <x-forms.input type="text" name="surname" label-text="Apellidos:" class="mb-5">
-    </x-forms.input>
-
-    <x-forms.input type="date" name="birthday" label-text="Fecha de nacimiento:" class="mb-5">
-    </x-forms.input>
-
-    <x-forms.input type="text" name="email" label-text="Correo electrónico:" value="{{session('email')}}" readonly class="mb-5 input-read">
-    </x-forms.input>
-
-    <x-forms.input type="password" name="password" label-text="Contraseña:" value="" is-required class="mb-8">
-    </x-forms.input>
-
-    <button class="boton-base verde-blanco w-full" type="submit">Registrarse</button>
 @endsection

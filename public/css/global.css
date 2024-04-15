@@ -67,6 +67,14 @@
     background-color: #707070;
 }
 
+.svg-verde{
+    fill: #167250;
+}
+
+.svg-gris-claro{
+    fill: #F1F0F8;
+}
+
 .link {
     color: #707070;
     cursor: pointer;
@@ -158,4 +166,10 @@
 
 .input-read{
     width: -webkit-fill-available;
+}
+
+.profile-img {
+    width: 38px;
+    height: 38px;
+    
 }

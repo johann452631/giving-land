@@ -1,31 +1,48 @@
 <?php
- 
+
 namespace App\Http\Controllers;
- 
-use Illuminate\Http\Request;
+
+use App\Http\Requests\EmailResetPasswordRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\NewPasswordRequest;
+use App\Models\User;
+use App\Utilities\Utility;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
- 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+
 class LoginController extends Controller
 {
     /**
      * Handle an authentication attempt.
      */
-    public function authenticate(Request $request): RedirectResponse
+
+    public function index()
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        return view('sections.login.form-contents', [
+            'tituloPagina' => 'Login',
+            'titulo' => 'Inicio sesión',
+            'rutaSiguiente' => 'login.authenticate',
+            'yield' => 'login'
         ]);
- 
+    }
+
+    public function authenticate(LoginRequest $request): RedirectResponse
+    {
+        $credentials = $request->only(['email', 'password']);
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
-            return redirect()->intended('dashboard');
+            Utility::sendAlert('exito', 'Se inició sesión.');
+            return to_route('home');
         }
- 
+
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'El correo electrónico o la contraseña son incorrectos.',
         ])->onlyInput('email');
     }
+
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class NewPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,17 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|regex:/^[\p{L}\s]+$/u',
-            'surname' => 'nullable|regex:/^[\p{L}\s]+$/u',
-            'password' => 'required|regex:/^(?=.*\d).{6,14}$/'
+            'token' => 'required',
+            'password' => 'required|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d).{6,16}$/'
         ];
     }
-    public function messages(): array
+
+    public function messages() : array
     {
         return [
-            'name.required' => 'El :attribute es requerido.',
             'password.required' => 'La :attribute es requerida.',
-            'password.regex' => 'Debe contener mínimo 6 caracteres, máximo 14 y al menos un número.'
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'password.regex' => 'Debe contener mínimo 6 y máximo 16 caracteres, números, letras y/o carácteres especiales.'
         ];
     }
 }

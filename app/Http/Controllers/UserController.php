@@ -13,29 +13,31 @@ class UserController extends Controller
 {
     public function store(StoreUserRequest $request)
     {
-        session()->forget(['email', 'code']);
-        $aux = $request->except('_token');
-        $aux['password'] = Hash::make($request->password);
-        User::factory()->create($aux);
-        Auth::attempt($request->only('email', 'password'));
+        session()->forget('email');
+        $request->merge(['password' => Hash::make($request->password)]);
+        Auth::login(User::factory()->create($request->except('_token')));
+        $request->session()->regenerate();
         Utility::sendAlert('exito', 'Se registró y se inició sesión.');
         return to_route('home');
     }
 
     public function create()
     {
-        return view('sections.signup.form-contents')->with([
+        session()->forget('destination');
+        return view('sections.users.create')->with([
+            'tituloPagina' => 'Registro de datos',
             'titulo' => 'Registro de datos',
             'rutaSiguiente' => 'users.store',
-            'yield' => 'data',
+            'yield' => 'create',
         ]);
     }
 
-    public function show($user)
+    public function show()
     {
-        return view('sections.authentication.navigationsections')->with([
-            'titulo' => $user.' - perfil',
-            'yield' => 'profile'
+        $user = auth()->user();
+        return view('sections.users.show',[
+            'tituloPagina' => 'Perfil'.' - '.$user->username,
+            'user' => $user
         ]);
     }
 }
