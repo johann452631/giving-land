@@ -8,6 +8,11 @@
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
     @stack('links')
     @vite('resources/css/app.css')
+    @auth
+        @php
+            $user = auth()->user();
+        @endphp
+    @endauth
 </head>
 
 <body>

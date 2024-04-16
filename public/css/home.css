@@ -1,20 +1,3 @@
-.buscador {
-    height: 36px;
-    width: 492px;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: white;
-    padding: 0 16px;
-    gap: 8px;
-}
-
-.buscador input {
-    outline: none;
-    border: none;
-    background: none;
-    font-size: 18px;
-}
-
 .filtro-lateral{
     position: fixed;
     left: 24px;

@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class NavigationHeader extends Component
 {
+    public $user;
     /**
      * Create a new component instance.
      */
-    public function __construct( public $profileImg)
+    public function __construct()
     {
-        //
+        $this->user = auth()->user();
     }
 
     /**

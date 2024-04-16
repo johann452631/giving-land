@@ -8,7 +8,6 @@ class SignupController extends Controller
 {
     public function index()
     {
-        session(['destination'=>'users.create']);
         return view('sections.signup.form-contents')->with([
             'tituloPagina' => 'Registro',
             'titulo' => 'Registro',
@@ -18,6 +17,7 @@ class SignupController extends Controller
     }
 
     public function sendCode(EmailSignupRequest $request){
+        session(['destination'=>'users.create']);
         session(['email' => $request->email]);
         CodeValidationController::sendCode();
         return to_route('codeValidation.codeForm');

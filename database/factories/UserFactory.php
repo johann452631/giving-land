@@ -14,7 +14,6 @@ class UserFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (User $user) {
-            // ...
             $user->username = str_replace(" ","_",strtolower($user->name))."_".$user->id;
             $user->save();
         });

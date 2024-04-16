@@ -10,16 +10,7 @@
         @endguest
     @endPushOnce
 
-    @auth
-        @php
-            $user = auth()->user();
-        @endphp
-        <x-navigation-header :profile-img="$user->profile_img" />
-    @endauth
-
-    @guest
-        <x-navigation-header :profile-img="null" />
-    @endguest
+    <x-navigation-header />
 
 
     {{-- Filtro lateral --}}

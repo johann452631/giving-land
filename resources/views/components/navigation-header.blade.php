@@ -1,5 +1,5 @@
 <div
-    {{ $attributes->merge(['class' => 'header z-10 fixed px-12 py-2 items-center bg-gris-claro w-full flex justify-between']) }}>
+    {{ $attributes->merge(['class' => 'header z-10 fixed top-0 px-12 py-2 items-center bg-gris-claro w-full flex justify-between']) }}>
     <!-- link inicio - logo -->
     <a class="flex items-center text-decoration-none cursor-pointer" href={{ route('home') }}>
         <svg class="svg-verde mr-2" width="48" height="48" viewBox="0 0 94 80" xmlns="http://www.w3.org/2000/svg">
@@ -33,19 +33,26 @@
     {{-- atenticado --}}
     @auth
         <div class="relative inline-block text-left">
-            @if ($profileImg == null)
-                <img class="profile-img dropdown-button" id="userOptionsButton" src="{{asset('storage\app_icons\user-solid.svg')}}">
+            @if ($user->profile_img == null)
+                <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                    src="{{ asset('appicons\user-solid.svg') }}" alt="">
             @else
-                <img src="{{$pfofileImg}}" alt="">
+                @if ($user->google_id == null)
+                    <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                    src="{{ asset('/storage/users_profile_images/' . $user->profile_img) }}" alt="">
+                @else
+                    <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                    src="{{ $user->profile_img }}" alt="">
+                @endif
             @endif
+
 
             <div class="dropdown-menu absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
                 role="menu" aria-orientation="vertical" aria-labelledby="userOptionsButton" tabindex="-1"
                 id="userOptionsMenu">
                 <div class="py-1" role="none">
-                    <a href={{ route('users.show', auth()->user()->id) }}
-                        class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-0">Perfil</a>
+                    <a href={{ route('users.show', $user->username) }} class="text-gray-700 block px-4 py-2 text-sm"
+                        role="menuitem" tabindex="-1" id="menu-item-0">Perfil</a>
                     <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                         id="menu-item-1">Configuración</a>
                     <hr>

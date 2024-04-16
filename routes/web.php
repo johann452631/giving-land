@@ -9,6 +9,7 @@ use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -39,8 +40,11 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
-    session(['email' => 's@gmail.com']);
-    return to_route('users.create');
+    return User::factory()->create([
+        'name' => 'care monda jeje jeje',
+        'email' => 'care@gmail.com',
+        'password' => Hash::make('buenas')
+    ])->save();
 });
 
 Route::get('/all', function () {
@@ -52,25 +56,25 @@ Route::get('/invalidate', function () {
 
 Route::view('vp', 'prueba');
 
- 
+
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
- 
+
 Route::get('/google-auth/callback', function () {
     $user_google = Socialite::driver('google')->stateless()->user();
+    // dd($user_google);
     $user = User::updateOrCreate([
         'google_id' => $user_google->id,
-    ],[
+    ], [
+        'username' => str_replace(" ", "_", strtolower($user_google->name)) . "_" . $user_google->id,
         'name' => $user_google->name,
         'email' => $user_google->email,
         'profile_img' => $user_google->avatar,
-        'username' => $user_google->nickname, 
     ]);
     Auth::login($user);
     Session()->regenerate();
     return to_route('home');
-    // $user->token
 });
 
 Route::controller(AppController::class)->group(function () {
@@ -94,7 +98,7 @@ Route::controller(SignupController::class)->group(function () {
 Route::controller(CodeValidationController::class)->group(function () {
     Route::get('/code-form', 'codeForm')->name('codeValidation.codeForm');
     Route::post('/verify-code', 'verifyCode')->name('codeValidation.verifyCode');
-    Route::get('/cp','prueba')->name('codeValidation.prueba');
+    Route::get('/cp', 'prueba')->name('codeValidation.prueba');
 });
 
 Route::controller(ResetPasswordController::class)->group(function () {
