@@ -3,16 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ValidationMailable;
-use App\Models\User;
-use Illuminate\Auth\Passwords\DatabaseTokenRepository;
-use Illuminate\Contracts\Hashing\Hasher;
-use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class CodeValidationController extends Controller
 {
@@ -20,7 +13,8 @@ class CodeValidationController extends Controller
     {
         $permitted_chars = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $code = substr(str_shuffle($permitted_chars), 0, 6);
-        Mail::to(session('email'))->send(new ValidationMailable($code));
+        session(['plain' => $code]);
+        // Mail::to(session('email'))->send(new ValidationMailable($code));
         session(['code' => Hash::make($code)]);
     }
 
@@ -54,10 +48,10 @@ class CodeValidationController extends Controller
         return back()->with('errorVerificacion', "El código no coincide");
     }
 
-    public function prueba()
-    {
-        $tokenRepository = new DatabaseTokenRepository(DB::connection(),new BcryptHasher(), 'password_reset_tokens', 'bcrypt ');
+    // public function prueba()
+    // {
+    //     $tokenRepository = new DatabaseTokenRepository(DB::connection(),new BcryptHasher(), 'password_reset_tokens', 'bcrypt ');
 
-        return $tokenRepository->create(Password::getUser(['email'=>'alejoimbachihoyos@gmail.com']));
-    }
+    //     return $tokenRepository->create(Password::getUser(['email'=>'alejoimbachihoyos@gmail.com']));
+    // }
 }

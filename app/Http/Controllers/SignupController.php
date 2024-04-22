@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmailSignupRequest;
+use App\Http\Requests\NewEmailRequest;
 
 class SignupController extends Controller
 {
@@ -16,7 +16,7 @@ class SignupController extends Controller
         ]);
     }
 
-    public function sendCode(EmailSignupRequest $request){
+    public function sendCode(NewEmailRequest $request){
         session(['destination'=>'users.create']);
         session(['email' => $request->email]);
         CodeValidationController::sendCode();

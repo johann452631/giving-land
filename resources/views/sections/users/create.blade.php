@@ -6,10 +6,7 @@
         <span class="text-red-500">* </span>
         <span class="texto-gris">Indica que es obligatorio.</span>
     </div>
-    <x-forms.input autofocus type="text" name="name" label-text="Nombres:" is-required class="mb-5">
-    </x-forms.input>
-
-    <x-forms.input type="text" name="surname" label-text="Apellidos:" class="mb-5">
+    <x-forms.input autofocus type="text" name="name" label-text="Nombre:" is-required class="mb-5">
     </x-forms.input>
 
     <x-forms.input type="text" name="email" label-text="Correo electrónico:" value="{{ session('email') }}" readonly

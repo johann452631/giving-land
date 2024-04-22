@@ -185,7 +185,8 @@ return [
         'name' => 'nombre',
         'surname' => 'apellido',
         'email' => 'correo electrónico',
-        'password' => 'contraseña'
+        'password' => 'contraseña',
+        'username' => 'nombre de usuario'
     ],
 
 ];

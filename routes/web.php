@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\ChangeEmailController;
 use App\Http\Controllers\CodeValidationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -40,11 +42,12 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
-    return User::factory()->create([
-        'name' => 'care monda jeje jeje',
-        'email' => 'care@gmail.com',
-        'password' => Hash::make('buenas')
-    ])->save();
+    $permitted_chars = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $code = substr(str_shuffle($permitted_chars), 0, 6);
+    session([
+        'code' => Hash::make($code),
+        'plain' => $code
+    ]);
 });
 
 Route::get('/all', function () {
@@ -70,7 +73,7 @@ Route::get('/google-auth/callback', function () {
         'username' => str_replace(" ", "_", strtolower($user_google->name)) . "_" . $user_google->id,
         'name' => $user_google->name,
         'email' => $user_google->email,
-        'profile_img' => $user_google->avatar,
+        'url_profile_img' => $user_google->avatar,
     ]);
     Auth::login($user);
     Session()->regenerate();
@@ -109,5 +112,12 @@ Route::controller(ResetPasswordController::class)->group(function () {
 });
 
 Route::resource('users.products', ProductController::class);
+
+Route::controller(ChangeEmailController::class)->group(function () {
+    Route::get('/users/{username}/edit-email', 'index')->name('changeEmail.index');
+    Route::post('/users/edit-email/send-code', 'sendCode')->name('changeEmail.sendCode');
+    Route::get('/users/{username}/edit-email/code-form', 'codeForm')->name('changeEmail.codeForm');
+    Route::get('/users/edit-email/change', 'change')->name('changeEmail.change');
+});
 
 Route::resource('users', UserController::class);

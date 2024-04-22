@@ -12,54 +12,49 @@
 
     <x-navigation-header />
 
-
-    {{-- Filtro lateral --}}
-    <nav class="filtro-lateral">
-        @auth
-            <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
-                href={{ route('users.products.create', auth()->user()->id) }}>
-                Publicar artículo
-            </a>
-        @endauth
-        <div class="bg-gris-claro mt-3 ps-2 flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-filter"
-                viewBox="0 0 16 16">
-                <path
-                    d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
-            </svg>
-            <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
-        </div>
-        <ul class="text-decoration-none">
-            <li>
-                <input type="radio" name="filtro-categoria" id="radioElectronica">
-                <label for="radioElectronica">Electrónica</label>
-            </li>
-            <li>
-                <input type="radio" name="filtro-categoria" id="radioelectrodomesticos">
-                <label for="radioelectrodomesticos">Electrodomésticos</label>
-            </li>
-            <li>
-                <input type="radio" name="filtro-categoria" id="radioVehiculos">
-                <label for="radioVehiculos">Vehículos</label>
-            </li>
-            <li>
-                <input type="radio" name="filtro-categoria" id="radioJojasRelojes">
-                <label for="radioJojasRelojes">Joyas y relojes</label>
-            </li>
-            <li>
-                <input type="radio" name="filtro-categoria" id="radioRopaCalzado">
-                <label for="radioRopaCalzado">Ropa y calzado</label>
-            </li>
-        </ul>
-    </nav>
-
-    {{-- publicidad lateral --}}
-    <div class="publicidad-lateral"></div>
-
     {{-- main --}}
-    <div class="contenido-main relative w-full">
+    <div class="contenido-main">
+        {{-- Filtro lateral --}}
+        <nav class="menu-opciones-lateral">
+            @auth
+                <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
+                    href={{ route('users.products.create', auth()->user()->id) }}>
+                    Publicar artículo
+                </a>
+            @endauth
+            <div class="bg-gris-claro mt-3 ps-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-filter"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5" />
+                </svg>
+                <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
+            </div>
+            <ul class="text-decoration-none">
+                <li>
+                    <input type="radio" name="filtro-categoria" id="radioElectronica">
+                    <label for="radioElectronica">Electrónica</label>
+                </li>
+                <li>
+                    <input type="radio" name="filtro-categoria" id="radioelectrodomesticos">
+                    <label for="radioelectrodomesticos">Electrodomésticos</label>
+                </li>
+                <li>
+                    <input type="radio" name="filtro-categoria" id="radioVehiculos">
+                    <label for="radioVehiculos">Vehículos</label>
+                </li>
+                <li>
+                    <input type="radio" name="filtro-categoria" id="radioJojasRelojes">
+                    <label for="radioJojasRelojes">Joyas y relojes</label>
+                </li>
+                <li>
+                    <input type="radio" name="filtro-categoria" id="radioRopaCalzado">
+                    <label for="radioRopaCalzado">Ropa y calzado</label>
+                </li>
+            </ul>
+        </nav>
         {{-- artículos --}}
-        <div class="articulos w-full flex flex-wrap justify-around" id="divArticulos">
+        <div class="articulos" id="divArticulos">
             <div class="info-main w-full m-2 rounded"></div>
             @foreach ($products as $product)
                 <div class="tarjeta bg-gris-claro ${articulos[i].categoria}">
@@ -97,10 +92,12 @@
                 </div>
             @endforeach
         </div>
+        {{-- publicidad lateral --}}
+        <x-publicidad-lateral/>
     </div>
 
     {{-- footer --}}
-    <div class="relative py-10 px-20 z-10 bg-gris w-full flex flex-col items-center texto-gris-claro">
+    <div class="py-10 px-20 z-10 bg-gris w-full flex flex-col items-center texto-gris-claro">
         <div class="w-full border-b border-gray-50 mb-5 pb-5 flex justify-between">
             <div class="flex flex-col items-center">
                 <svg class="svg-gris-claro" width="40" height="40" viewBox="0 0 94 80"

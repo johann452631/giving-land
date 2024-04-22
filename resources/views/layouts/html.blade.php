@@ -8,16 +8,11 @@
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
     @stack('links')
     @vite('resources/css/app.css')
-    @auth
-        @php
-            $user = auth()->user();
-        @endphp
-    @endauth
+    @livewireStyles
 </head>
 
 <body>
     @yield('content')
-
     @session('alert')
         <x-alert :message="$value['message']" class="alerta-{{ $value['type'] }}" id="divAlert">
         </x-alert>
@@ -28,7 +23,10 @@
             }, 3500);
         </script>
     @endsession
+    @stack('scripts')
     <script src={{ asset('js/global.js') }}></script>
+    <script src="https://kit.fontawesome.com/0062b0aa7f.js" crossorigin="anonymous"></script>
+    @livewireScripts
 </body>
 
 </html>
