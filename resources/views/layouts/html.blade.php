@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $tituloPagina }}</title>
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
+    <link rel="icon" type="image/svg+xml" href="{{asset('appicons/logo-sm.svg')}}">
     @stack('links')
     @vite('resources/css/app.css')
     @livewireStyles

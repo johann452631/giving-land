@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{ asset('css/user-index.css') }}">
     @endPushOnce
     <x-navigation-header />
-    <div class="contenido-main">
+    <div class="contenido-main screen-size">
         <div class="menu-opciones-lateral">
             <a class="inline-block boton-base verde-blanco text-center" href="">Publicar artículo</a>
             <nav class="">
@@ -24,4 +24,5 @@
         @yield($yield)
         <x-publicidad-lateral />
     </div>
+    <x-footer/>
 @endsection

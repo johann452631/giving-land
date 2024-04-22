@@ -1,7 +1,6 @@
 .contenido-main {
     display: grid;
     grid-template-columns: minmax(120px,160px) auto minmax(120px,160px);
-    /* grid-template-columns: repeat(3,auto); */
     column-gap: 8px;
 }
 
@@ -77,13 +76,3 @@
 .boton-favorito input[type='checkbox']:checked+label svg {
     fill-rule: nonzero;
 }
-
-/* .publicidad-lateral {
-    position: sticky;
-    top: 5rem;
-    right: 0;
-    z-index: 2;
-    height: calc(100vh - 7rem);
-    overflow-y: auto;
-    background-color: #F1F0F8;
-} */
