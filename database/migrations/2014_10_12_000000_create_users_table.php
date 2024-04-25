@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -12,6 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Storage::deleteDirectory('public/users_profile_images');
+        Storage::makeDirectory('public/users_profile_images');
+        Storage::copy(public_path('/appicons/user-solid.svg'), 'public/users_profile_images/default.svg');
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique()->nullable();

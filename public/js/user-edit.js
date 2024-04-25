@@ -10,3 +10,13 @@ document.getElementById('inputImg').addEventListener('change', function () {
         reader.readAsDataURL(file);
     }
 });
+
+document.getElementById('eliminarFoto').addEventListener('click', function () {
+    document.getElementById('popup').classList.remove('hidden');
+});
+
+document.getElementById('popup').addEventListener('click', function (e) {
+    if (e.target.id === 'popup' || e.target.classList.contains('cerrar-popup')) {
+        document.getElementById('popup').classList.add('hidden');
+    }
+});

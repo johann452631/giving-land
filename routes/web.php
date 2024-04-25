@@ -120,4 +120,8 @@ Route::controller(ChangeEmailController::class)->group(function () {
     Route::get('/users/edit-email/change', 'change')->name('changeEmail.change');
 });
 
+Route::controller(UserController::class)->group(function () {
+    Route::put('/users/delete-photo/{id}', 'deletePhoto')->name('users.deletePhoto');
+});
+
 Route::resource('users', UserController::class);

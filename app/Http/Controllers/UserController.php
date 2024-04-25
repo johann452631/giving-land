@@ -72,4 +72,11 @@ class UserController extends Controller
         Auth::login($user);
         return to_route('users.show',$user->username);
     }
+
+    public function deletePhoto($id){
+        $user = User::find($id);
+        $user->update(['url_profile_img' => null]);
+        Auth::login($user);
+        return to_route('users.edit',$user->username);
+    }
 }
