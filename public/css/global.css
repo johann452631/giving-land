@@ -193,9 +193,7 @@
     align-items: center;
     grid-template-columns: auto minmax(200px,600px) auto;
     column-gap: 8px;
-    max-width: 1336px;
     padding: 0 12px;
-    margin: 0 auto;
     justify-content: space-between;
 }
 .navigation-header-options{
@@ -223,10 +221,13 @@
     }
 }
 
-.contenido-main{
+.screen-size{
     max-width: 1336px;
-    padding: 84px 12px;
     margin: 0 auto;
+}
+
+.contenido-main{
+    padding: 84px 12px;
 }
 
 .menu-opciones-lateral {

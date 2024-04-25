@@ -30,7 +30,7 @@ class EmailResetPasswordRequest extends FormRequest
     {
         return [
             'email.required' => 'El :attribute es requerido.',
-            'email.exists' => 'El :atribute no se está registrado.'
+            'email.exists' => 'El :attribute no se está registrado.'
         ];
     }
 }
