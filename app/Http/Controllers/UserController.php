@@ -61,7 +61,7 @@ class UserController extends Controller
         if ($request->url_profile_img == null) {
             $user->update($request->except(['_token', '_method','url_profile_img']));
         }else{
-            ($user->url_profile_img != null) ? Storage::delete('public/users_profile_images/' . $user->url_profile_img) : '';
+            ($user->url_profile_img != 'default.svg') ? Storage::delete('public/users_profile_images/' . $user->url_profile_img) : '';
             $img = $request->file('url_profile_img');
             $imgName = time() . "_" . str_replace(" ", "_", $img->getClientOriginalName());
             $aux = $request->except('_token','_method');
@@ -75,7 +75,8 @@ class UserController extends Controller
 
     public function deletePhoto($id){
         $user = User::find($id);
-        $user->update(['url_profile_img' => null]);
+        Storage::delete('public/users_profile_images/' . $user->url_profile_img);
+        $user->update(['url_profile_img' => 'default.svg']);
         Auth::login($user);
         return to_route('users.edit',$user->username);
     }

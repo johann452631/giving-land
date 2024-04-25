@@ -5,15 +5,11 @@
     @endPushOnce
     <div class="">
         <div class="flex sticky top-20 bg-gris-claro p-4 rounded-lg">
-            @if ($user->url_profile_img == null)
-                <img class="profile-img bg-white pt-2 mr-6" src="{{ asset('appicons\user-solid.svg') }}" alt="">
+            @if ($user->google_id == null)
+                <img src="{{ asset('storage/users_profile_images/' . $user->url_profile_img) }}" alt=""
+                    class="profile-img">
             @else
-                @if ($user->google_id == null)
-                    <img src="{{ asset('storage/users_profile_images/' . $user->url_profile_img) }}" alt=""
-                        class="profile-img">
-                @else
-                    <img src="{{ asset($user->url_profile_img) }}" alt="" class="profile-img">
-                @endif
+                <img src="{{ $user->url_profile_img }}" alt="" class="profile-img">
             @endif
             <div class="flex flex-col">
                 <h1 class="text-2xl">{{ $user->name }}</h1>

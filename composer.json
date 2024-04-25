@@ -12,8 +12,8 @@
         "laravel-lang/native-country-names": "^1.4",
         "laravel-lang/native-currency-names": "^1.4",
         "laravel-lang/native-locale-names": "^2.3",
-        "laravel/framework": "^10.0",
-        "laravel/sanctum": "^3.2",
+        "laravel/framework": "^11.0",
+        "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.13",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.4"
@@ -28,7 +28,7 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
+        "nunomaduro/collision": "^8.1",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },

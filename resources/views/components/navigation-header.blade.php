@@ -32,17 +32,12 @@
         {{-- atenticado --}}
         <div class="navigation-header-options relative">
             @auth
-                @if ($user->url_profile_img == null)
+                @if ($user->google_id == null)
                     <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
-                        src="{{ asset('appicons\user-solid.svg') }}" alt="">
+                        src="{{ asset('/storage/users_profile_images/' . $user->url_profile_img) }}" alt="">
                 @else
-                    @if ($user->google_id == null)
-                        <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
-                            src="{{ asset('/storage/users_profile_images/' . $user->url_profile_img) }}" alt="">
-                    @else
-                        <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
-                            src="{{ $user->url_profile_img }}" alt="">
-                    @endif
+                    <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                        src="{{ $user->url_profile_img }}" alt="">
                 @endif
                 <div class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
                     role="menu" aria-orientation="vertical" aria-labelledby="userOptionsButton" tabindex="-1"

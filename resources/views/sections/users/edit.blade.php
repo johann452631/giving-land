@@ -21,12 +21,9 @@
                 <label for="url_profile_img">
                     <p class="texto-verde mb-2">Imagen de perfil:</p>
                     <div class="flex items-center">
-                        @if ($user->url_profile_img == null)
-                            <img class="profile-edit-img bg-white" src="{{ asset('appicons\user-solid.svg') }}"
-                                alt="" id="imagenSeleccionada">
-                        @else
-                            <img src="{{ asset('storage/users_profile_images/' . $user->url_profile_img) }}" alt=""
-                                class="profile-edit-img mr-3" id="imagenSeleccionada">
+                        <img class="profile-edit-img bg-white" src="{{ asset('storage/users_profile_images/'.$user->url_profile_img) }}" alt=""
+                            id="imagenSeleccionada">
+                        @if ($user->url_profile_img != 'default.svg')
                             <div class="boton-base bg-red-500" id="eliminarFoto"><i class="fa-solid fa-trash"></i></div>
                         @endif
                     </div>

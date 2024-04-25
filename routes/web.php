@@ -9,6 +9,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
+use App\Utilities\Utility;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -57,7 +58,7 @@ Route::get('/invalidate', function () {
     return session()->invalidate();
 });
 
-Route::view('vp', 'prueba');
+Route::view('vp', 'vp',['tituloPagina' => 'prueba']);
 
 
 Route::get('/google-auth/redirect', function () {
@@ -77,6 +78,7 @@ Route::get('/google-auth/callback', function () {
     ]);
     Auth::login($user);
     Session()->regenerate();
+    Utility::sendAlert('exito','Se ingresó con su cuenta de Google');
     return to_route('home');
 });
 
