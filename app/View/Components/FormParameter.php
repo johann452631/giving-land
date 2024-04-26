@@ -13,7 +13,7 @@ class FormParameter extends Component
      */
     public function __construct(
         public string $rutaSiguiente,
-        public string $parametro,
+        public $parametro = null,
         public $metodo = null,
     )
     {

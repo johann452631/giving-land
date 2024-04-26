@@ -1,6 +1,5 @@
-@extends('layouts.html')
-@section('content')
-    @pushOnce('links')
+<x-html>
+    <x-slot:links>
         <link rel="stylesheet" href={{ asset('css/home.css') }}>
         @auth
             <link rel="stylesheet" href={{ asset('css/auth-home.css') }}>
@@ -8,14 +7,14 @@
         @guest
             <link rel="stylesheet" href={{ asset('css/guest-home.css') }}>
         @endguest
-    @endPushOnce
+    </x-slot>
 
     <x-navigation-header />
 
     {{-- main --}}
     <div class="contenido-main screen-size">
         {{-- Filtro lateral --}}
-        <nav class="menu-opciones-lateral">
+        <div class="menu-opciones-lateral">
             @auth
                 <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
                     href={{ route('users.products.create', auth()->user()->id) }}>
@@ -52,7 +51,7 @@
                     <label for="radioRopaCalzado">Ropa y calzado</label>
                 </li>
             </ul>
-        </nav>
+        </div>
         {{-- artículos --}}
         <div class="articulos" id="divArticulos">
             <div class="info-main w-full m-2 rounded"></div>
@@ -104,4 +103,4 @@
     @guest
         <script src={{ asset('js/guest-home.js') }}></script>
     @endguest
-@endsection
+</x-html>

@@ -35,7 +35,7 @@ class Alert2 extends Component
     public function render(): View|Closure|string
     {
         return <<<'blade'
-<div class="fixed top-14 left-14 z-10 p-5 border-l-4 rounded-md border-s-{{$color}}-700" {{$attributes}}>
+<div class="fixed top-14 left-14 z-10 p-5 border-l-4 rounded-md border-s-red-700" {{$attributes}}>
     {{$slot}}
 </div>
 blade;

@@ -10,23 +10,18 @@ use Illuminate\Support\Facades\Auth;
 class ChangeEmailController extends Controller
 {
     public function index(){
-        return view('sections.users.edit', [
-            'tituloPagina' => 'Editar correo electrónico',
-            'yield' => 'edit-email',
+        return view('sections.profile.index', [
+            'content' => 'email-edit',
             'user' => auth()->user()
         ]);
     }
 
     public function sendCode(NewEmailRequest $request)
     {
-        session([
-            'destination' => 'changeEmail.change',
-            'email' => $request->email
+        return to_route('profile.emailCodeForm', [
+            'email' => $request->email,
+            'hashed' => CodeValidationController::sendCode($request->email),
         ]);
-
-        CodeValidationController::sendCode($request->email);
-
-        return to_route('changeEmail.codeForm',auth()->user()->username);
     }
 
     public function codeForm(){

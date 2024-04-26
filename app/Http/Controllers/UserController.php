@@ -8,20 +8,18 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Utilities\Utility;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
-        session()->forget('destination');
         return view('sections.users.create')->with([
-            'tituloPagina' => 'Registro de datos',
-            'titulo' => 'Registro de datos',
             'rutaSiguiente' => 'users.store',
-            'yield' => 'create',
+            'request' => $request,
         ]);
     }
 
@@ -38,8 +36,6 @@ class UserController extends Controller
     public function show()
     {
         return view('sections.users.show', [
-            'tituloPagina' => 'Perfil',
-            'yield' => 'show',
             'user' => auth()->user()
         ]);
     }

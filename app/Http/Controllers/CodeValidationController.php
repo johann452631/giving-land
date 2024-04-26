@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Mail;
 
 class CodeValidationController extends Controller
 {
-    public static function sendCode(): void
+    public static function sendCode(string $email): string
     {
         $permitted_chars = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $code = substr(str_shuffle($permitted_chars), 0, 6);
         session(['plain' => $code]);
-        // Mail::to(session('email'))->send(new ValidationMailable($code));
-        session(['code' => Hash::make($code)]);
+        // Mail::to($email)->send(new ValidationMailable($code));
+        return Hash::make($code);
     }
 
     public function codeForm()
@@ -28,30 +28,23 @@ class CodeValidationController extends Controller
         ]);
     }
 
-    public function verifyCode(Request $request)
-    {
-        $inputCode = strtoupper(implode("", $request->except('_token')));
-        $hashedCode = session('code');
-        if (Hash::check($inputCode, $hashedCode)) {
-            session()->forget('code');
-            if (null !== session('token')) {
-                $email = session('email');
-                $token = session('token');
-                session()->forget(['email','token']);
-                return to_route(session('destination'), [
-                    'email' => $email,
-                    'token' => $token
-                ]);
-            }
-            return to_route(session('destination'));
-        }
-        return back()->with('errorVerificacion', "El código no coincide");
-    }
-
-    // public function prueba()
+    // public function verifyCode(Request $request)
     // {
-    //     $tokenRepository = new DatabaseTokenRepository(DB::connection(),new BcryptHasher(), 'password_reset_tokens', 'bcrypt ');
-
-    //     return $tokenRepository->create(Password::getUser(['email'=>'alejoimbachihoyos@gmail.com']));
+    //     $inputCode = strtoupper(implode("", $request->except('_token')));
+    //     $hashedCode = session('code');
+    //     if (Hash::check($inputCode, $hashedCode)) {
+    //         session()->forget('code');
+    //         if (null !== session('token')) {
+    //             $email = session('email');
+    //             $token = session('token');
+    //             session()->forget(['email','token']);
+    //             return to_route(session('destination'), [
+    //                 'email' => $email,
+    //                 'token' => $token
+    //             ]);
+    //         }
+    //         return to_route(session('destination'));
+    //     }
+    //     return back()->with('errorVerificacion', "El código no coincide");
     // }
 }

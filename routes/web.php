@@ -5,6 +5,7 @@ use App\Http\Controllers\ChangeEmailController;
 use App\Http\Controllers\CodeValidationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
@@ -43,12 +44,7 @@ Route::get('p', function () {
     //     session()->forget('hola');
     //     session()->forget('hola_timeout');
     // }
-    $permitted_chars = '123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $code = substr(str_shuffle($permitted_chars), 0, 6);
-    session([
-        'code' => Hash::make($code),
-        'plain' => $code
-    ]);
+    return bin2hex(random_bytes(16));
 });
 
 Route::get('/all', function () {
@@ -58,7 +54,13 @@ Route::get('/invalidate', function () {
     return session()->invalidate();
 });
 
-Route::view('vp', 'vp',['tituloPagina' => 'prueba']);
+Route::get('/regenerate', function () {
+    return session()->regenerate();
+});
+
+Route::get('/vp', function () {
+    return view('vp')->fragment('dos');
+});
 
 
 Route::get('/google-auth/redirect', function () {
@@ -98,6 +100,8 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(SignupController::class)->group(function () {
     Route::get('/signup', 'index')->name('signup.index');
     Route::post('/signup/send-code', 'sendCode')->name('signup.sendCode');
+    Route::get('/signup/code-form/{token}','codeForm')->name('signup.codeForm');
+    Route::post('/signup/verify-code', 'verifyCode')->name('signup.verifyCode');
 });
 
 Route::controller(CodeValidationController::class)->group(function () {
@@ -123,7 +127,12 @@ Route::controller(ChangeEmailController::class)->group(function () {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::put('/users/delete-photo/{id}', 'deletePhoto')->name('users.deletePhoto');
+    Route::get('/users/create/{token}','create')->name('users.create')->middleware();
+    Route::post('/users/store/{token}','store')->name('users.store')->middleware();
 });
 
-Route::resource('users', UserController::class);
+Route::controller(ProfileController::class)->group(function () {
+    Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
+});
+
+Route::resource('users', UserController::class)->except(['index','create','store'])->middleware('auth');

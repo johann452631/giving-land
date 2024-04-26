@@ -145,13 +145,6 @@
     border-bottom: 1.5px solid #167250;
 }
 
-.form-auth{
-    border-radius: 8px;
-    width: 450px;
-    padding: 40px 48px;
-    background-color: #F1F0F8;
-}
-
 .div-codigo input {
     width: 100%;
     text-align: center;
