@@ -21,10 +21,10 @@ class PostFactory extends Factory
         return [
             'name' => fake()->words(4,true),
             'purpose' => fake()->randomElement(['Intercambio','Donación']),
-            'descripion' => fake()->text(),
+            'description' => fake()->text(),
             'location' => fake()->city(),
             'user_id' => User::all()->random()->id,
-            'user_id' => Category::all()->random()->id,
+            'category_id' => Category::all()->random()->id,
         ];
     }
 }

@@ -10,6 +10,8 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
+use App\Models\Image;
+use App\Models\Profile;
 use App\Models\User;
 use App\MyOwn\classes\Utility;
 use Illuminate\Contracts\Session\Session;
@@ -77,7 +79,19 @@ Route::get('/google-auth/callback', function () {
         'username' => str_replace(" ", "_", strtolower($user_google->name)) . "_" . $user_google->id,
         'name' => $user_google->name,
         'email' => $user_google->email,
-        'url_profile_img' => $user_google->avatar,
+    ]);
+
+    $profile = Profile::updateOrCreate([
+        'user_id' => $user->id
+    ]);
+
+    Image::updateOrCreate([
+        'imageable_id' => $profile->id,
+        'imageable_type' => Profile::class
+    ],[
+        'url' => $user_google->avatar,
+        // 'imageable_id' => $profile->id,
+        // 'imageable_type' => Profile::class
     ]);
     Auth::login($user);
     Session()->regenerate();

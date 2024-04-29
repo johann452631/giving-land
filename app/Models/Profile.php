@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Profile extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'email',
+        'user_id'
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

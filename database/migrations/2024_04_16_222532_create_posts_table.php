@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 return new class extends Migration
 {
@@ -11,6 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Storage::deleteDirectory('public/posts_images');
+        Storage::makeDirectory('public/posts_images');
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('name',45);

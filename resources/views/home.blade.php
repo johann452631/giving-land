@@ -17,7 +17,7 @@
         <div class="menu-opciones-lateral">
             @auth
                 <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
-                    href={{ route('users.products.create', auth()->user()->id) }}>
+                    href="#">
                     Publicar artículo
                 </a>
             @endauth
@@ -30,26 +30,12 @@
                 <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
             </div>
             <ul class="text-decoration-none">
-                <li>
-                    <input type="radio" name="filtro-categoria" id="radioElectronica">
-                    <label for="radioElectronica">Electrónica</label>
-                </li>
-                <li>
-                    <input type="radio" name="filtro-categoria" id="radioelectrodomesticos">
-                    <label for="radioelectrodomesticos">Electrodomésticos</label>
-                </li>
-                <li>
-                    <input type="radio" name="filtro-categoria" id="radioVehiculos">
-                    <label for="radioVehiculos">Vehículos</label>
-                </li>
-                <li>
-                    <input type="radio" name="filtro-categoria" id="radioJojasRelojes">
-                    <label for="radioJojasRelojes">Joyas y relojes</label>
-                </li>
-                <li>
-                    <input type="radio" name="filtro-categoria" id="radioRopaCalzado">
-                    <label for="radioRopaCalzado">Ropa y calzado</label>
-                </li>
+                @foreach ($categories as $category)
+                    <li>
+                        <input type="radio" name="{{$category->name}}" id="radio{{$category->name}}">
+                        <label for="radio{{$category->name}}">{{$category->name}}</label>
+                    </li>
+                @endforeach
             </ul>
         </div>
         {{-- posts --}}
@@ -58,11 +44,13 @@
             @foreach ($posts as $post)
                 <div class="tarjeta bg-gris-claro">
                     <div class="foto-tarjeta bg-gris">
-                        <img src={{ asset("img/{$post->images}") }} alt="">
+                        @foreach ($post->images as $image)
+                            <img src={{ asset("storage/posts_images/{$image->url}") }} alt="">
+                        @endforeach
                     </div>
                     <div class="info-tarjeta relative">
                         <div class="texto-tarjeta ps-3 pt-2 pb-2">
-                            <h5>{{ $post->name }}</h5>
+                            <h5 class="text-xl text-gray-900 font-semibold">{{ $post->name }}</h5>
                             <p class="w-full">{{ $post->description }}</p>
                             <span class="texto-verde font-bold">{{ $post->purpose }}</span>
                             <div class="flex items-center">
@@ -76,8 +64,7 @@
                             </div>
                         </div>
                         <div class="boton-favorito absolute top-0 right-0">
-                            <input type="checkbox" name="" id="checkCorazon{{ $post->id }}"
-                                class="inhabilitable">
+                            <input type="checkbox" id="checkCorazon{{ $post->id }}" class="inhabilitable">
                             <label for="checkCorazon{{ $post->id }}" class="bg-light rounded p-1 cliqueable"
                                 id="labelCorazon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

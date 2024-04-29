@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\Product;
 use App\MyOwn\classes\Utility;
@@ -12,6 +13,8 @@ class AppController extends Controller
     public function init(){
         return view('home',[
             'posts'=> Post::all(),
+            'categories' => Category::all(),
+            'user' => Auth::user(),
             'tituloPagina' => 'Giving-Land'
         ]);
     }

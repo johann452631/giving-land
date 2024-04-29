@@ -16,7 +16,7 @@ return new class extends Migration
         Storage::copy('default/user-solid.svg', 'public/users_profile_images/default.svg');
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('email',45)->unique();
+            $table->string('email',45)->unique()->nullable();
             $table->foreignId('user_id')->unique()->constrained();
             $table->timestamps();
         });
