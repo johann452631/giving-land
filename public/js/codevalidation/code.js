@@ -11,7 +11,6 @@ inputs[0].addEventListener('paste', function (event) {
         }
     } else {
         event.preventDefault();
-        // event.target.focus();
     }
 });
 for (let index = 1; index < inputs.length; index++) {
@@ -31,7 +30,5 @@ for (let index = 0; index < inputs.length; index++) {
     inputs[index].addEventListener('keyup', function (event) {
         let key = event.key;
         (index != inputs.length - 1 && !/\b(Tab|Backspace|Enter|Shift|CapsLock)\b/.test(key) && !event.ctrlKey) ? ((/^[a-zA-Z1-9]{1}$/.test(key)) ? inputs[index + 1].focus() : '') : '';
-
-        // (index != inputs.length - 1 && (!/\b(Tab|Backspace|Enter|Shift|CapsLock)\b/.test(key))) ? inputs[index + 1].focus() : '';
     });
 }

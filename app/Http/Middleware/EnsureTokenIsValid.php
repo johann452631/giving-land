@@ -13,8 +13,11 @@ class EnsureTokenIsValid
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next):Response
     {
+        if ($request->token != session('token')) {
+            return redirect('/');
+        }
         return $next($request);
     }
 }

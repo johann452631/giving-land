@@ -18,15 +18,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // \App\Models\User::factory(10)->create();
-        Product::factory()->count(20)->state(new Sequence(
-            ['purpose' => 'Donación'],
-            ['purpose' => 'Intercambio'],
-        ))->create();
-
         User::factory()->create([
             'name' => 'Alejandro Imbachí Hoyos',
             'email' => 'test@mail.com',
             'password' => Hash::make('buenas')
+        ]);
+        $this->call([
+            CategorySeeder::class,
+            PostSeeder::class,
         ]);
     }
 }

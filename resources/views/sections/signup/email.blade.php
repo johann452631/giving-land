@@ -1,7 +1,6 @@
-<h1 class="text-center text-3xl texto-verde pb-2">Registro</h1>
-<x-forms.input autofocus type="email" name="email" label-text="Correo electrónico:" class="mb-5">
-    <br>
-    <span class="texto-gris mt-2">Se enviará un código de verificación</span>
+<h1 class="text-center text-3xl texto-verde mb-6">Registro</h1>
+<x-forms.input autofocus type="email" name="email" label-text="Correo electrónico:" class="mb-8">
+    <p class="texto-gris mt-3">Se enviará un código de verificación</p> 
 </x-forms.input>
 <input type="hidden" name="token" value="{{$token}}">
 <div class="flex flex-col">

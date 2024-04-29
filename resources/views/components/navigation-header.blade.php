@@ -43,7 +43,7 @@
                     role="menu" aria-orientation="vertical" aria-labelledby="userOptionsButton" tabindex="-1"
                     id="userOptionsMenu">
                     <div class="py-1" role="none">
-                        <a href={{ route('users.show', $user->username) }} class="text-gray-700 block px-4 py-2 text-sm"
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm"
                             role="menuitem" tabindex="-1" id="menu-item-0">Perfil</a>
                         <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                             id="menu-item-1">Configuración</a>

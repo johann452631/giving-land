@@ -12,7 +12,7 @@
         </x-form-parameter>
     </x-popup>
     <div>
-        <x-form-parameter ruta-siguiente="users.update" :parametro="$user->id" metodo="PUT" class="py-10 px-20 rounded-lg"
+        <x-form ruta-siguiente="users.update" :parametro="$user->id" metodo="PUT" class="py-10 px-20 rounded-lg"
             enctype="multipart/form-data">
             <x-forms.input autofocus type="text" name="username" label-text="Nombre de usuario:" class="mb-10"
                 value="{{ $user->username }}">
@@ -47,7 +47,7 @@
                 <a href="{{ route('users.show', $user->username) }}"
                     class="d-inline-block boton-base gris-blanco">Cancelar</a>
             </div>
-        </x-form-parameter>
+        </x-form>
     </div>
     <script src="{{ asset('js/user-edit.js') }}"></script>
 @endsection

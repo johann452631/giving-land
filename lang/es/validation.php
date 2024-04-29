@@ -186,6 +186,7 @@ return [
         'surname' => 'apellido',
         'email' => 'correo electrónico',
         'password' => 'contraseña',
+        'password_confirmation' => 'confirmación de contraseña',
         'username' => 'nombre de usuario'
     ],
 

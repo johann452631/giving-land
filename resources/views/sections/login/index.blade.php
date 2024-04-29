@@ -1,13 +1,31 @@
-@extends('layouts.html')
-@section('content')
-    <x-header class="pl-5" />
+<x-html>
+    <x-header class="p-3 flex justify-between items-center">
+        <a class="boton-base verde-blanco" href="{{ route('signup.index') }}">Registro</a>
+    </x-header>
 
-    <div class="flex justify-center pt-12">
-        @include('sections.div-form', [
-            'titulo' => $titulo,
-            'rutaSiguiente' => $rutaSiguiente,
-            'yield' => $yield,
-        ])
+    <div class="px-4 pt-10">
+        <x-form ruta-siguiente="login.authenticate" class="auth-form shadow shadow-gray-400">
+            <h2 class="text-center texto-verde text-3xl mb-6">Inicio de sesión</h2>
+
+            <x-forms.input type="email" name="email" label-text="Correo electrónico:" class="mb-10" autofocus />
+
+            <x-forms.input type="password" name="password" label-text="Contraseña:" class="mb-10">
+                <div class="text-right mt-3">
+                    <a href={{ route('resetPassword.index') }}
+                        class="texto-gris hover-oscuro">
+                        ¿Olvidaste la contraseña?
+                    </a>
+                </div>
+            </x-forms.input>
+
+            <div class="flex flex-col">
+                <button class="boton-base verde-blanco mb-4" type="submit">Iniciar sesión</button>
+                <a href="/google-auth/redirect"
+                    class="boton-base blanco-gris w-full flex justify-center items-center shadow-sm">
+                    <img class="size-7" src="{{ asset('appicons/icon-google.svg') }}" alt="">
+                    <p class="text-base ml-2">Iniciar con Google</p>
+                </a>
+            </div>
+        </x-form>
     </div>
-    
-@endsection
+</x-html>

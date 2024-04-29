@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Product;
-use App\Utilities\Utility;
+use App\MyOwn\classes\Utility;
 use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
     public function init(){
         return view('home',[
-            'products'=> Product::all(),
+            'posts'=> Post::all(),
             'tituloPagina' => 'Giving-Land'
         ]);
     }
@@ -28,7 +29,7 @@ class AppController extends Controller
         Auth::logout();
         session()->invalidate();
         session()->regenerateToken();
-        Utility::sendAlert('peligro', 'Se cerró sesión.');
+        Utility::sendAlert('danger', 'Se cerró sesión.');
         return to_route('home');
     }
 }

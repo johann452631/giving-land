@@ -22,8 +22,8 @@ class NewPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => 'required',
-            'password' => 'required|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d).{6,16}$/'
+            'password' => 'required|confirmed|regex:/^(?=.*[a-zA-Z])(?=.*\d).{6,16}$/',
+            'password_confirmation' => 'required'
         ];
     }
 
@@ -31,6 +31,7 @@ class NewPasswordRequest extends FormRequest
     {
         return [
             'password.required' => 'La :attribute es requerida.',
+            'password_confirmation.required' => 'La :attribute es requerida.',
             'password.confirmed' => 'Las contraseñas no coinciden',
             'password.regex' => 'Debe contener mínimo 6 y máximo 16 caracteres, números, letras y/o carácteres especiales.'
         ];

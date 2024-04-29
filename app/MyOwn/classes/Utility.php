@@ -1,13 +1,12 @@
 <?php
-namespace App\Utilities;
+namespace App\MyOwn\classes;
 
 class Utility
 {
-    public static function sendAlert($type,$message){
+    public static function sendAlert(string $type,string $message){
         session()->flash('alert',[
             'type' => $type,
             'message' => $message
         ]);
-        // session()->flash('alert','joole');
     }
 }

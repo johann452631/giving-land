@@ -9,8 +9,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\User;
-use App\Utilities\Utility;
+use App\MyOwn\classes\Utility;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -111,8 +112,10 @@ Route::controller(CodeValidationController::class)->group(function () {
 });
 
 Route::controller(ResetPasswordController::class)->group(function () {
-    Route::get('/reset-password', 'emailResetPasswordForm')->name('resetPassword.emailResetPasswordForm');
-    Route::post('/reset-password/send-code', 'sendResetPasswordCode')->name('resetPassword.sendResetPasswordCode');
+    Route::get('/reset-password', 'index')->name('resetPassword.index');
+    Route::post('/reset-password/send-code', 'sendCode')->name('resetPassword.sendCode');
+    Route::get('/reset-password/code-form/{token}', 'codeForm')->name('resetPassword.codeForm');
+    Route::post('/reset-password/verify-code', 'verifyCode')->name('resetPassword.verifyCode');
     Route::get('/reset-password/new-password-form/{token}', 'newPasswordForm')->name('resetPassword.newPasswordForm');
     Route::post('/reset-password/save-new-password', 'saveNewPassword')->name('resetPassword.saveNewPassword');
 });
@@ -126,13 +129,10 @@ Route::controller(ChangeEmailController::class)->group(function () {
     Route::get('/users/edit-email/change', 'change')->name('changeEmail.change');
 });
 
-Route::controller(UserController::class)->group(function () {
-    Route::get('/users/create/{token}','create')->name('users.create')->middleware();
-    Route::post('/users/store/{token}','store')->name('users.store')->middleware();
-});
+Route::get('users/create/{token}',[UserController::class,'create'])->name('users.create');
+
+Route::resource('users', UserController::class)->only(['store','update','destroy']);
 
 Route::controller(ProfileController::class)->group(function () {
     Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
 });
-
-Route::resource('users', UserController::class)->except(['index','create','store'])->middleware('auth');

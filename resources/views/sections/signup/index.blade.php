@@ -1,14 +1,11 @@
 <x-html>
-    <x-slot:links>
-        <link rel="stylesheet" href="{{asset('css/signup.css')}}">
-    </x-slot>
-    <x-header class="p-3"/>
+    <x-header class="p-3 flex justify-between items-center" >
+        <a class="boton-base verde-blanco" href="{{route('login.index')}}">Inicio de sesión</a>
+    </x-header>
+
     <div class="px-4 pt-10">
-        <x-form-parameter :ruta-siguiente="$rutaSiguiente" class="signup-form">
+        <x-form :ruta-siguiente="$rutaSiguiente" class="auth-form shadow shadow-gray-400">
             @include("sections.signup.$content")
-        </x-form-parameter>
+        </x-form>
     </div>
-    @if ($content == 'code')
-        <script src="{{asset('js/codevalidation/code.js')}}"></script>
-    @endif
 </x-html>
