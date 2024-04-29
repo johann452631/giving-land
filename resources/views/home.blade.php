@@ -16,8 +16,7 @@
         {{-- Filtro lateral --}}
         <div class="menu-opciones-lateral">
             @auth
-                <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde"
-                    href="#">
+                <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde" href="#">
                     Publicar artículo
                 </a>
             @endauth
@@ -29,12 +28,10 @@
                 </svg>
                 <span class="ps-2 pt-1 pb-1 fw-bold">Filtro</span>
             </div>
-            <ul class="text-decoration-none">
+            <ul class="flex flex-col">
+                <a href="{{ route('home') }}">Ver todo</a>
                 @foreach ($categories as $category)
-                    <li>
-                        <input type="radio" name="{{$category->name}}" id="radio{{$category->name}}">
-                        <label for="radio{{$category->name}}">{{$category->name}}</label>
-                    </li>
+                    <a href="{{ route('home', $category->name) }}">{{ $category->name }}</a>
                 @endforeach
             </ul>
         </div>

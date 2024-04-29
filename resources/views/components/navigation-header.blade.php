@@ -32,19 +32,17 @@
         {{-- atenticado --}}
         <div class="navigation-header-options relative">
             @auth
-                @if ($user->google_id == null)
-                    <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
-                        src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}" alt="">
+                <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                    @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
                 @else
-                    <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
-                        src="{{ $user->profile->image->url }}" alt="">
-                @endif
+                src="{{ $user->profile->image->url }}" alt="" @endif>
+
                 <div class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden"
                     role="menu" aria-orientation="vertical" aria-labelledby="userOptionsButton" tabindex="-1"
                     id="userOptionsMenu">
                     <div class="py-1" role="none">
-                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm"
-                            role="menuitem" tabindex="-1" id="menu-item-0">Perfil</a>
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                            id="menu-item-0">Perfil</a>
                         <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
                             id="menu-item-1">Configuración</a>
                         <hr>

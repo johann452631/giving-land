@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
-    public function init(){
+    public function init(?string $category = null){
+        $posts= isset($category) ? Category::where('name',$category)->first()->posts : Post::all();
         return view('home',[
-            'posts'=> Post::all(),
             'categories' => Category::all(),
+            'posts'=> $posts,
             'user' => Auth::user(),
             'tituloPagina' => 'Giving-Land'
         ]);

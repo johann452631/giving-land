@@ -95,12 +95,12 @@ Route::get('/google-auth/callback', function () {
     ]);
     Auth::login($user);
     Session()->regenerate();
-    Utility::sendAlert('exito','Se ingresó con su cuenta de Google');
+    Utility::sendAlert('success','Se ingresó con su cuenta de Google');
     return to_route('home');
 });
 
 Route::controller(AppController::class)->group(function () {
-    Route::get('/', 'init')->name('home');
+    Route::get('/{category?}', 'init')->name('home');
 
     Route::post('/logout', 'logout')->name('app.logout');
 
@@ -108,12 +108,12 @@ Route::controller(AppController::class)->group(function () {
 });
 
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login', 'index')->name('login.index');
-    Route::post('/login', 'authenticate')->name('login.authenticate');
+    Route::get('/login/index', 'index')->name('login.index');
+    Route::post('/login/authenticate', 'authenticate')->name('login.authenticate');
 });
 
 Route::controller(SignupController::class)->group(function () {
-    Route::get('/signup', 'index')->name('signup.index');
+    Route::get('/signup/index', 'index')->name('signup.index');
     Route::post('/signup/send-code', 'sendCode')->name('signup.sendCode');
     Route::get('/signup/code-form/{token}','codeForm')->name('signup.codeForm');
     Route::post('/signup/verify-code', 'verifyCode')->name('signup.verifyCode');
