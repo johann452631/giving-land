@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('buenas')
         ]);
 
-        // User::factory()->count(5)->create();
+        User::factory()->count(3)->create();
 
         $users = User::all();
 
