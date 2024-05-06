@@ -1,12 +1,15 @@
 <x-html>
-    <x-slot:links>
+    @pushOnce('links')
         <link rel="stylesheet" href="{{ asset('css/user-index.css') }}">
-    </x-slot>
+    @endPushOnce
     <x-navigation-header />
-    <x-user-index>
-        @include($content)
-    </x-user-index>
-    @if ($content == 'email-code')
-        <script src="{{ asset('js/codevalidation/code.js') }}"></script>
-    @endif
+    <x-profile-index>
+        <div>
+
+        </div>
+        <div class="posts">
+            
+        </div>
+    </x-profile-index>
+    
 </x-html>

@@ -100,7 +100,7 @@ Route::get('/google-auth/callback', function () {
 });
 
 Route::controller(AppController::class)->group(function () {
-    Route::get('/{category?}', 'init')->name('home');
+    Route::get('/posts/{category?}', 'init')->name('home');
 
     Route::post('/logout', 'logout')->name('app.logout');
 
@@ -147,6 +147,7 @@ Route::get('users/create/{token}',[UserController::class,'create'])->name('users
 
 Route::resource('users', UserController::class)->only(['store','update','destroy']);
 
-Route::controller(ProfileController::class)->group(function () {
-    Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
-});
+// Route::controller(ProfileController::class)->group(function () {
+//     Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
+// });
+Route::singleton('profile', ProfileController::class);
