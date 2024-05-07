@@ -23,22 +23,5 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->count(3)->create();
-
-        $users = User::all();
-
-        foreach ($users as $user) {
-            Profile::create([
-                'user_id' => $user->id
-            ]);
-        }
-
-        $profiles = Profile::all();
-        foreach ($profiles as $profile) {
-            Image::create([
-                'url' => 'default.svg',
-                'imageable_id' => $profile->id,
-                'imageable_type' => Profile::class
-            ]);
-        }
     }
 }

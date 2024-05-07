@@ -49,6 +49,9 @@ Route::get('p', function () {
     // }
     return bin2hex(random_bytes(16));
 });
+Route::get('/', function () {
+    return to_route('home');
+});
 
 Route::get('/all', function () {
     return session()->all();

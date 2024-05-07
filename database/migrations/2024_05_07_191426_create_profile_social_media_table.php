@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('social_media', function (Blueprint $table) {
-            $table->id();
-            $table->string('name',45);
+        Schema::create('profile_social_media', function (Blueprint $table) {
+            $table->foreignId('profile_id')->constrained()->onDelete('cascade');
+            $table->foreignId('social_media_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('social_media');
+        Schema::dropIfExists('profiles_social_media');
     }
 };

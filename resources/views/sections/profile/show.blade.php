@@ -2,18 +2,31 @@
     @pushOnce('links')
         <link rel="stylesheet" href="{{ asset('css/profile-index.css') }}">
         <link rel="stylesheet" href="{{ asset('css/profile-show.css') }}">
-
     @endPushOnce
     <x-navigation-header />
     <x-profile-index>
         <div class="flex flex-col">
-            <div>
-                <img class="profile-img"
-                    @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
-                    @else
-                    src="{{ $profile->image->url }}" alt="" @endif>
+            <div class="flex flex-col">
+                <div class="flex">
 
-                <h2>{{ $profile->user->name }}</h2>
+                    <img class="profile-img"
+                        @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
+                        @else
+                        src="{{ $profile->image->url }}" alt="" @endif>
+
+                    <h2>{{ $profile->user->name }}</h2>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h2>Información de contacto</h2>
+                    <ul class="flex flex-wrap">
+                        @foreach ($socialMedia as $element)
+                        {{$element->name}}
+                            <a class="mr-6" href="#"><img class="size-8" src="{{asset('socialmediaicons/'.$element->image->url)}}" alt=""></a>
+                        @endforeach
+                    </ul>
+                </div>
+                <hr class="my-4">
                 <a href="{{ route('profile.edit') }}">Editar</a>
             </div>
             <div class="posts">
