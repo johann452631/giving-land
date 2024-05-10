@@ -1,5 +1,5 @@
-<div class="w-full">
-    <div {{ $attributes->merge(['class' => 'bg-gris-claro screen-size']) }}>
+<div class="w-full bg-gris-claro">
+    <div {{ $attributes->merge(['class' => 'screen-size']) }}>
         <!-- link inicio - logo -->
         <a class="flex items-center text-decoration-none cursor-pointer" href={{route('home')}}>
             <svg class="svg-verde" width="60" height="60" viewBox="0 0 94 80" xmlns="http://www.w3.org/2000/svg">

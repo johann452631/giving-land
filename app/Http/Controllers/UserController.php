@@ -7,6 +7,8 @@ use App\Http\Middleware\EnsureTokenIsValid;
 use App\Http\Requests\NewEmailRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Image;
+use App\Models\Profile;
 use App\Models\User;
 use App\MyOwn\classes\Utility;
 use Closure;
@@ -38,6 +40,15 @@ class UserController extends Controller
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->except('_token'));
         $user->update(['username' => str_replace(" ", "_", strtolower($user->name)) . "_" . $user->id]);
+        $profile = Profile::create([
+            'user_id' => $user->id
+        ]);
+
+        Image::create([
+            'url' => 'default.svg',
+            'imageable_id' => $profile->id,
+            'imageable_type' => Profile::class
+        ]);
         Auth::login($user);
         $request->session()->regenerate();
         Utility::sendAlert('success', 'Se registró y se inició sesión.');

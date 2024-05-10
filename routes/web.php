@@ -3,13 +3,16 @@
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ChangeEmailController;
 use App\Http\Controllers\CodeValidationController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SettlementController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
+use App\Models\Favorite;
 use App\Models\Image;
 use App\Models\Profile;
 use App\Models\User;
@@ -137,8 +140,6 @@ Route::controller(ResetPasswordController::class)->group(function () {
     Route::post('/reset-password/save-new-password', 'saveNewPassword')->name('resetPassword.saveNewPassword');
 });
 
-Route::resource('users.products', ProductController::class);
-
 Route::controller(ChangeEmailController::class)->group(function () {
     Route::get('/users/{username}/edit-email', 'index')->name('changeEmail.index');
     Route::post('/users/edit-email/send-code', 'sendCode')->name('changeEmail.sendCode');
@@ -153,4 +154,16 @@ Route::resource('users', UserController::class)->only(['store','update','destroy
 // Route::controller(ProfileController::class)->group(function () {
 //     Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
 // });
+
 Route::singleton('profile', ProfileController::class);
+
+Route::resource('favorites', FavoriteController::class)->only(['index']);
+
+Route::resource('settlements', SettlementController::class)->only(['index']);
+
+Route::get('security-privacy/index',function () {
+    return view('sections.profile.index',[
+        'profile' => Auth::user()->profile,
+        'section' => 'security-privacy'
+    ]);
+})->name('securityPrivacy');
