@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PhoneNumber extends Model
+class ContactInformation extends Model
 {
     use HasFactory;
-
     public function profile():BelongsTo
     {
         return $this->belongsTo(Profile::class);

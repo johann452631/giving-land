@@ -27,12 +27,12 @@ class Profile extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function phoneNumbers():HasMany
+    public function contactInformation():HasMany
     {
-        return $this->hasMany(PhoneNumber::class);
+        return $this->hasMany(ContactInformation::class);
     }
 
-    public function social_media():BelongsToMany
+    public function socialMedia():BelongsToMany
     {
         return $this->belongsToMany(SocialMedia::class);
     }

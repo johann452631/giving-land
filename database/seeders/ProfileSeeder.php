@@ -36,7 +36,7 @@ class ProfileSeeder extends Seeder
             ]);
 
             foreach ($socialMediaAll->random(4) as $socialMedia) {
-                $profile->social_media()->attach($socialMedia->id);
+                $profile->socialMedia()->attach($socialMedia->id);
             }
         }
     }

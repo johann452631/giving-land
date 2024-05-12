@@ -15,7 +15,7 @@
                 <h2>Información de contacto</h2>
                 <ul class="flex flex-wrap">
                     @foreach ($socialMedia as $element)
-                        <a class="mr-6" href="#"><img class="size-8"
+                        <a class="mr-6" href="{{$element->url}}" target="_blank"><img class="size-8"
                                 src="{{ asset('socialmediaicons/' . $element->image->url) }}" alt=""></a>
                     @endforeach
                 </ul>

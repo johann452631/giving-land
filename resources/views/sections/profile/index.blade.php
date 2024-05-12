@@ -4,8 +4,13 @@
     @endPushOnce
 
     <x-navigation-header />
+    <div class="contenido-main screen-size">
+        <livewire:profile-nav/>
+        <livewire:profile-section/>
+        <x-publicidad-lateral />
+    </div>
 
-    <x-profile-index :$profile>
+    {{-- <x-profile-index :$profile>
         @switch($section)
             @case('profile')
                 @pushOnce('links')
@@ -39,6 +44,6 @@
             @default
         @endswitch
 
-    </x-profile-index>
+    </x-profile-index> --}}
 
 </x-html>

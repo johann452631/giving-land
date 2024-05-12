@@ -11,9 +11,13 @@ document.getElementById('inputImg').addEventListener('change', function () {
     }
 });
 
-document.getElementById('eliminarFoto').addEventListener('click', function () {
-    document.getElementById('popup').classList.remove('hidden');
-});
+const eliminarFotoButton = document.getElementById('eliminarFoto');
+
+if (eliminarFotoButton != null) {
+    eliminarFotoButton.addEventListener('click', function () {
+        document.getElementById('popup').classList.remove('hidden');
+    });
+}
 
 document.getElementById('popup').addEventListener('click', function (e) {
     if (e.target.id === 'popup' || e.target.classList.contains('cerrar-popup')) {

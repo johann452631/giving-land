@@ -30,6 +30,7 @@
 
     <script src={{ asset('js/global.js') }}></script>
     <script src="https://kit.fontawesome.com/0062b0aa7f.js" crossorigin="anonymous"></script>
+    @stack('scripts')
 </body>
 
 </html>

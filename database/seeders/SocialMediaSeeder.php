@@ -15,17 +15,32 @@ class SocialMediaSeeder extends Seeder
     public function run(): void
     {
         SocialMedia::insert([
-            ['name' => 'facebook'],
-            ['name' => 'instagram'],
-            ['name' => 'linkedin'],
-            ['name' => 'whatsapp'],
-            ['name' => 'x-twitter'],
+            [
+                'name' => 'facebook',
+                'url' => 'https://www.facebook.com/'
+            ],
+            [
+                'name' => 'instagram',
+                'url' => 'https://www.instagram.com/'
+            ],
+            [
+                'name' => 'linkedin',
+                'url' => 'https://co.linkedin.com/'
+            ],
+            [
+                'name' => 'whatsapp',
+                'url' => 'https://www.whatsapp.com/'
+            ],
+            [
+                'name' => 'x-twitter',
+                'url' => 'https://twitter.com/'
+            ],
         ]);
 
         $socialMedia = SocialMedia::all();
         foreach ($socialMedia as $element) {
             Image::create([
-                'url' => $element->name.'.svg',
+                'url' => $element->name . '.svg',
                 'imageable_id' => $element->id,
                 'imageable_type' => SocialMedia::class
             ]);
