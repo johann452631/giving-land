@@ -1,4 +1,4 @@
-document.getElementById('inputImg').addEventListener('change', function () {
+document.getElementById('inputImg').addEventListener('input', function () {
     var file = this.files[0];
     if (file) {
         var reader = new FileReader();
@@ -9,18 +9,5 @@ document.getElementById('inputImg').addEventListener('change', function () {
         };
         reader.readAsDataURL(file);
     }
-});
-
-const eliminarFotoButton = document.getElementById('eliminarFoto');
-
-if (eliminarFotoButton != null) {
-    eliminarFotoButton.addEventListener('click', function () {
-        document.getElementById('popup').classList.remove('hidden');
-    });
-}
-
-document.getElementById('popup').addEventListener('click', function (e) {
-    if (e.target.id === 'popup' || e.target.classList.contains('cerrar-popup')) {
-        document.getElementById('popup').classList.add('hidden');
-    }
+    document.getElementById('profileImgEdit').querySelector('button[type=submit]').disabled = false;
 });

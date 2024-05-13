@@ -32,7 +32,7 @@
         {{-- atenticado --}}
         <div class="navigation-header-options relative">
             @auth
-                <img class="navigation-header-user-img dropdown-button" id="userOptionsButton"
+                <img class="size-10 redondo cursor-pointer dropdown-button" id="userOptionsButton"
                     @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
                 @else
                 src="{{ $user->profile->image->url }}" alt="" @endif>

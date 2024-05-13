@@ -11,42 +11,31 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function show(){
+    public function show()
+    {
         return view('sections.profile.index');
     }
 
-    public function edit(){
-        return view('sections.profile.edit',[
+    public function edit()
+    {
+        return view('sections.profile.edit', [
             'profile' => Auth::user()->profile
         ]);
     }
 
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $profile = Auth::user()->profile;
-        if ($request->profile_img == null) {
-            $profile->update($request->except(['_token', '_method', 'profile_img']));
-        } else {
-            ($profile->image->url != 'default.svg') ? Storage::delete('public/users_profile_images/' . $profile->image->url) : '';
-            $img = $request->file('profile_img');
-            $imgName = time() . "_" . str_replace(" ", "_", $img->getClientOriginalName());
-            $profile->image->update([
-                'url' => $imgName
-            ]);
-            $img->storeAs('public/users_profile_images', $imgName);
+        if ($profile->image->url != 'default.svg') {
+            Storage::delete('public/users_profile_images/' . $profile->image->url);
         }
-        Utility::sendAlert('success', 'Se actualizaron los datos');
-        return to_route('profile.show');
-    }
-
-    public function deletePhoto(){
-        $profile = Auth::user()->profile;
-        Storage::delete('public/user_profile_images/'.$profile->image->url);
+        $img = $request->file('profile_img');
+        $imgName = time() . "_" . str_replace(" ", "_", $img->getClientOriginalName());
         $profile->image->update([
-            'url' => 'default.svg'
+            'url' => $imgName
         ]);
-
-        Utility::sendAlert('warning', 'Se eliminó tu foto de perfil');
-
-        return back();
+        $img->storeAs('public/users_profile_images', $imgName);
+        Utility::sendAlert('success', 'Se actualizó la foto de perfil');
+        return to_route('profile.edit');
     }
 }
