@@ -9,14 +9,14 @@
 
             <h2>{{ $profile->user->name }}</h2>
         </div>
-        @if (count($socialMedia))
+        @if (count($profile->socialMedia))
             <hr class="my-4">
             <div>
                 <h2>Información de contacto</h2>
                 <ul class="flex flex-wrap">
-                    @foreach ($socialMedia as $element)
-                        <a class="mr-6" href="{{$element->url}}" target="_blank"><img class="size-8"
-                                src="{{ asset('socialmediaicons/' . $element->image->url) }}" alt=""></a>
+                    @foreach ($profile->socialMedia as $item)
+                        <a class="mr-6" href="{{ $item->pivot->url }}" target="_blank"><img class="size-8"
+                                src="{{ asset('socialmediaicons/' . $item->image->url) }}" alt=""></a>
                     @endforeach
                 </ul>
             </div>
@@ -25,18 +25,13 @@
         <a href="{{ route('profile.edit') }}">Editar perfil</a>
     </div>
     <div class="posts my-4">
-        @if (!count($posts))
+        @if (!count($profile->user->posts))
             <p class="text-2xl font-bold">No has hecho ninguna publicación aún</p>
         @else
-            @foreach ($posts as $post)
+            @foreach ($profile->user->posts as $post)
                 <div class="flex mt-8 border-4">
                     <div class="flex overflow-x-auto scrollbar-hide">
                         @foreach ($post->images as $image)
-                            <div class="flex-none w-64 mx-2">
-                                <div class="border rounded-lg p-4 shadow-md">
-                                    <img src="{{ asset('/storage/posts_images/' . $image->url) }}" alt="">
-                                </div>
-                            </div>
                             <div class="flex-none w-64 mx-2">
                                 <div class="border rounded-lg p-4 shadow-md">
                                     <img src="{{ asset('/storage/posts_images/' . $image->url) }}" alt="">

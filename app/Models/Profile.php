@@ -34,6 +34,6 @@ class Profile extends Model
 
     public function socialMedia():BelongsToMany
     {
-        return $this->belongsToMany(SocialMedia::class);
+        return $this->belongsToMany(SocialMedia::class)->withPivot('url');
     }
 }

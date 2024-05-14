@@ -20,6 +20,7 @@ function cerrarDropdowns() {
     });
 }
 
+//Cerrar dropdown cuando se hace fuera de él o en el mismo botón
 window.addEventListener('click', event => {
     for (let index = 0; index < dropdownButtons.length; index++) {
         if(event.target != dropdownButtons[index]
@@ -31,22 +32,27 @@ window.addEventListener('click', event => {
     }
 });
 
+//Cerrar popup cuando se hace click fuera de él
 popups.forEach(element => {
-    element.addEventListener('click', function (e) {
-        if (e.target.classList.contains('popup')) {
-            e.target.classList.add('hidden');
+    element.addEventListener('click', (event) => {
+        if (event.target.classList.contains('popup')) {
+            event.target.classList.add('hidden');
         }
     });
 });
 
+function mostrarPopup(event) {
+    document.querySelector(event.target.getAttribute('data-show-popup')).classList.remove('hidden');
+}
+
+function cerrarPopup(event) {
+    document.querySelector(event.target.getAttribute('data-close-popup')).classList.add('hidden');
+}
+
 popupShowers.forEach(element => {
-    element.addEventListener('click',(event) => {
-        document.querySelector(event.target.getAttribute('data-show-popup')).classList.remove('hidden');
-    });
+    element.addEventListener('click',mostrarPopup);
 });
 
 popupClosers.forEach(element => {
-    element.addEventListener('click',(event) => {
-        document.querySelector(event.target.getAttribute('data-close-popup')).classList.add('hidden');
-    });
+    element.addEventListener('click',cerrarPopup);
 });

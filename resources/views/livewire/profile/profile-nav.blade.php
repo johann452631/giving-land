@@ -6,29 +6,17 @@
             });
         </script>
     @endPushOnce
-    <a class="inline-block boton-base verde-blanco" href="">Publicar artículo</a>
-    {{-- <ul class="flex flex-col mt-3">
-        <a class="hover-gris-claro p-2 rounded flex" href="{{route('profile.show')}}">
-            <img class="size-8"
-                    @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
-                    @else
-                    src="{{ $profile->image->url }}" alt="" @endif>
-            <p>{{$profile->user->name}}</p>
-        </a>
-        <a class="hover-gris-claro p-2 rounded" href="{{route('favorites.index')}}">Publicaciones guardadas</a>
-        <a class="hover-gris-claro p-2 rounded" href="{{route('settlements.index')}}">Historial de movimientos</a>
-        <a class="hover-gris-claro p-2 rounded" href="{{route('securityPrivacy')}}">Seguridad y privacidad</a>
-    </ul> --}}
-    <div>
+    <a class="inline-block boton-base verde-blanco mb-4" href="">Publicar artículo</a>
+    @if ($user->id == $profile->user->id)
         <div>
-            <input wire:model="section" wire:change="navigate" type="radio" value="profile" id="profile" name="section"
+            <input type="radio" wire:model="section" wire:change="navigate" value="profile" id="profile" name="section"
                 hidden />
             <label class="hover-gris-claro p-2 rounded flex items-center" for="profile">
-                <img class="size-8"
-                    @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
-                @else
-                src="{{ $profile->image->url }}" alt="" @endif>
-                <p>{{ $profile->user->name }}</p>
+                <img class="size-8 redondo"
+                    @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
+            @else
+            src="{{ $user->profile->image->url }}" alt="" @endif>
+                <p>{{ $user->name }}</p>
             </label>
         </div>
         <div>
@@ -46,5 +34,13 @@
                 id="security-privacy" name="section" hidden />
             <label class="hover-gris-claro p-2 rounded flex" for="security-privacy">Seguridad y privacidad</label>
         </div>
-    </div>
+    @else
+        <a class="hover-gris-claro p-2 rounded flex items-center" href="{{route('profile.show',$user->username)}}">
+            <img class="size-8 redondo"
+                @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
+            @else
+            src="{{ $user->profile->image->url }}" alt="" @endif>
+            <p>{{ $user->name }}</p>
+        </a>
+    @endif
 </div>

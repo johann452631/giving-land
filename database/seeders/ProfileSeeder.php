@@ -35,8 +35,11 @@ class ProfileSeeder extends Seeder
                 'imageable_type' => Profile::class
             ]);
 
-            foreach ($socialMediaAll->random(4) as $socialMedia) {
-                $profile->socialMedia()->attach($socialMedia->id);
+            foreach ($socialMediaAll->random(4) as $item) {
+                $profile->socialMedia()->attach($item->id,[
+                    'url' => 'https://laravel.com/',
+                    'created_at' => now()
+                ]);
             }
         }
     }

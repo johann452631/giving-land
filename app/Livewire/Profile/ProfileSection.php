@@ -9,31 +9,24 @@ use Livewire\Attributes\On;
 
 class ProfileSection extends Component
 {
-    public $user;
+    public $profile;
 
     #[Url]
     public $section = 'profile';
 
-    public function mount(){
-        $this->user = Auth::user();
-    }
-
     #[On('section-changed')]
     public function change($section){
+        if($section == 'profile'){
+            $this->profile = Auth::user()->profile;
+        }
         $this->section = $section;
         $this->render();
     }
 
     public function render()
     {
-        return view('livewire.profile.profile-section',($this->section != 'profile')?[
+        return view('livewire.profile.profile-section',[
             'section' => $this->section,
-            'user' => $this->user,
-        ]:[
-            'section' => $this->section,
-            'profile' => $this->user->profile,
-            'socialMedia' => $this->user->profile->socialMedia,
-            'posts' => $this->user->posts,
         ]);
     }
 }

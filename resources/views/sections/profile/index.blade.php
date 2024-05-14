@@ -5,8 +5,8 @@
 
     <x-navigation-header />
     <div class="contenido-main screen-size">
-        <livewire:profile.profile-nav/>
-        <livewire:profile.profile-section/>
+        <livewire:profile.profile-nav :$profile/>
+        <livewire:profile.profile-section :$profile/>
         <x-publicidad-lateral />
     </div>
 

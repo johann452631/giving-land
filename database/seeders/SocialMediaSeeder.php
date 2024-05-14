@@ -17,23 +17,18 @@ class SocialMediaSeeder extends Seeder
         SocialMedia::insert([
             [
                 'name' => 'facebook',
-                'url' => 'https://www.facebook.com/'
             ],
             [
                 'name' => 'instagram',
-                'url' => 'https://www.instagram.com/'
             ],
             [
                 'name' => 'linkedin',
-                'url' => 'https://co.linkedin.com/'
             ],
             [
                 'name' => 'whatsapp',
-                'url' => 'https://www.whatsapp.com/'
             ],
             [
                 'name' => 'x-twitter',
-                'url' => 'https://twitter.com/'
             ],
         ]);
 

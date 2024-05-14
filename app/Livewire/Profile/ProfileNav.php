@@ -10,12 +10,12 @@ class ProfileNav extends Component
 {
     public $profile;
 
-    public function mount(){
-        $this->profile = Auth::user()->profile;
-    }
-
     #[Url]
-    public $section = 'profile';
+    public $section;
+
+    function mount(){
+        $this->section = ($this->profile->user->id == Auth::user()->id)?'profile':null;
+    }
 
     public function navigate(){
         $this->dispatch('section-changed',section: $this->section);
@@ -24,6 +24,8 @@ class ProfileNav extends Component
 
     public function render()
     {
-        return view('livewire.profile.profile-nav');
+        return view('livewire.profile.profile-nav',[
+            'user' => Auth::user()
+        ]);
     }
 }

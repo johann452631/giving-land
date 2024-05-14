@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profile_social_media', function (Blueprint $table) {
-            $table->foreignId('profile_id')->constrained()->onDelete('cascade');
-            $table->foreignId('social_media_id')->constrained()->onDelete('cascade');
+            $table->foreignId('profile_id')->constrained();
+            $table->foreignId('social_media_id')->constrained();
+            $table->string('url');
+            $table->unique([
+                'profile_id',
+                'social_media_id'
+            ]);
+
             $table->timestamps();
         });
     }

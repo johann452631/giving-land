@@ -154,8 +154,9 @@ Route::resource('users', UserController::class)->only(['store','update','destroy
 // Route::controller(ProfileController::class)->group(function () {
 //     Route::put('/profile/delete-photo/{id}', 'deletePhoto')->name('profile.deletePhoto');
 // });
+Route::get('{username}', [ProfileController::class,'show'])->name('profile.show');
 
-Route::singleton('profile', ProfileController::class);
+Route::singleton('profile', ProfileController::class)->except('show');
 
 Route::resource('favorites', FavoriteController::class)->only(['index']);
 

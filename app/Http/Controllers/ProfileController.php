@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\Profile;
 use App\Models\User;
 use App\MyOwn\classes\Utility;
 use Illuminate\Http\Request;
@@ -11,9 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    public function show()
+    public function show($username)
     {
-        return view('sections.profile.index');
+        $profile = User::where('username',$username)->first()->profile;
+        return view('sections.profile.index',compact('profile'));
     }
 
     public function edit()

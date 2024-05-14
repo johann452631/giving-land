@@ -18,7 +18,8 @@ class ImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'url' => fake()->image('public/storage/posts_images',600,600,null,false),
+            // 'url' => fake()->image('public/storage/posts_images',100,100,null,false),
+            'url' => 'articulo_'.rand(1,5).'.jpg'
         ];
     }
 }
