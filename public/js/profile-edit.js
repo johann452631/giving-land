@@ -19,15 +19,15 @@ document.querySelectorAll('[data-select-social-media]').forEach(element => {
 });
 
 function inputWhatsapp(event) {
-    let div = document.querySelector(event.target.getAttribute('data-select-social-media'));
-    div.style.display = 'block';
-    div.querySelector('label').textContent = (event.target.value == 4) ? "Ingresa el número" : "Link de perfil";
-    div.querySelector('input').form.querySelector('button[type="submit"]').disabled = false;
+    // let div = document.querySelector(event.target.getAttribute('data-select-social-media'));
+    // div.classList.remove('hidden');
+    // div.querySelector('label').textContent = (event.target.value == 4) ? "Número:" : "Link de perfil:";
+    // document.getElementById('enviar_editar_crear').disabled = false;
 }
 
 //Editar social media
-document.querySelectorAll('.input-edit-social-media').forEach(element => {
-    element.addEventListener('input', (event) => {
-        event.target.form.querySelector('button[type="submit"]').disabled = false;
-    });
-});
+// document.querySelectorAll('.input-edit-social-media').forEach(element => {
+//     element.addEventListener('input', (event) => {
+//         event.target.form.querySelector('button[type="submit"]').disabled = false;
+//     });
+// });

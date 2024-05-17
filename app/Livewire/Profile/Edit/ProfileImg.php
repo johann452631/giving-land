@@ -10,7 +10,22 @@ class ProfileImg extends Component
 {
     public $profile;
 
-    public function deletePhoto(){
+    public $editDisplayed = false;
+
+    public $deleteDisplayed = false;
+
+    public function edit()
+    {
+        $this->editDisplayed = true;
+    }
+
+    public function dialogDeletePhoto()
+    {
+        $this->deleteDisplayed = true;
+    }
+
+    public function deletePhoto()
+    {
         Storage::delete('public/users_profile_images/' . $this->profile->image->url);
         $this->profile->image->update([
             'url' => 'default.svg'
@@ -23,6 +38,7 @@ class ProfileImg extends Component
 
     public function render()
     {
+        // $this->editDisplayed = false;
         return view('livewire.profile.edit.profile-img');
     }
 }

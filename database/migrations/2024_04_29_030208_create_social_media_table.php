@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\SocialMedia;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,24 @@ return new class extends Migration
             $table->id();
             $table->string('name',45);
         });
+
+        SocialMedia::insert([
+            [
+                'name' => 'facebook',
+            ],
+            [
+                'name' => 'instagram',
+            ],
+            [
+                'name' => 'linkedin',
+            ],
+            [
+                'name' => 'whatsapp',
+            ],
+            [
+                'name' => 'x-twitter',
+            ],
+        ]);
     }
 
     /**

@@ -1,9 +1,9 @@
 <div>
     {{-- Popup editar foto de perfil --}}
-    <x-popup class="max-w-sm" id="profile_img_edit">
+    <x-popup-livewire max-width="sm" id="profile_img_edit" wire:model='editDisplayed'>
         <x-form rutaSiguiente="profile.update" metodo="PUT" class="rounded py-8 px-2 flex flex-col items-center"
             enctype="multipart/form-data">
-            <img class="size-32 redondo mb-6 mx-auto"
+            <img class="size-40 redondo mb-6 mx-auto"
                 @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                 @else
                 src="{{ $profile->image->url }}" alt="" @endif
@@ -16,21 +16,21 @@
             <div class="mt-4 min-w-16 flex flex-between">
                 <button class="boton-base verde-blanco disabled:opacity-75 mr-6" type="submit"
                     disabled>Guardar</button>
-                <button class="boton-base bg-gray-500 text-white" wire:click="$refresh" type="reset"
-                    data-close-popup="#profile_img_edit">Cancelar</button>
+                <button class="boton-base bg-gray-500 text-white" type="reset"
+                x-on:click="show = false">Cancelar</button>
             </div>
         </x-form>
-    </x-popup>
+    </x-popup-livewire>
 
     {{-- Popup eliminar foto de perfil --}}
-    <x-popup class="max-w-sm" id="profile_img_delete">
+    <x-popup-livewire max-width="sm" id="profile_img_delete" wire:model='deleteDisplayed'>
         <form class="bg-gris-claro rounded-lg p-8" wire:submit="deletePhoto">
-            <p class="mb-3 text-lg">¿Deseas eliminar tu foto de perfil?</p>
+            <p class="mb-3 text-lg">¿Estás segura/o de eliminar tu foto de perfil?</p>
             <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
             <button type="button" class="boton-base bg-gris text-white"
-                data-close-popup="#profile_img_delete">Cancelar</button>
+            x-on:click="show = false">Cancelar</button>
         </form>
-    </x-popup>
+    </x-popup-livewire>
 
     <div>
         <p class="texto-verde mb-2 text-lg">Imagen de perfil:</p>
@@ -41,10 +41,10 @@
                 src="{{ $profile->image->url }}" alt="" @endif>
             <div>
                 <i class="p-2 rounded cursor-pointer bg-yellow-300 mr-4 fa-solid fa-pen"
-                    data-show-popup="#profile_img_edit"></i>
+                    wire:click='edit'></i>
                 @if ($profile->image->url != 'default.svg')
                     <i class="p-2 rounded cursor-pointer bg-red-500 fa-solid fa-trash"
-                        data-show-popup="#profile_img_delete"></i>
+                    wire:click='dialogDeletePhoto'></i>
                 @endif
             </div>
         </div>

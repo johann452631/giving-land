@@ -6,6 +6,7 @@ use App\Models\Image;
 use App\Models\SocialMedia;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class SocialMediaSeeder extends Seeder
 {
@@ -14,24 +15,7 @@ class SocialMediaSeeder extends Seeder
      */
     public function run(): void
     {
-        SocialMedia::insert([
-            [
-                'name' => 'facebook',
-            ],
-            [
-                'name' => 'instagram',
-            ],
-            [
-                'name' => 'linkedin',
-            ],
-            [
-                'name' => 'whatsapp',
-            ],
-            [
-                'name' => 'x-twitter',
-            ],
-        ]);
-
+        // $files = Storage::allFiles('')
         $socialMedia = SocialMedia::all();
         foreach ($socialMedia as $element) {
             Image::create([
