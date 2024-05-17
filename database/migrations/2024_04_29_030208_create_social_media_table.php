@@ -19,6 +19,9 @@ return new class extends Migration
 
         SocialMedia::insert([
             [
+                'name' => 'whatsapp',
+            ],
+            [
                 'name' => 'facebook',
             ],
             [
@@ -28,11 +31,8 @@ return new class extends Migration
                 'name' => 'linkedin',
             ],
             [
-                'name' => 'whatsapp',
-            ],
-            [
                 'name' => 'x-twitter',
-            ],
+            ]
         ]);
     }
 

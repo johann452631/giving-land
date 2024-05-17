@@ -14,16 +14,6 @@ class PostSeeder extends Seeder
      */
     public function run(): void
     {
-        $posts = Post::factory()->count(20)->create();
-        foreach ($posts as $post) {
-            $limit = rand(1,5);
-            for ($i=0; $i < $limit; $i++) { 
-                $image = Image::factory()->create([
-                    'imageable_id' => $post->id,
-                    'imageable_type' => Post::class
-                ]);
-                Storage::copy('default/posts_images/'.$image->url, 'public/posts_images/'.$image->url);
-            }
-        }
+        Post::factory()->count(50)->create();
     }
 }

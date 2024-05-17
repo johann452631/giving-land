@@ -19,27 +19,15 @@ class ProfileSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            Profile::create([
+            $profile = Profile::create([
                 'user_id' => $user->id
             ]);
-        }
-
-        $socialMediaAll = SocialMedia::all();
-
-        $profiles = Profile::all();
-
-        foreach ($profiles as $profile) {
-            Image::create([
-                'url' => 'default.svg',
-                'imageable_id' => $profile->id,
-                'imageable_type' => Profile::class
-            ]);
-
-            foreach ($socialMediaAll->random(4) as $item) {
-                $profile->socialMedia()->attach($item->id,[
-                    'url' => 'https://laravel.com/',
-                    'created_at' => now()
-                ]);
+            $socialMedia = SocialMedia::all()->random(rand(1,5));
+            foreach ($socialMedia as $item) {
+                // $profile->socialMedia()->attach($item->id,[
+                //     'created_at' => now()
+                // ]);
+                $profile->socialMedia()->attach($item->id);
             }
         }
     }

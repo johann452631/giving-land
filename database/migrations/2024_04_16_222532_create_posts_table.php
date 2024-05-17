@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Storage::deleteDirectory('public/posts_images');
-        Storage::makeDirectory('public/posts_images');
+        
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('name',45);
+            $table->string('name',100);
             $table->enum('purpose',['Donación','Intercambio']);
             $table->string('description');
             $table->string('location',45);
