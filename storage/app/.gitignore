@@ -1,6 +1,6 @@
 *
 !default/
-!default/posts_images
-!default/socialmediaicons
+!default/posts_images/
+!default/socialmediaicons/
 !public/
 !.gitignore
