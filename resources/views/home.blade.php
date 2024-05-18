@@ -1,4 +1,4 @@
-<x-html>
+<x-html titulo-pagina="Giving Land">
     @pushOnce('links')
         <link rel="stylesheet" href={{ asset('css/home.css') }}>
         @auth

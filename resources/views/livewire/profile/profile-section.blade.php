@@ -5,7 +5,7 @@
         @break
 
         @case('favorites')
-            <div>publicaciones guardadas</div>
+            <div>publicaciones guardadas {{$profile->user->name}}</div>
         @break
 
         @case('settlements-history')

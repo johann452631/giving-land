@@ -1,6 +1,6 @@
 <x-html>
-    <x-header />
-    <div class="px-4 pt-10">
+    <x-auth-header />
+    <div class="h-screen pt-16 grid place-items-center px-4">
         <x-form :ruta-siguiente="$rutaSiguiente" class="auth-form shadow shadow-gray-400">
             <h2 class="text-center texto-verde text-3xl mb-6">Restablecimiento de contraseña</h2>
 

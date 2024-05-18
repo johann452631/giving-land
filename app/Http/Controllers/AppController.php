@@ -4,27 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\Product;
 use App\MyOwn\classes\Utility;
 use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
-    public function init(?string $category = null){
+    public function home(?string $category = null){
         $posts= isset($category) ? Category::where('name',$category)->first()->posts : Post::all();
         return view('home',[
             'categories' => Category::all(),
             'posts'=> $posts,
-            'user' => Auth::user(),
-            'tituloPagina' => 'Giving-Land'
-        ]);
-    }
-
-    public function settings()
-    {
-        return view('sections.authentication.navigationsections',[
-            'titulo' => 'Configuración',
-            'yield' => 'settings'
         ]);
     }
 

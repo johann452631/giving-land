@@ -20,15 +20,15 @@ class SignupController extends Controller
     {
         session(['token' => bin2hex(random_bytes(16))]);
         return view('sections.signup.index', [
-            'content' => 'email',
             'rutaSiguiente' => 'signup.sendCode',
+            'content' => 'email',
             'token' => session('token')
         ]);
     }
 
     public function sendCode(NewEmailRequest $request)
     {
-        session(['hashed' => CodeValidationController::sendCode($request->email)]);
+        session(['hashed' => Utility::sendVerificationCode($request->email)]);
         return to_route('signup.codeForm', $request->only(['email', 'token']));
     }
 
@@ -40,6 +40,7 @@ class SignupController extends Controller
             'request' => $request,
         ]);
     }
+
     public function verifyCode(Request $request)
     {
         $inputCode = strtoupper(implode("", $request->except(['_token', 'token', 'email'])));

@@ -1,9 +1,9 @@
-<x-html>
-    <x-header class="p-3 flex justify-between items-center">
+<x-html titulo-pagina="Giving Land - Login">
+    <x-auth-header class="flex justify-between items-center">
         <a class="boton-base verde-blanco" href="{{ route('signup.index') }}">Registro</a>
-    </x-header>
+    </x-auth-header>
 
-    <div class="px-4 pt-10">
+    <div class="h-screen pt-16 grid place-items-center px-4">
         <x-form ruta-siguiente="login.authenticate" class="auth-form shadow shadow-gray-400">
             <h2 class="text-center texto-verde text-3xl mb-6">Inicio de sesión</h2>
 

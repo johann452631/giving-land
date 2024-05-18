@@ -36,7 +36,7 @@ class ResetPasswordController extends Controller
 
     public function sendCode(EmailResetPasswordRequest $request)
     {
-        session(['hashed' => CodeValidationController::sendCode($request->email)]);
+        session(['hashed' => Utility::sendVerificationCode($request->email)]);
         return to_route('resetPassword.codeForm', $request->only(['email', 'token']));
     }
 
