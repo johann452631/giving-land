@@ -13,10 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Storage::deleteDirectory('public/users_profile_images');
-        Storage::copy('default/user-solid.svg', 'public/users_profile_images/default.svg');
+        
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->unique()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

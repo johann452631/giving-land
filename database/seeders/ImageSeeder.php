@@ -19,27 +19,20 @@ class ImageSeeder extends Seeder
         $profiles = Profile::all();
 
         foreach ($profiles as $profile) {
-            Image::create([
-                'url' => 'default.svg',
-                'imageable_id' => $profile->id,
-                'imageable_type' => Profile::class
-            ]);
+            $profile->image()->save(Image::create(['url' => 'default.svg',]));
         }
 
         $posts = Post::all();
 
-        $defaultFiles = array_map('basename',Storage::files('default/posts_images'));
+        $filesNames = array_map('basename', Storage::files('default/posts_images'));
 
         foreach ($posts as $post) {
-            $limit = rand(1,5);
-            for ($i=0; $i < $limit; $i++) {
-                $defaultFile = $defaultFiles[array_rand($defaultFiles)];
-                $image = Image::create([
-                    'url' => str_replace(" ","_",strtolower(microtime()))."_".$defaultFile,
-                    'imageable_id' => $post->id,
-                    'imageable_type' => Post::class
-                ]);
-                Storage::copy('default/posts_images/'.$defaultFile, 'public/posts_images/'.$image->url);
+            $limit = rand(1, 5);
+            for ($i = 0; $i < $limit; $i++) {
+                $fileName = $filesNames[array_rand($filesNames)];
+                $image = Image::create(['url' => str_replace(" ", "_", strtolower(microtime())) . "_" . $fileName]);
+                $post->images()->save($image);
+                Storage::copy('default/posts_images/' . $fileName, 'public/posts_images/' . $image->url);
             }
         }
     }

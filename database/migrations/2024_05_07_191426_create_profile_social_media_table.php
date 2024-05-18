@@ -20,7 +20,7 @@ return new class extends Migration
                 'social_media_id'
             ]);
 
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

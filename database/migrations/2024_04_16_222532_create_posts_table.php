@@ -19,12 +19,12 @@ return new class extends Migration
             $table->string('name',100);
             $table->enum('purpose',['Donación','Intercambio']);
             $table->string('description');
-            $table->string('location',45);
+            $table->string('location',80);
             $table->boolean('draft')->default(1);
             $table->boolean('reported')->default(0);
             $table->boolean('banned')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('category_id')->constrained();
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

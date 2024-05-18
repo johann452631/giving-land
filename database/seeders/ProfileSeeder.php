@@ -19,15 +19,10 @@ class ProfileSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            $profile = Profile::create([
-                'user_id' => $user->id
-            ]);
+            $user->profile()->save(Profile::create());
             $socialMedia = SocialMedia::all()->random(rand(1,5));
             foreach ($socialMedia as $item) {
-                // $profile->socialMedia()->attach($item->id,[
-                //     'created_at' => now()
-                // ]);
-                $profile->socialMedia()->attach($item->id);
+                $user->profile->socialMedia()->attach($item->id);
             }
         }
     }
