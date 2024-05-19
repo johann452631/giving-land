@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Livewire\Profile;
+
+use App\Models\Profile;
 use Livewire\Attributes\Url;
 
 use Illuminate\Support\Facades\Auth;
@@ -8,23 +10,17 @@ use Livewire\Component;
 
 class ProfileNav extends Component
 {
-    public $profile;
-
-    #[Url]
+    // #[Url]
+    // public $user;
     public $section;
-
-    function mount(){
-        $this->section = ($this->profile->user->id == Auth::user()->id)?'profile':null;
-    }
-
-    public function navigate(){
-        $this->dispatch('section-changed',section: $this->section);
-        $this->dispatch('resetScroll');
+    function mount($profile, $section)
+    {
+        $this->section = ($profile->user->id == Auth::user()->id) ? $section : null;
     }
 
     public function render()
     {
-        return view('livewire.profile.profile-nav',[
+        return view('livewire.profile.profile-nav', [
             'user' => Auth::user()
         ]);
     }

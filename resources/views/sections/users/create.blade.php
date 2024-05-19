@@ -1,5 +1,5 @@
 <x-html>
-    <x-auth-header />
+    <x-simple-header />
 
     <div class="h-screen pt-16 grid place-items-center px-4">
         <x-form ruta-siguiente="users.store" class="auth-form shadow shadow-gray-400">

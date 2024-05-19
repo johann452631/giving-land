@@ -8,8 +8,8 @@
             <link rel="stylesheet" href={{ asset('css/guest-home.css') }}>
         @endguest
     @endPushOnce
-
-    <x-navigation-header />
+    <x-header/>
+    {{-- <x-simple-header/> --}}
 
     {{-- main --}}
     <div class="contenido-main screen-size">
@@ -38,6 +38,7 @@
         {{-- posts --}}
         <div class="articulos" id="divArticulos">
             <div class="info-main w-full m-2 rounded"></div>
+            {{-- <div>{{dd(request()->routeIs('posts'))}}</div> --}}
             @foreach ($posts as $post)
                 <div class="tarjeta bg-gris-claro">
                     <div class="foto-tarjeta bg-gris">

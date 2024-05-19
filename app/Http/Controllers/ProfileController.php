@@ -15,7 +15,10 @@ class ProfileController extends Controller
     public function show($username)
     {
         $profile = User::where('username',$username)->first()->profile;
-        return view('sections.profile.index',compact('profile'));
+        return view('sections.profile.index',[
+            'profile' => $profile,
+            'section' => 'profile'
+        ]);
     }
 
     public function edit()
@@ -39,5 +42,13 @@ class ProfileController extends Controller
         $img->storeAs('public/users_profile_images', $imgName);
         Utility::sendAlert('success', 'Se actualizó la foto de perfil');
         return to_route('profile.edit');
+    }
+
+    public function goToSection($username,$section){
+        if(Auth::user()->username !=$username){
+            return to_route('profile.show',Auth::user()->username);
+        }
+        $profile = Auth::user()->profile;
+        return view('sections.profile.index',compact('section','profile'));
     }
 }

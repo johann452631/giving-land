@@ -144,10 +144,12 @@ Route::resource('users', UserController::class)->only(['store','update','destroy
 //     Route::get('/users/{username}/edit-email/code-form', 'codeForm')->name('changeEmail.codeForm');
 //     Route::get('/users/edit-email/change', 'change')->name('changeEmail.change');
 // });
+Route::singleton('profile', ProfileController::class)->except('show');
 
 Route::get('{username}', [ProfileController::class,'show'])->name('profile.show');
 
-Route::singleton('profile', ProfileController::class)->except('show');
+Route::get('{username}/{section}', [ProfileController::class,'goToSection'])->name('profile.section');
+
 
 // Route::resource('favorites', FavoriteController::class)->only(['index']);
 

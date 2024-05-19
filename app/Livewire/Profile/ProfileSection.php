@@ -11,16 +11,14 @@ class ProfileSection extends Component
 {
     public $profile;
 
-    #[Url]
+    // #[Url]
     public $section = 'profile';
 
     #[On('section-changed')]
     public function change($section){
-        if($section == 'profile'){
-            $this->profile = Auth::user()->profile;
-        }
+        // $this->profile = Auth::user()->profile;
         $this->section = $section;
-        $this->render();
+        // $this->render();
     }
 
     public function render()
