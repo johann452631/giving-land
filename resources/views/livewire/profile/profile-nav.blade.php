@@ -1,7 +1,7 @@
 <div class="menu-opciones-lateral">
     <a class="inline-block boton-base verde-blanco mb-4" href="">Publicar artículo</a>
     <div class="flex flex-col">
-        <a @class([
+        <a wire:navigate @class([
             'hover-gris-claro p-2 rounded flex items-center',
             'border-l-4 border-green-700' => $section == 'profile',
         ]) href="{{ route('profile.show', $user->username) }}" >
@@ -12,7 +12,7 @@
             <p>{{ $user->name }}</p>
         </a>
         @isset($section)
-            <a @class([
+            <a wire:navigate @class([
                 'hover-gris-claro p-2 rounded flex items-center',
                 'border-l-4 border-green-700' => $section == 'favorites',
             ])
@@ -24,7 +24,7 @@
                 Favoritos
             </a>
 
-            <a @class([
+            <a wire:navigate @class([
                 'hover-gris-claro p-2 rounded flex items-center',
                 'border-l-4 border-green-700' => $section == 'settlements-history',
             ])

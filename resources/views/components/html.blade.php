@@ -11,11 +11,12 @@
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
     <link rel="icon" type="image/svg+xml" href="{{ asset('appicons/logo-sm.svg') }}">
     @stack('links')
+    <script src={{ asset('js/global.js') }}></script>
 </head>
 
 <body>
     @session('alert')
-        <x-alert :type="$value['type']" :message="$value['message']" id="divAlert"/>
+        <x-alert :type="$value['type']" :message="$value['message']" id="divAlert" />
         <script>
             divAlert = document.getElementById('divAlert');
             setTimeout(() => {
@@ -25,12 +26,11 @@
     @endsession
 
     {{ $slot }}
-    
+
     @livewireScripts
 
-    <script src={{ asset('js/global.js') }}></script>
-    <script src="https://kit.fontawesome.com/0062b0aa7f.js" crossorigin="anonymous"></script>
     @stack('scripts')
+    <script src="https://kit.fontawesome.com/0062b0aa7f.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

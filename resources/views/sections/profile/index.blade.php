@@ -3,10 +3,13 @@
         <link rel="stylesheet" href="{{ asset('css/profile-index.css') }}">
     @endPushOnce
 
-    <x-navigation-header />
+    @persist('player')
+        <x-header />
+    @endpersist
+
     <div class="contenido-main screen-size">
         {{-- <livewire:profile.profile-section /> --}}
-        <livewire:profile.profile-nav :$profile :$section/>
+        <livewire:profile.profile-nav :$profile :$section />
         <div>
             @switch($section)
                 @case('favorites')
@@ -28,8 +31,7 @@
                 @break
 
                 @default
-                @include('sections.profile.show')
-
+                    @include('sections.profile.show')
             @endswitch
         </div>
         <x-publicidad-lateral />

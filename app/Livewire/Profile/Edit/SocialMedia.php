@@ -5,13 +5,14 @@ namespace App\Livewire\Profile\Edit;
 use App\Models\Profile;
 use App\Models\SocialMedia as ModelsSocialMedia;
 use App\MyOwn\classes\Utility;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Validate;
 
 class SocialMedia extends Component
 {
-    public $profile, $socialMedia, $item, $editOrCreateDisplayed, $deleteDisplayed, $divInputDisplayed, $whatsappSelected, $id;
+    public $profile, $socialMedia, $item, $editUrl, $editDisplayed, $createDisplayed, $deleteDisplayed, $whatsappSelected, $id;
 
     #[Validate('required')]
     public $url;
@@ -22,33 +23,33 @@ class SocialMedia extends Component
 
     public function mount()
     {
+        $this->profile = Auth::user()->profile;
         $this->socialMedia = ModelsSocialMedia::all();
+        // dd(count($this->profile->socialMedia));
         $this->item = null;
-        $this->editOrCreateDisplayed = $this->deleteDisplayed = $this->divInputDisplayed = $this->whatsappSelected = false;
+        $this->editDisplayed = $this->createDisplayed = $this->deleteDisplayed = $this->whatsappSelected = false;
         $this->id = '0';
         $this->url = $this->number = '';
     }
 
-    public function onChangeSelect()
-    {
-        $this->divInputDisplayed = true;
-        $this->url = '';
-        $this->number = '';
-        $this->resetValidation();
-        // $this->render();
+    public function create(){
+        $this->editDisplayed = false;
+        $this->deleteDisplayed = false;
+        $this->createDisplayed = true;
     }
 
-    public function editOrCreate($item = null)
+    public function edit($item)
     {
         // dd($item);
-        $this->item = $item;
+        $this->createDisplayed = false;
         $this->deleteDisplayed = false;
-        if ($item !== null) {
-            $this->divInputDisplayed = true;
-            $this->id = $item['id'];
-            $this->url = $item['pivot']['url'];
-        }
-        $this->editOrCreateDisplayed = true;
+        $this->id = $item['id'];
+        $this->url = $item['pivot']['url'];
+        $this->editDisplayed = true;
+    }
+
+    public function update(){
+
     }
 
 

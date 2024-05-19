@@ -23,7 +23,7 @@ class ProfileController extends Controller
 
     public function edit()
     {
-        return view('sections.profile.edit', [
+        return view('sections.profile.edit',[
             'profile' => Auth::user()->profile
         ]);
     }

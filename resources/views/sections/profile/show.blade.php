@@ -21,8 +21,10 @@
                 </ul>
             </div>
         @endif
-        <hr class="my-4">
-        <a href="{{ route('profile.edit') }}">Editar perfil</a>
+        @owner($profile)
+            <hr class="my-4">
+            <a href="{{ route('profile.edit') }}">Editar perfil</a>
+        @endowner
     </div>
     <div class="posts my-4">
         @if (!count($profile->user->posts))

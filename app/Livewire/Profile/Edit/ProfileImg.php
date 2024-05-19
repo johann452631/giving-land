@@ -3,16 +3,19 @@
 namespace App\Livewire\Profile\Edit;
 
 use App\MyOwn\classes\Utility;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class ProfileImg extends Component
 {
-    public $profile;
+    public $profile, $editDisplayed, $deleteDisplayed;
 
-    public $editDisplayed = false;
 
-    public $deleteDisplayed = false;
+    public function mount(){
+        $this->profile = Auth::user()->profile;
+        $this->editDisplayed = $this->deleteDisplayed = false;
+    }
 
     public function edit()
     {
