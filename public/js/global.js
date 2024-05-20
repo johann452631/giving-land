@@ -14,7 +14,7 @@ window.addEventListener('load',()=>{
     });
     setTimeout(() => {
         document.querySelectorAll(".input-error").forEach(p => {
-            p.style.display = 'none';
+            p.remove();
         });
     }, 3500);
 });

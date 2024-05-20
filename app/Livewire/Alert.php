@@ -10,11 +10,17 @@ class Alert extends Component
 {
     public $displayed = false;
 
-    public string $type,$message,$bg , $borderColor, $textColor;
+    public string $type;
+    public string $message;
+    public string $bg;
+    public string $borderColor;
+    public string $textColor;
 
-    public function mount(){
-        $this->type = $this->message = $this->bg = $this->borderColor = $this->textColor = '';
-
+    #[On('alert-sent')]
+    public function display($type, $message)
+    {
+        $this->type = $type;
+        $this->message = $message;
         switch ($this->type) {
             case 'success':
                 $this->bg = 'bg-green-200';
@@ -37,23 +43,22 @@ class Alert extends Component
                 # code...
                 break;
         }
+        $this->displayed = true;
+        $this->dispatch('alert-shown');
     }
 
-    #[On('alert-sent')]
-    public function show(){
-        $this->displayed = true;
+    #[On('alert-shown')]
+    public function close()
+    {
+        sleep(2);
+        $this->displayed = false;
     }
 
     public function render()
     {
-        // return <<<'blade'
-        // <div @class(['fixed top-14 left-14 border-l-4 p-4 z-50 rounded {{$bg}} {{$borderColor}}', 'hidden' => !$displayed]) id="alert_livewire">
-        //     <p class="{{$textColor}}">{{$message}}</p>
-        // </div>
-        // blade;
         return <<<'blade'
-        <div @class(['fixed top-14 left-14 border-l-4 p-4 z-50 rounded', 'hidden' => !$displayed]) id="alert_livewire">
-            <p>junch</p>
+        <div @class(['fixed top-14 left-14 border-l-4 p-4 z-50 rounded '.$bg.' '.$borderColor, 'hidden' => !$displayed])>
+            <p class ="{{$textColor}}">{{$message}}</p>
         </div>
         blade;
     }

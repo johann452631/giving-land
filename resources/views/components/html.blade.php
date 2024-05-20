@@ -17,12 +17,6 @@
 <body>
     @session('alert')
         <x-alert :type="$value['type']" :message="$value['message']" id="divAlert" />
-        <script>
-            divAlert = document.getElementById('divAlert');
-            setTimeout(() => {
-                divAlert.remove();
-            }, 3500);
-        </script>
     @endsession
 
     {{ $slot }}

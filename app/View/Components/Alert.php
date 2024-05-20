@@ -47,9 +47,15 @@ class Alert extends Component
     public function render(): View|Closure|string
     {
         return <<<'blade'
-<div class="fixed top-14 left-14 border-l-4 p-4 z-50 rounded {{$bg}} {{$borderColor}}" {{$attributes}}>
-    <p class="{{$textColor}}">{{$message}}</p>
-</div>
-blade;
+        <div class="fixed top-14 left-14 border-l-4 p-4 z-50 rounded {{$bg}} {{$borderColor}}" {{$attributes}}>
+            <p class="{{$textColor}}">{{$message}}</p>
+        </div>
+        <script>
+            divAlert = document.getElementById('divAlert');
+            setTimeout(() => {
+                divAlert.remove();
+            }, 2000);
+        </script>
+        blade;
     }
 }

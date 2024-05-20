@@ -2,6 +2,8 @@
     @pushOnce('links')
         <link rel="stylesheet" href="{{ asset('css/profile-edit.css') }}">
     @endPushOnce
+
+    <livewire:alert />
     
     <x-header />
     <div class="contenido-main">

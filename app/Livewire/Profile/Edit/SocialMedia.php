@@ -12,44 +12,104 @@ use Livewire\Attributes\Validate;
 
 class SocialMedia extends Component
 {
-    public $profile, $socialMedia, $item, $editUrl, $editDisplayed, $createDisplayed, $deleteDisplayed, $whatsappSelected, $id;
+    public $profile;
+
+    public $socialMedia;
+    public $item;
 
     #[Validate('required')]
-    public $url;
+    public $editUrl;
 
-    #[Validate('required|numeric')]
-    public $number;
+    // #[Validate(
+    //     'required|numeric|digits:10',
+    //     message: [
+    //         'required' => 'El :attribute es requerido.',
+    //         'numeric' => 'Todo el campo debe ser numérico.',
+    //         'digits:10' => 'El :attribute debe contener :value dígitos.',
+    //     ],
+    //     attribute: [
+    //         'editNumber' => 'número',
+    //     ]
+    // )]
+    public $editNumber;
 
+    public $editIsWhatsapp;
+    public $initEditInput;
+    public $editInputChanged;
+    public $editDisplayed;
+    public $createDisplayed;
+    public $deleteDisplayed;
+    public $createSelectedSocialMedia;
+    public $createUrls;
 
     public function mount()
     {
         $this->profile = Auth::user()->profile;
         $this->socialMedia = ModelsSocialMedia::all();
-        // dd(count($this->profile->socialMedia));
-        $this->item = null;
-        $this->editDisplayed = $this->createDisplayed = $this->deleteDisplayed = $this->whatsappSelected = false;
-        $this->id = '0';
-        $this->url = $this->number = '';
+        $this->item;
+        $this->editUrl = '';
+        $this->editNumber = '';
+        $this->editIsWhatsapp = false;
+        $this->initEditInput = '';
+        $this->editInputChanged = false;
+        $this->editDisplayed = false;
+        $this->createDisplayed = false;
+        $this->deleteDisplayed = false;
+        $this->createSelectedSocialMedia = [];
+        $this->createUrls = [];
+        $this->resetValidation();
     }
 
-    public function create(){
+    public function create()
+    {
         $this->editDisplayed = false;
         $this->deleteDisplayed = false;
+        //codigo
         $this->createDisplayed = true;
     }
 
-    public function edit($item)
+    public function edit(ModelsSocialMedia $item)
     {
-        // dd($item);
-        $this->createDisplayed = false;
-        $this->deleteDisplayed = false;
-        $this->id = $item['id'];
-        $this->url = $item['pivot']['url'];
+        $this->mount();
+        $this->item = $this->profile->socialMedia()->find($item->id);
+        $this->initEditInput = $this->item->pivot->url;
+        $this->editIsWhatsapp = ($this->item->id == 1);
+        if ($this->editIsWhatsapp) {
+            $this->editNumber = str_replace('https://wa.me/57', '', $this->initEditInput);
+        } else {
+            $this->editUrl = $this->item->pivot->url;
+        }
         $this->editDisplayed = true;
     }
 
-    public function update(){
+    public function onEditInputChanged()
+    {
+        $this->editInputChanged = ($this->editIsWhatsapp) ? (str_replace('https://wa.me/57', '', $this->initEditInput) != $this->editNumber) : ($this->initEditInput != $this->editUrl);
+        $this->resetValidation();
+    }
 
+    public function update(ModelsSocialMedia $item)
+    {
+        if ($this->editIsWhatsapp) {
+            $this->validate(
+                [
+                    'editNumber' => 'required|numeric|digits:10'
+                ],
+                [
+                    'required' => 'El :attribute es requerido.',
+                    'numeric' => 'Todo el campo debe ser numérico.',
+                    'digits:10' => 'El :attribute debe contener :value dígitos.',
+                ],
+                [
+                    'editNumber' => 'número',
+                ]
+            );
+        }
+        $this->profile->socialMedia()->updateExistingPivot($item->id, [
+            'url' => ($this->editIsWhatsapp) ? 'https://wa.me/57' . $this->editNumber : $this->editUrl
+        ]);
+        $this->editDisplayed = false;
+        $this->dispatch('alert-sent', type: 'success', message: 'Se actualizó la red social');
     }
 
 
@@ -67,27 +127,28 @@ class SocialMedia extends Component
         } else {
             try {
                 $this->profile->socialMedia()->attach($this->id, [
-                    'url' => (empty($this->number)) ? $this->url : "https://wa.me/57". $this->number
+                    'url' => (empty($this->number)) ? $this->url : "https://wa.me/57" . $this->number
                 ]);
             } catch (\Illuminate\Database\UniqueConstraintViolationException $th) {
                 $this->render();
                 // dd($this->editOrCreateDisplayed);
             }
         }
-        $this->editOrCreateDisplayed = false;
+        // $this->editOrCreateDisplayed = false;
     }
 
 
-    public function dialogDestroy($item)
+    public function dialogDestroy(ModelsSocialMedia $item)
     {
-        $this->editOrCreateDisplayed = false;
+        // $this->editOrCreateDisplayed = false;
+        $this->mount();
         $this->deleteDisplayed = true;
         $this->item = $item;
     }
 
-    public function destroy($id)
+    public function destroy(ModelsSocialMedia $item)
     {
-        $this->profile->socialMedia()->detach($id);
+        $this->profile->socialMedia()->detach($item->id);
         $this->deleteDisplayed = false;
         // $this->mount();
         // $this->render();
