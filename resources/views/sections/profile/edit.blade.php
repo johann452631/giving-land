@@ -3,9 +3,10 @@
         <link rel="stylesheet" href="{{ asset('css/profile-edit.css') }}">
     @endPushOnce
 
-    <livewire:alert />
-    
+    {{-- Header --}}
     <x-header />
+
+    {{-- Main --}}
     <div class="contenido-main">
         <div class="bg-gris-claro rounded p-10 max-w-xl my-0 mx-auto">
             <livewire:profile.edit.profile-img />

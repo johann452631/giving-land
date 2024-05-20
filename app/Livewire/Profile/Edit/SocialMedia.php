@@ -13,39 +13,22 @@ use Livewire\Attributes\Validate;
 class SocialMedia extends Component
 {
     public $profile;
-
-    public $socialMedia;
     public $item;
-
-    #[Validate('required')]
     public $editUrl;
-
-    // #[Validate(
-    //     'required|numeric|digits:10',
-    //     message: [
-    //         'required' => 'El :attribute es requerido.',
-    //         'numeric' => 'Todo el campo debe ser numérico.',
-    //         'digits:10' => 'El :attribute debe contener :value dígitos.',
-    //     ],
-    //     attribute: [
-    //         'editNumber' => 'número',
-    //     ]
-    // )]
     public $editNumber;
-
     public $editIsWhatsapp;
     public $initEditInput;
     public $editInputChanged;
     public $editDisplayed;
-    public $createDisplayed;
-    public $deleteDisplayed;
+    public $createSocialMedia;
     public $createSelectedSocialMedia;
     public $createUrls;
+    public $createDisplayed;
+    public $deleteDisplayed;
 
     public function mount()
     {
         $this->profile = Auth::user()->profile;
-        $this->socialMedia = ModelsSocialMedia::all();
         $this->item;
         $this->editUrl = '';
         $this->editNumber = '';
@@ -53,18 +36,18 @@ class SocialMedia extends Component
         $this->initEditInput = '';
         $this->editInputChanged = false;
         $this->editDisplayed = false;
-        $this->createDisplayed = false;
-        $this->deleteDisplayed = false;
+        $this->createSocialMedia = ModelsSocialMedia::all()->diff($this->profile->socialMedia);
         $this->createSelectedSocialMedia = [];
         $this->createUrls = [];
+        $this->createDisplayed = false;
+        $this->deleteDisplayed = false;
         $this->resetValidation();
     }
 
     public function create()
     {
-        $this->editDisplayed = false;
-        $this->deleteDisplayed = false;
-        //codigo
+        $this->mount();
+        // dd($this->createSocialMedia);
         $this->createDisplayed = true;
     }
 
@@ -104,12 +87,22 @@ class SocialMedia extends Component
                     'editNumber' => 'número',
                 ]
             );
+        }else{
+            $this->validate(
+                [
+                    'editUrl' => 'required'
+                ],
+                [
+                    'required' => 'El link es requerido.',
+                ],
+            );
         }
         $this->profile->socialMedia()->updateExistingPivot($item->id, [
             'url' => ($this->editIsWhatsapp) ? 'https://wa.me/57' . $this->editNumber : $this->editUrl
         ]);
         $this->editDisplayed = false;
         $this->dispatch('alert-sent', type: 'success', message: 'Se actualizó la red social');
+        $this->mount();
     }
 
 
@@ -140,7 +133,6 @@ class SocialMedia extends Component
 
     public function dialogDestroy(ModelsSocialMedia $item)
     {
-        // $this->editOrCreateDisplayed = false;
         $this->mount();
         $this->deleteDisplayed = true;
         $this->item = $item;
@@ -150,8 +142,8 @@ class SocialMedia extends Component
     {
         $this->profile->socialMedia()->detach($item->id);
         $this->deleteDisplayed = false;
-        // $this->mount();
-        // $this->render();
+        $this->dispatch('alert-sent', type: 'warning', message: 'Se eliminó la red social');
+        $this->mount();
     }
 
     public function render()

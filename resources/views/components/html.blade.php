@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <livewire:alert />
     @session('alert')
         <x-alert :type="$value['type']" :message="$value['message']" id="divAlert" />
     @endsession

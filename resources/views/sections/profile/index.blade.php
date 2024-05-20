@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="{{ asset('css/profile-index.css') }}">
     @endPushOnce
 
-    @persist('player')
+    @persist('header')
         <x-header />
     @endpersist
 
