@@ -1,41 +1,51 @@
 <div class="container overflow-x-auto">
     {{-- Crear una red social --}}
-    @if (count($createSocialMedia))
-        <x-popup-livewire class="max-w-lg" id="crear_red_social" wire:model='createDisplayed'>
-            <form class="bg-gris-claro rounded-lg p-8" wire:submit='store'>
-                <h2 class="texto-verde text-3xl mb-6 text-center">
-                    Agregar red social
-                </h2>
-                <div>
-                    <ul class="flex flex-col gap-y-2">
-                        @foreach ($createSocialMedia as $profileItem)
-                            <li class="flex items-center">
-                                <input type="checkbox" id="createInput{{$profileItem->id}}">
-                                <label class="flex w-full" for="createInput{{$profileItem->id}}">
-                                    <img class="size-6"
-                                        src="{{ asset('socialmediaicons/' . $profileItem->image->url) }}"
-                                        alt="">
-                                    <input type="text" class="w-full">
-                                </label>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div>
-                    <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
-                        id="enviar_editar_crear">
-                        Agregar
-                    </button>
-                    <button type="button" class="boton-base bg-gris text-white"
-                        x-on:click="show = false">Cancelar</button>
-                </div>
-            </form>
-        </x-popup-livewire>
-    @endif
+    <x-popup-livewire max-width="xl" id="crear_red_social" wire:model='createDisplayed'>
+        <form class="bg-gris-claro rounded-lg p-8" wire:submit='store()'>
+            <h2 class="texto-verde text-3xl mb-6 text-center">
+                Agregar red social
+            </h2>
+            <select class="w-full outline-none bg-transparent text-xl" wire:model='createSelectedSocialMedia'
+                wire:input='onCreateSelectChanged'>
+                <option value="0" disabled>Seleccione una red social</option>
+                @foreach ($createSocialMedia as $element)
+                    <option value="{{ $element->id }}">{{ ucfirst($element->name) }}</option>
+                @endforeach
+            </select>
+            <div @class(['div-form-input mb-8','hidden' => $submitDisabled])>
+                <label class="texto-verde text-lg" for="input">
+                    @if ($inputIsNumber)
+                        Número:
+                    @else
+                        Link de perfil:
+                    @endif
+                </label>
+                @if ($inputIsNumber)
+                    <input class="w-full" class="w-full" wire:input='onCreateInputChanged' wire:model="inputNumber" inputmode="numeric" maxlength="10"
+                        type="text" id="input">
+                    @error('inputNumber')
+                        <p class="text-red-400">* {{ $message }}</p>
+                    @enderror
+                @else
+                    <input class="w-full" maxlength="255" wire:input='onCreateInputChanged' wire:model="inputUrl" type="text" id="input">
+                    @error('inputUrl')
+                        <p class="text-red-400">* {{ $message }}</p>
+                    @enderror
+                @endif
+            </div>
+            <div>
+                <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
+                    @disabled($submitDisabled)>
+                    Agregar
+                </button>
+                <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
+            </div>
+        </form>
+    </x-popup-livewire>
 
     {{-- Editar red social --}}
     @isset($item)
-        <x-popup-livewire class="max-w-lg" id="crear_red_social" wire:model='editDisplayed'>
+        <x-popup-livewire id="crear_red_social" wire:model='editDisplayed'>
             <form class="bg-gris-claro rounded-lg p-8" wire:submit='update({{ $item }})'>
                 <h2 class="texto-verde text-3xl mb-6 text-center">
                     Editar red social
@@ -46,29 +56,29 @@
                 </div>
                 <div class="div-form-input mb-8">
                     <label class="texto-verde text-lg" for="input">
-                        @if ($item['id'] == 1)
+                        @if ($inputIsNumber)
                             Número:
                         @else
                             Link de perfil:
                         @endif
                     </label>
-                    @if ($editIsWhatsapp)
-                        <input class="w-full" class="w-full" wire:input='onEditInputChanged' wire:model="editNumber"
+                    @if ($inputIsNumber)
+                        <input class="w-full" class="w-full" wire:input='onEditInputChanged' wire:model="inputNumber"
                             inputmode="numeric" maxlength="10" type="text" id="input">
-                        @error('editNumber')
+                        @error('inputNumber')
                             <p class="text-red-400">* {{ $message }}</p>
                         @enderror
                     @else
-                        <input class="w-full" maxlength="255" wire:input='onEditInputChanged' wire:model="editUrl"
+                        <input class="w-full" maxlength="255" wire:input='onEditInputChanged' wire:model="inputUrl"
                             type="text" id="input">
-                        @error('editUrl')
+                        @error('inputUrl')
                             <p class="text-red-400">* {{ $message }}</p>
                         @enderror
                     @endif
                 </div>
                 <div>
                     <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
-                        @if (!$editInputChanged) disabled @endif>Guardar</button>
+                        @disabled($submitDisabled)>Guardar</button>
                     <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
                 </div>
             </form>
@@ -78,7 +88,7 @@
     {{-- Diálogo de eliminar --}}
     @isset($item)
         <x-popup-livewire max-width="sm" id="profile_img_delete" wire:model='deleteDisplayed'>
-            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item->id }})'>
+            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item }})'>
                 <div class="flex flex-wrap mb-3 text-lg">
                     ¿Estás segura/o de eliminar
                     {{ ' ' . $item->name }}
