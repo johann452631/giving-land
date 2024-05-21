@@ -3,34 +3,21 @@
     <x-popup-livewire max-width="xl" id="crear_red_social" wire:model='createDisplayed'>
         <form class="bg-gris-claro rounded-lg p-8" wire:submit='store()'>
             <h2 class="texto-verde text-3xl mb-6 text-center">
-                Agregar red social
+                Agregar información de contacto
             </h2>
-            <select class="w-full outline-none bg-transparent text-xl" wire:model='createSelectedSocialMedia'
-                wire:input='onCreateSelectChanged'>
-                <option value="0" disabled>Seleccione una red social</option>
-                @foreach ($createSocialMedia as $element)
-                    <option value="{{ $element->id }}">{{ ucfirst($element->name) }}</option>
-                @endforeach
-            </select>
-            <div @class(['div-form-input mb-8','hidden' => $submitDisabled])>
-                <label class="texto-verde text-lg">
-                    @if ($inputIsNumber)
-                        Número:
-                    @else
-                        Link de perfil:
-                    @endif
-                    @if ($inputIsNumber)
-                        <input class="w-full" class="w-full text-gray-900" wire:input='onCreateInputChanged' wire:model="inputNumber" inputmode="numeric" maxlength="10"
-                            type="text">
-                        @error('inputNumber')
-                            <p class="text-red-400">* {{ $message }}</p>
-                        @enderror
-                    @else
-                        <input class="w-full text-gray-900" maxlength="255" wire:input='onCreateInputChanged' wire:model="inputUrl" type="text">
-                        @error('inputUrl')
-                            <p class="text-red-400">* {{ $message }}</p>
-                        @enderror
-                    @endif
+            <p>Email, número de teléfono, página web, etc. (En caso de enlaces, puedes marcar la casilla "Es enlace" para que se pueda navegar con un click.)</p>
+            <div>
+                <label>
+                    <input type="checkbox" wire:model="isLink" value="1">
+                    Es enlace
+                </label>
+            </div>
+            <div class="div-form-input mb-8">
+                <label>
+                    <input class="w-full" maxlength="255" wire:model="inputInfo" type="text">
+                    @error('inputInfo')
+                        <p class="text-red-400">* {{ $message }}</p>
+                    @enderror
                 </label>
             </div>
             <div>
@@ -44,7 +31,7 @@
     </x-popup-livewire>
 
     {{-- Editar red social --}}
-    @isset($item)
+    {{-- @isset($item)
         <x-popup-livewire id="crear_red_social" wire:model='editDisplayed'>
             <form class="bg-gris-claro rounded-lg p-8" wire:submit='update({{ $item }})'>
                 <h2 class="texto-verde text-3xl mb-6 text-center">
@@ -55,26 +42,26 @@
                     <p class="text-lg">{{ $item->name }}</p>
                 </div>
                 <div class="div-form-input mb-8">
-                    <label class="texto-verde text-lg">
+                    <label class="texto-verde text-lg" for="input">
                         @if ($inputIsNumber)
                             Número:
                         @else
                             Link de perfil:
                         @endif
-                        @if ($inputIsNumber)
-                            <input class="w-full text-gray-900" class="w-full" wire:input='onEditInputChanged' wire:model="inputNumber"
-                                inputmode="numeric" maxlength="10" type="text">
-                            @error('inputNumber')
-                                <p class="text-red-400">* {{ $message }}</p>
-                            @enderror
-                        @else
-                            <input class="w-full text-gray-900" maxlength="255" wire:input='onEditInputChanged' wire:model="inputUrl"
-                                type="text">
-                            @error('inputUrl')
-                                <p class="text-red-400">* {{ $message }}</p>
-                            @enderror
-                        @endif
                     </label>
+                    @if ($inputIsNumber)
+                        <input class="w-full" class="w-full" wire:input='onEditInputChanged' wire:model="inputNumber"
+                            inputmode="numeric" maxlength="10" type="text" id="input">
+                        @error('inputNumber')
+                            <p class="text-red-400">* {{ $message }}</p>
+                        @enderror
+                    @else
+                        <input class="w-full" maxlength="255" wire:input='onEditInputChanged' wire:model="inputUrl"
+                            type="text" id="input">
+                        @error('inputUrl')
+                            <p class="text-red-400">* {{ $message }}</p>
+                        @enderror
+                    @endif
                 </div>
                 <div>
                     <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
@@ -83,10 +70,10 @@
                 </div>
             </form>
         </x-popup-livewire>
-    @endisset
+    @endisset --}}
 
     {{-- Diálogo de eliminar --}}
-    @isset($item)
+    {{-- @isset($item)
         <x-popup-livewire max-width="sm" id="profile_img_delete" wire:model='deleteDisplayed'>
             <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item }})'>
                 <div class="flex flex-wrap mb-3 text-lg">
@@ -100,33 +87,30 @@
                 <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
             </form>
         </x-popup-livewire>
-    @endisset
+    @endisset --}}
 
-    <h1 class="text-lg texto-verde mb-4">Redes sociales:</h1>
+    <h1 class="text-lg texto-verde mb-4">Información de contacto:</h1>
 
 
-    <!-- Botón para agregar usuario -->
-    <buton @class([
-        'bg-blue-600 boton-base text-white mb-4 rounded',
-        'hidden' => !count($createSocialMedia),
-    ]) wire:click='create'>
+    <!-- Botón para agregar info -->
+    <buton class="bg-blue-600 boton-base text-white mb-4 rounded" wire:click='create'>
         Agregar red social
     </buton>
 
 
     <!-- Tabla de usuarios -->
-    @if (count($profile->socialMedia))
+    @if (count($profile->contactIformation))
         <table class="min-w-full">
             <thead class="">
                 <tr>
-                    <th class="py-2 pr-2 text-left">Red</th>
+                    <th class="py-2 pr-2 text-left">Info</th>
                     <th class="py-2 pr-2 text-left">Link</th>
                     <th class="py-2 text-center">Acciones</th>
                 </tr>
             </thead>
             <tbody class="">
                 <!-- Aquí se llenarían dinámicamente los datos de la tabla con datos del servidor -->
-                @foreach ($profile->socialMedia as $profileItem)
+                @foreach ($profile->contactInformation as $profileItem)
                     {{-- Por up para la edición de las redes sociales --}}
 
                     <tr>
@@ -152,3 +136,4 @@
     @endif
 
 </div>
+

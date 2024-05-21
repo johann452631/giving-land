@@ -33,6 +33,8 @@ class LoginController extends Controller
             return to_route('home');
         }
 
+
+        
         return back()->withErrors([
             'email' => 'El correo electrónico o la contraseña son incorrectos.',
         ])->onlyInput('email');

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('contact_information', function (Blueprint $table) {
             $table->id();
-            $table->string('info',45)->unique();
+            $table->string('info',100)->unique();
+            $table->boolean('is_link')->default(0);
             $table->foreignId('profile_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
