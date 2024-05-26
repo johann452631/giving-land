@@ -88,9 +88,8 @@ class SocialMedia extends Component
                 ],
             );
         }
-        $this->profile->socialMedia()->attach($this->createSelectedSocialMedia,[
-            'url' => ($this->inputIsNumber) ? 'https://wa.me/57' . $this->inputNumber : $this->inputUrl
-        ]);
+        $username = ($this->inputIsNumber) ? $this->inputNumber : $this->inputUrl;
+        $this->profile->socialMedia()->attach($this->createSelectedSocialMedia,compact('username'));
 
         $this->dispatch('alert-sent', type: 'success', message: 'Se registró la red social');
         $this->mount();

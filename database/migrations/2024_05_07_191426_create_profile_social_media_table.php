@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('profile_social_media', function (Blueprint $table) {
             $table->foreignId('profile_id')->constrained();
             $table->foreignId('social_media_id')->constrained();
-            // $table->string('url')->default('https://laravel.com/');
-            $table->string('url');
+            $table->string('username');
             $table->unique([
                 'profile_id',
                 'social_media_id'

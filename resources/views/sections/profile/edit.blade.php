@@ -13,6 +13,8 @@
             <hr class="my-4">
             <livewire:profile.edit.social-media />
             <hr class="my-4">
+            <livewire:profile.edit.contact-information />
+            <hr class="my-4">
             <a class="boton-base verde-blanco" href="{{route('profile.show',$profile->user->username)}}">Regresar al perfil</a>
         </div>
     </div>

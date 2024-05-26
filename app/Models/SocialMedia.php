@@ -13,7 +13,7 @@ class SocialMedia extends Model
 
     public function profiles():BelongsToMany
     {
-        return $this->belongsToMany(Profile::class)->withPivot('url');
+        return $this->belongsToMany(Profile::class)->withPivot('username');
     }
 
     public function image():MorphOne

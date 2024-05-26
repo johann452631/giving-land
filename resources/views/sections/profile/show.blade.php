@@ -15,7 +15,7 @@
                 <h2>Información de contacto</h2>
                 <ul class="flex flex-wrap">
                     @foreach ($profile->socialMedia as $item)
-                        <a class="mr-6" href="{{ $item->pivot->url }}" target="_blank"><img class="size-8"
+                        <a class="mr-6" href="{{ $item->url.$item->pivot->username }}" target="_blank"><img class="size-8"
                                 src="{{ asset('socialmediaicons/' . $item->image->url) }}" alt=""></a>
                     @endforeach
                 </ul>

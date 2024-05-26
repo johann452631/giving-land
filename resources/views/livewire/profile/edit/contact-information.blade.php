@@ -1,24 +1,30 @@
 <div class="container overflow-x-auto">
     {{-- Crear una red social --}}
-    <x-popup-livewire max-width="xl" id="crear_red_social" wire:model='createDisplayed'>
+    <x-popup-livewire max-width="md" id="crear_red_social" wire:model='createDisplayed'>
         <form class="bg-gris-claro rounded-lg p-8" wire:submit='store()'>
             <h2 class="texto-verde text-3xl mb-6 text-center">
                 Agregar información de contacto
             </h2>
-            <p>Email, número de teléfono, página web, etc. (En caso de enlaces, puedes marcar la casilla "Es enlace" para que se pueda navegar con un click.)</p>
-            <div>
-                <label>
-                    <input type="checkbox" wire:model="isLink" value="1">
-                    Es enlace
+            <div class="div-form-input mb-8">
+                <label class="texto-verde text-lg">
+                    Nombre de la información
+                    <input class="w-full text-gray-900" type="text" wire:model="inputName" maxlength="20"
+                        placeholder="Correo electrónico, teléfono, dirección, etc">
                 </label>
             </div>
             <div class="div-form-input mb-8">
-                <label>
-                    <input class="w-full" maxlength="255" wire:model="inputInfo" type="text">
-                    @error('inputInfo')
-                        <p class="text-red-400">* {{ $message }}</p>
-                    @enderror
-                </label>
+                <div class="flex justify-between">
+                    <label class="texto-verde text-lg" for="information">Información</label>
+                    <label class="text-lg" title="Se podrá navegar con un click">
+                        <i class="fa-solid fa-circle-question fa-xs"></i>
+                        Es enlace
+                        <input class="text-gray-900" type="checkbox" wire:model='isLink'>
+                    </label>
+                </div>
+                <input class="w-full" maxlength="255" wire:model="inputInfo" type="text" id="information">
+                @error('inputInfo')
+                    <p class="text-red-400">* {{ $message }}</p>
+                @enderror
             </div>
             <div>
                 <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
@@ -29,6 +35,14 @@
             </div>
         </form>
     </x-popup-livewire>
+
+    <h1 class="text-lg texto-verde mb-4">Información de contacto:</h1>
+
+
+    <!-- Botón para agregar info -->
+    <buton class="bg-blue-600 boton-base text-white mb-4 rounded" wire:click='create'>
+        Agregar red social
+    </buton>
 
     {{-- Editar red social --}}
     {{-- @isset($item)
@@ -89,17 +103,9 @@
         </x-popup-livewire>
     @endisset --}}
 
-    <h1 class="text-lg texto-verde mb-4">Información de contacto:</h1>
-
-
-    <!-- Botón para agregar info -->
-    <buton class="bg-blue-600 boton-base text-white mb-4 rounded" wire:click='create'>
-        Agregar red social
-    </buton>
-
 
     <!-- Tabla de usuarios -->
-    @if (count($profile->contactIformation))
+    {{-- @if (count($profile->contactIformation))
         <table class="min-w-full">
             <thead class="">
                 <tr>
@@ -111,8 +117,6 @@
             <tbody class="">
                 <!-- Aquí se llenarían dinámicamente los datos de la tabla con datos del servidor -->
                 @foreach ($profile->contactInformation as $profileItem)
-                    {{-- Por up para la edición de las redes sociales --}}
-
                     <tr>
                         <td class="py-3">
                             <img class="size-6" src="{{ asset('socialmediaicons/' . $profileItem->image->url) }}"
@@ -133,7 +137,6 @@
         </table>
     @else
         <p class="mt-4">No tienes redes sociales agregadas aún</p>
-    @endif
+    @endif --}}
 
 </div>
-
