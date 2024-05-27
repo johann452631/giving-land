@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\ContactInformation;
 use App\Models\Image;
 use App\Models\Product;
 use App\Models\User;
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProfileSeeder::class,
+            ContactInformationSeeder::class,
             PostSeeder::class,
             ImageSeeder::class
         ]);

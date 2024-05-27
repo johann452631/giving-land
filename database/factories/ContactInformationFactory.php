@@ -17,7 +17,9 @@ class ContactInformationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->words(rand(1,3),true),
+            'info' => fake()->url(),
+            'is_link' => rand(0,1),
         ];
     }
 }

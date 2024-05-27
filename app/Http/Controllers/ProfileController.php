@@ -23,25 +23,8 @@ class ProfileController extends Controller
 
     public function edit()
     {
-        return view('sections.profile.edit',[
-            'profile' => Auth::user()->profile
-        ]);
-    }
-
-    public function update(Request $request)
-    {
-        $profile = Auth::user()->profile;
-        if ($profile->image->url != 'default.svg') {
-            Storage::delete('public/users_profile_images/' . $profile->image->url);
-        }
-        $img = $request->file('profile_img');
-        $imgName = time() . "_" . str_replace(" ", "_", $img->getClientOriginalName());
-        $profile->image->update([
-            'url' => $imgName
-        ]);
-        $img->storeAs('public/users_profile_images', $imgName);
-        Utility::sendAlert('success', 'Se actualizó la foto de perfil');
-        return to_route('profile.edit');
+        $username = Auth::user()->username;
+        return view('sections.profile.edit',compact('username'));
     }
 
     public function goToSection($username,$section){

@@ -19,7 +19,7 @@ class ImageSeeder extends Seeder
         $profiles = Profile::all();
 
         foreach ($profiles as $profile) {
-            $profile->image()->save(Image::create(['url' => 'default.svg',]));
+            $profile->image()->create(['url' => 'default.svg',]);
         }
 
         $posts = Post::all();

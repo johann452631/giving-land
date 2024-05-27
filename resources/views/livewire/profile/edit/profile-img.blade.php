@@ -1,52 +1,66 @@
-<div>
-    {{-- Popup editar foto de perfil --}}
+<div class="pb-4">
     <x-popup-livewire max-width="sm" id="profile_img_edit" wire:model='editDisplayed'>
-        <x-form rutaSiguiente="profile.update" metodo="PUT" class="rounded py-8 px-2 flex flex-col items-center"
-            enctype="multipart/form-data">
-            <img class="size-40 redondo mb-6 mx-auto"
-                @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
+        <form class="rounded py-8 px-2 flex flex-col items-center" wire:submit='update'>
+            @if ($photo)
+                <img class="size-48 redondo mb-6 mx-auto" src="{{ $photo->temporaryUrl() }}">
+            @else
+                <img class="size-48 redondo mb-6 mx-auto"
+                    @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                 @else
                 src="{{ $profile->image->url }}" alt="" @endif
-                id="imagenSeleccionada">
+                    id="imagenSeleccionada">
+            @endif
             <div>
-                <input type="file" accept="image/*" id="inputImg" name="profile_img" hidden>
+                <input wire:input='photoLoaded' type="file" accept="image/*" id="inputImg" wire:model='photo' hidden>
                 <label class="boton-base bg-yellow-200" for="inputImg">Seleccionar imagen</label>
             </div>
 
             <div class="mt-4 min-w-16 flex flex-between">
-                <button class="boton-base verde-blanco disabled:opacity-75 mr-6" type="submit"
-                    disabled>Guardar</button>
+                <button class="boton-base verde-blanco disabled:opacity-75 mr-6" type="submit" @disabled($submitDisabled)>Guardar</button>
                 <button class="boton-base bg-gray-500 text-white" type="reset"
-                x-on:click="show = false">Cancelar</button>
+                    x-on:click="show = false" wire:click='cancel'>Cancelar</button>
             </div>
-        </x-form>
+        </form>
     </x-popup-livewire>
 
     {{-- Popup eliminar foto de perfil --}}
     <x-popup-livewire max-width="sm" id="profile_img_delete" wire:model='deleteDisplayed'>
-        <form class="bg-gris-claro rounded-lg p-8" wire:submit="deletePhoto">
+        <form class="bg-gris-claro rounded-lg p-8" wire:submit="destroy">
             <p class="mb-3 text-lg">¿Estás segura/o de eliminar tu foto de perfil?</p>
             <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
-            <button type="button" class="boton-base bg-gris text-white"
-            x-on:click="show = false">Cancelar</button>
+            <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
         </form>
     </x-popup-livewire>
 
+    <h2 class="texto-verde mb-2 text-2xl">Imagen de perfil:</h2>
     <div>
-        <p class="texto-verde mb-2 text-lg">Imagen de perfil:</p>
         <div class="flex w-full items-center">
-            <img class="size-12 redondo mr-4"
+            <img class="size-16 redondo mr-4"
                 @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                 @else
                 src="{{ $profile->image->url }}" alt="" @endif>
             <div>
-                <i class="p-2 rounded cursor-pointer bg-yellow-300 mr-4 fa-solid fa-pen"
-                    wire:click='edit'></i>
+                <i class="p-2 rounded cursor-pointer bg-yellow-300 mr-4 fa-solid fa-pen" wire:click='edit'></i>
                 @if ($profile->image->url != 'default.svg')
                     <i class="p-2 rounded cursor-pointer bg-red-500 fa-solid fa-trash"
-                    wire:click='dialogDeletePhoto'></i>
+                        wire:click='dialogDeletePhoto'></i>
                 @endif
             </div>
         </div>
     </div>
 </div>
+{{-- <script>
+    document.getElementById('inputImg').addEventListener('input', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.getElementById('imagenSeleccionada');
+                img.src = e.target.result;
+                img.style.background = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+        document.getElementById('profile_img_edit').querySelector('button[type=submit]').disabled = false;
+    });
+</script> --}}
