@@ -84,27 +84,27 @@
     </buton>
 
     @if ($createDisplayed)
-        <form class="bg-gris-claro rounded-lg" wire:submit='store()'>
-            <div class="div-form-input mb-8">
-                <label class="texto-verde text-lg">
-                    Nombre de la información
-                    <input class="w-full text-gray-900" type="text" wire:model="inputName" maxlength="20"
-                        placeholder="Correo electrónico, teléfono, dirección, etc">
-                </label>
-            </div>
-            <div class="div-form-input mb-8">
-                <div class="flex justify-between">
-                    <label class="texto-verde text-lg" for="information">Información</label>
-                    <label class="text-lg" title="Se podrá navegar con un click">
-                        <i class="fa-solid fa-circle-question fa-xs"></i>
-                        Es enlace
-                        <input class="text-gray-900" type="checkbox" wire:model='isLink'>
-                    </label>
+        <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='store()'>
+            <div class="grid mb-4" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+                <div class="div-form-input mr-4">
+                    <label class="texto-verde text-lg" for="contact_information_input_name">Nombre</label>
+                    <input class="w-full text-gray-900 placeholder:text-base" type="text" wire:model="inputName" maxlength="20"
+                        placeholder="página web, dirección, etc" id="contact_information_input_name">
                 </div>
-                <input class="w-full" maxlength="255" wire:model="inputInfo" type="text" id="information">
-                @error('inputInfo')
-                    <p class="text-red-400">* {{ $message }}</p>
-                @enderror
+                <div class="div-form-input">
+                    <div class="flex justify-between">
+                        <label class="texto-verde text-lg" for="contact_information_input_information">Información</label>
+                        <label class="text-lg" title="Se podrá navegar con un click">
+                            <i class="fa-solid fa-circle-question fa-xs"></i>
+                            Es enlace
+                            <input class="text-gray-900" type="checkbox" wire:model='isLink'>
+                        </label>
+                    </div>
+                    <input class="w-full" maxlength="255" wire:model="inputInfo" type="text" id="contact_information_input_information">
+                    @error('inputInfo')
+                        <p class="text-red-400">* {{ $message }}</p>
+                    @enderror
+                </div>
             </div>
             <div>
                 <button type="submit" class="boton-base verde-blanco mr-3 disabled:opacity-75"

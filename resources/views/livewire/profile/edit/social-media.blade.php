@@ -56,7 +56,7 @@
     </buton>
 
     @if ($createDisplayed)
-        <form class="bg-gris-claro rounded-lg border-2 py-2" wire:submit='store()'>
+        <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='store()'>
             <div class="grid gap-x-2 mb-4" style="grid-template-columns: 2fr 1fr">
                 <div class="div-form-input">
                     @if ($createSelectedSocialMedia == 1)

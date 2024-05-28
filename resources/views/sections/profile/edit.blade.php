@@ -3,8 +3,8 @@
     <x-header />
 
     {{-- Main --}}
-    <div class="contenido-main">
-        <div class="bg-gris-claro rounded p-10 max-w-xl my-0 mx-auto">
+    <div class="pt-24">
+        <div class="bg-gris-claro rounded p-10 max-w-2xl my-0 mx-auto">
             <livewire:profile.edit.profile-img />
             <hr>
             <livewire:profile.edit.social-media />
