@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ContactInformation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'info',
+        'is_link'
+    ];
+
     public function profile():BelongsTo
     {
         return $this->belongsTo(Profile::class);

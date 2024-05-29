@@ -1,39 +1,4 @@
 <div class="py-4 overflow-x-auto">
-    {{-- editar una red social --}}
-    <x-popup-livewire max-width="md" id="crear_red_social" wire:model='editDisplayed'>
-        <form class="bg-gris-claro rounded-lg p-8" wire:submit='update()'>
-            <h2 class="texto-verde text-3xl mb-6 text-center">
-                Agregar información de contacto
-            </h2>
-            <div class="div-form-input mb-8">
-                <label class="texto-verde text-lg">
-                    Nombre de la información
-                    <input class="w-full text-gray-900" type="text" wire:model="inputName" maxlength="20">
-                </label>
-            </div>
-            <div class="div-form-input mb-8">
-                <div class="flex justify-between">
-                    <label class="texto-verde text-lg" for="information">Información</label>
-                    <label class="text-lg" title="Se podrá navegar con un click">
-                        <i class="fa-solid fa-circle-question fa-xs"></i>
-                        Es enlace
-                        <input class="text-gray-900" type="checkbox" wire:model='isLink'>
-                    </label>
-                </div>
-                <input class="w-full" maxlength="255" wire:model="inputInfo" type="text" id="information">
-                @error('inputInfo')
-                    <p class="text-red-400">* {{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <button type="submit" class="boton-base bg-red-500 mr-3 disabled:opacity-75"
-                    @disabled($submitDisabled)>
-                    Guardar
-                </button>
-                <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
-            </div>
-        </form>
-    </x-popup-livewire>
 
     <h1 class="text-2xl texto-verde mb-4">Información de contacto:</h1>
 
@@ -52,7 +17,7 @@
                 <!-- Aquí se llenarían dinámicamente los datos de la tabla con datos del servidor -->
                 @foreach ($profile->contactInformation as $profileItem)
                     <tr>
-                        <td class="py-3">{{$profileItem->name}}</td>
+                        <td class="py-3">{{ $profileItem->name }}</td>
                         <td class="py-3 max-w-52 truncate">{{ $profileItem->info }}</td>
                         <td class="py-3 text-center">
                             @if ($profileItem->is_link)
@@ -63,7 +28,7 @@
                         </td>
                         <td class="py-3 text-center">
                             <i class="p-2 rounded cursor-pointer bg-yellow-300 mr-4 fa-solid fa-pen"
-                                wire:click="edit({{ $profileItem }})"></i>
+                                wire:click="editOrCreate({{ $profileItem }})"></i>
                             <i class="p-2 rounded cursor-pointer bg-red-500 fa-solid fa-trash"
                                 wire:click='dialogDestroy({{ $profileItem }})'></i>
                         </td>
@@ -72,50 +37,65 @@
             </tbody>
         </table>
     @else
-        <p class="mt-4">No tienes redes sociales agregadas aún</p>
+        <p class="my-4">No tienes información de contacto aún</p>
     @endif
 
     {{-- botón para agregar info --}}
     <buton @class([
         'bg-blue-700 boton-base text-white mb-4 rounded',
-        'hidden' => $createDisplayed,
-    ]) wire:click='create'>
+        'hidden' => $editOrCreateDisplayed,
+    ]) wire:click='editOrCreate()'>
         Agregar
     </buton>
 
-    @if ($createDisplayed)
-        <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='store()'>
+    @if ($editOrCreateDisplayed)
+        <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='updateOrStore()'>
             <div class="grid mb-4" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
                 <div class="div-form-input mr-4">
                     <label class="texto-verde text-lg" for="contact_information_input_name">Nombre</label>
-                    <input class="w-full text-gray-900 placeholder:text-base" type="text" wire:model="inputName" maxlength="20"
-                        placeholder="página web, dirección, etc" id="contact_information_input_name">
+                    <input class="w-full text-gray-900 placeholder:text-base" type="text" wire:model="name"
+                        wire:input='onChange' maxlength="20" placeholder="página web, dirección, etc"
+                        id="contact_information_input_name">
+                    @error('name')
+                        <p class="text-red-400">* {{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="div-form-input">
                     <div class="flex justify-between">
-                        <label class="texto-verde text-lg" for="contact_information_input_information">Información</label>
+                        <label class="texto-verde text-lg"
+                            for="contact_information_input_information">Información</label>
                         <label class="text-lg" title="Se podrá navegar con un click">
                             <i class="fa-solid fa-circle-question fa-xs"></i>
                             Es enlace
-                            <input class="text-gray-900" type="checkbox" wire:model='isLink'>
+                            <input class="text-gray-900" type="checkbox" wire:model='is_link'
+                                @checked($is_link)>
                         </label>
                     </div>
-                    <input class="w-full" maxlength="255" wire:model="inputInfo" type="text" id="contact_information_input_information">
-                    @error('inputInfo')
+                    <input class="w-full" maxlength="255" wire:model="info" wire:input='onChange' type="text"
+                        id="contact_information_input_information">
+                    @error('info')
                         <p class="text-red-400">* {{ $message }}</p>
                     @enderror
                 </div>
             </div>
             <div>
-                <button type="submit" class="boton-base verde-blanco mr-3 disabled:opacity-75"
-                    @disabled($submitDisabled)>
-                    Agregar
-                </button>
-                <button type="button" class="boton-base gris-blanco" wire:click='cancelCreate'>Cancelar</button>
+                <button type="submit" class="boton-base verde-blanco mr-3 disabled:opacity-75">Agregar</button>
+                <button type="button" class="boton-base gris-blanco" wire:click='cancel'>Cancelar</button>
             </div>
         </form>
     @endif
 
-    
+    {{-- Pop up diálogo de confirmación de eliminación --}}
+    @if ($item !== null && $deleteDisplayed)
+        <x-popup-livewire max-width="md" wire:model='deleteDisplayed'>
+            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{$item}})'>
+                <div class="flex flex-wrap mb-3 text-lg">
+                    ¿Estás segura/o de eliminar&nbsp;<b>{{ $item->name." : ".$item->info }}</b>?
+                </div>
+                <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
+                <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
+            </form>
+        </x-popup-livewire>
+    @endif
 
 </div>

@@ -1,17 +1,4 @@
 <div class="py-4 overflow-x-auto">
-    {{-- Pop up diálogo de confirmación de eliminación --}}
-    @isset($item)
-        <x-popup-livewire max-width="md" id="profile_img_delete" wire:model='deleteDisplayed'>
-            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item }})'>
-                <div class="flex flex-wrap mb-3 text-lg">
-                    ¿Estás segura/o de eliminar&nbsp;<b>{{ ucfirst($item->name) }}</b>?
-                </div>
-                <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
-                <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
-            </form>
-        </x-popup-livewire>
-    @endisset
-
     <h1 class="text-2xl texto-verde">Redes sociales:</h1>
 
     <!-- Tabla de redes sociales -->
@@ -87,11 +74,21 @@
                 <button type="submit" class="boton-base verde-blanco">
                     Agregar
                 </button>
-                <button type="button" class="boton-base bg-gris text-white"
-                    wire:click='cancelCreate'>Cancelar</button>
+                <button type="button" class="boton-base bg-gris text-white" wire:click='cancelCreate'>Cancelar</button>
             </div>
         </form>
     @endif
 
-
+    {{-- Pop up diálogo de confirmación de eliminación --}}
+    @if ($item !== null && $deleteDisplayed)
+        <x-popup-livewire max-width="md" wire:model='deleteDisplayed'>
+            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item }})'>
+                <div class="flex flex-wrap mb-3 text-lg">
+                    ¿Estás segura/o de eliminar&nbsp;<b>{{ ucfirst($item->name) }}</b>?
+                </div>
+                <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
+                <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>
+            </form>
+        </x-popup-livewire>
+    @endif
 </div>

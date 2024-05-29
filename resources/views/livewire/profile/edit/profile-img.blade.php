@@ -1,5 +1,5 @@
 <div class="pb-4">
-    <x-popup-livewire max-width="sm" id="profile_img_edit" wire:model='editDisplayed'>
+    <x-popup-livewire max-width="sm" wire:model='editDisplayed'>
         <form class="rounded py-8 px-2 flex flex-col items-center" wire:submit='update'>
             @if ($photo)
                 <img class="size-48 redondo mb-6 mx-auto" src="{{ $photo->temporaryUrl() }}">
@@ -24,8 +24,8 @@
     </x-popup-livewire>
 
     {{-- Popup eliminar foto de perfil --}}
-    <x-popup-livewire max-width="sm" id="profile_img_delete" wire:model='deleteDisplayed'>
-        <form class="bg-gris-claro rounded-lg p-8" wire:submit="destroy">
+    <x-popup-livewire max-width="sm" wire:model='deleteDisplayed'>
+        <form class="bg-gris-claro rounded-lg p-8" wire:submit="delete">
             <p class="mb-3 text-lg">¿Estás segura/o de eliminar tu foto de perfil?</p>
             <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
             <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>

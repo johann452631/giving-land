@@ -1,29 +1,45 @@
 <div class="flex flex-col">
-    <div class="flex flex-col">
-        <div class="flex">
-
-            <img class="size-8"
+    <div class="">
+        <div class="flex py-4">
+            <img class="size-8 redondo mr-3"
                 @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                     @else
                     src="{{ $profile->image->url }}" alt="" @endif>
 
-            <h2>{{ $profile->user->name }}</h2>
+            <h2 class="text-2xl">{{ $profile->user->name }}</h2>
         </div>
         @if (count($profile->socialMedia))
-            <hr class="my-4">
-            <div>
-                <h2>Información de contacto</h2>
-                <ul class="flex flex-wrap">
+            <hr>
+            <div class="py-4">
+                <h2 class="text-xl texto-verde mb-2">Redes sociales</h2>
+                <ul class="flex flex-wrap gap-x-3">
                     @foreach ($profile->socialMedia as $item)
-                        <a class="mr-6" href="{{ $item->url.$item->pivot->username }}" target="_blank"><img class="size-8"
+                        <a href="{{ $item->url . $item->pivot->username }}" target="_blank"><img class="size-8"
                                 src="{{ asset('socialmediaicons/' . $item->image->url) }}" alt=""></a>
+                    @endforeach
+                </ul>
+            </div>
+            <hr>
+            <div class="py-4">
+                <h2 class="text-xl texto-verde">Información de contacto</h2>
+                <ul class="flex flex-col gap-y-3">
+                    @foreach ($profile->contactInformation as $item)
+                        @if ($item->is_link)
+                            <label>
+                                {{ $item->name . ':' }}
+                                <a target="_blank" class="text-blue-600 cursor-pointer hover:text-blue-400"
+                                    href="{{ $item->info }}">{{ $item->info }}</a>
+                            </label>
+                        @else
+                            <p>{{ $item->name . ' : ' . $item->info }}</p>
+                        @endif
                     @endforeach
                 </ul>
             </div>
         @endif
         @owner($profile)
             <hr class="my-4">
-            <a href="{{ route('profile.edit') }}">Editar perfil</a>
+            <a class="boton-base bg-yellow-300" href="{{ route('profile.edit') }}">Editar perfil</a>
         @endowner
     </div>
     <div class="posts my-4">

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name',100);
             $table->string('info');
-            $table->boolean('is_link')->default(0);
+            $table->boolean('is_link')->default(false);
             $table->foreignId('profile_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });

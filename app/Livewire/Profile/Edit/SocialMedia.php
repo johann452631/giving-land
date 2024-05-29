@@ -84,12 +84,13 @@ class SocialMedia extends Component
         $this->item = $item;
     }
 
-    public function destroy(ModelsSocialMedia $item)
+    public function destroy ($item = null)
     {
-        $this->profile->socialMedia()->detach($item->id);
+        $this->profile->socialMedia()->detach($item['id']);
         $this->deleteDisplayed = false;
         $this->createSocialMedia = ModelsSocialMedia::all()->diff($this->profile->socialMedia);
-        $this->dispatch('alert-sent', type: 'warning', message: 'Se eliminó '.$item->name);
+        $this->dispatch('alert-sent', type: 'warning', message: 'Se eliminó '.$item['name']);
+        $this->item = null;
     }
 
     public function render()

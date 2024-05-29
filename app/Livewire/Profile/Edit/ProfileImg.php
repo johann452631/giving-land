@@ -60,7 +60,7 @@ class ProfileImg extends Component
         $this->deleteDisplayed = true;
     }
 
-    public function destroy()
+    public function delete()
     {
         Storage::delete('public/users_profile_images/' . $this->profile->image->url);
         $this->profile->image->update([
