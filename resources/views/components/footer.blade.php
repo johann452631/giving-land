@@ -1,5 +1,5 @@
 <div class="w-full bg-gris z-10">
-    <div class="py-10 screen-size flex flex-col items-center texto-gris-claro">
+    <div class="py-10 px-4 screen-size flex flex-col items-center texto-gris-claro">
         <div class="w-full border-b border-gray-50 mb-5 pb-5 flex justify-between">
             <div class="flex flex-col items-center">
                 <svg class="svg-gris-claro" width="40" height="40" viewBox="0 0 94 80"

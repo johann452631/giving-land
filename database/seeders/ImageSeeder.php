@@ -8,6 +8,7 @@ use App\Models\Profile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ImageSeeder extends Seeder
 {
@@ -24,15 +25,15 @@ class ImageSeeder extends Seeder
 
         $posts = Post::all();
 
-        $filesNames = array_map('basename', Storage::files('default/posts_images'));
+        $defaultFilesNames = array_map('basename', Storage::files('default/posts_images'));
 
         foreach ($posts as $post) {
             $limit = rand(1, 5);
             for ($i = 0; $i < $limit; $i++) {
-                $fileName = $filesNames[array_rand($filesNames)];
-                $image = Image::create(['url' => str_replace(" ", "_", strtolower(microtime())) . "_" . $fileName]);
+                $defaultFileName = $defaultFilesNames[array_rand($defaultFilesNames)];
+                $image = Image::create(['url' => "image_".Str::uuid().".jpg"]);
                 $post->images()->save($image);
-                Storage::copy('default/posts_images/' . $fileName, 'public/posts_images/' . $image->url);
+                Storage::copy('default/posts_images/' . $defaultFileName, 'public/posts_images/'. $post->user->username .'/'. $image->url);
             }
         }
     }

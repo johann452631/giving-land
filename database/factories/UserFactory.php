@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\MyOwn\classes\Utility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -14,7 +15,7 @@ class UserFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (User $user) {
-            $user->username = str_replace(" ","_",strtolower($user->name))."_".$user->id;
+            $user->username = Utility::generateUsername($user->name);
             $user->save();
         });
     }

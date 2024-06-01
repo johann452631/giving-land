@@ -78,31 +78,20 @@ Route::get('/google-auth/redirect', function () {
 Route::get('/google-auth/callback', function () {
     $user_google = Socialite::driver('google')->stateless()->user();
     // dd($user_google);
-    $user = User::updateOrCreate([
-        'email' => $user_google->email,
-    ], [
-        'name' => $user_google->name,
-        'email' => $user_google->email,
-        'google_id' => $user_google->id,
-    ]);
-
-    $user->update(['username' => str_replace(" ", "_", strtolower($user->name)) . "_" . $user->id]);
-
-    $profile = Profile::updateOrCreate([
-        'user_id' => $user->id
-    ]);
-
-    Image::updateOrCreate([
-        'imageable_id' => $profile->id,
-        'imageable_type' => Profile::class
-    ],[
-        'url' => $user_google->avatar,
-        // 'imageable_id' => $profile->id,
-        // 'imageable_type' => Profile::class
-    ]);
+    // dd($user_google);
+    $user = User::where('email', $user_google->email)->get()->first();
+    if ($user === null) {
+        $user = User::create([
+            'name' => $user_google->name,
+            'email' => $user_google->email,
+        ]);
+        $user->update(['username' => Utility::generateUsername($user->name)]);
+        $user->profile()->save(Profile::create(['google_avatar' => $user_google->avatar]));
+    }
+    // dd($user->profile);
+    Utility::sendAlert('success', 'Se ingresó con su cuenta de Google');
     Auth::login($user);
     Session()->regenerate();
-    Utility::sendAlert('success','Se ingresó con su cuenta de Google');
     return to_route('home');
 });
 
@@ -128,15 +117,15 @@ Route::controller(ResetPasswordController::class)->group(function () {
 Route::controller(SignupController::class)->group(function () {
     Route::get('/signup/index', 'index')->name('signup.index');
     Route::post('/signup/send-code', 'sendCode')->name('signup.sendCode');
-    Route::get('/signup/code-form/{token}','codeForm')->name('signup.codeForm');
+    Route::get('/signup/code-form/{token}', 'codeForm')->name('signup.codeForm');
     Route::post('/signup/verify-code', 'verifyCode')->name('signup.verifyCode');
 });
 
-Route::get('users/create/{token}',[UserController::class,'create'])->name('users.create');
+Route::get('users/create/{token}', [UserController::class, 'create'])->name('users.create');
 
-Route::get('users/security-privacy',[UserController::class,'securityPrivacy'])->name('users.securityPrivacy');
+Route::get('users/security-privacy', [UserController::class, 'securityPrivacy'])->name('users.securityPrivacy');
 
-Route::resource('users', UserController::class)->only(['store','update','destroy']);
+Route::resource('users', UserController::class)->only(['store', 'update', 'destroy']);
 
 // Route::controller(ChangeEmailController::class)->group(function () {
 //     Route::get('/users/{username}/edit-email', 'index')->name('changeEmail.index');
@@ -146,9 +135,9 @@ Route::resource('users', UserController::class)->only(['store','update','destroy
 // });
 Route::singleton('profile', ProfileController::class)->only('edit');
 
-Route::get('{username}', [ProfileController::class,'show'])->name('profile.show');
+Route::get('{username}', [ProfileController::class, 'show'])->name('profile.show');
 
-Route::get('{username}/{section}', [ProfileController::class,'goToSection'])->name('profile.section');
+Route::get('{username}/{section}', [ProfileController::class, 'goToSection'])->name('profile.section');
 
 
 // Route::resource('favorites', FavoriteController::class)->only(['index']);

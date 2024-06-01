@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class ProfileImg extends Component
 {
@@ -43,10 +44,10 @@ class ProfileImg extends Component
     public function update()
     {
         // dd($this->photo);
-        if ($this->profile->image->url != 'default.svg') {
+        if ($this->profile->image->url != 'storage/users_profile_images/default.svg') {
             Storage::delete('public/users_profile_images/' . $this->profile->image->url);
         }
-        $imgName = time() . "_" . str_replace(" ", "_", $this->photo->getClientOriginalName());
+        $imgName = "image_" . Str::uuid() . "." . $this->photo->getClientOriginalExtension();
         $this->profile->image->update([
             'url' => $imgName
         ]);
@@ -55,16 +56,16 @@ class ProfileImg extends Component
         return to_route('profile.edit');
     }
 
-    public function dialogDeletePhoto()
+    public function dialogDelete()
     {
         $this->deleteDisplayed = true;
     }
 
     public function delete()
     {
-        Storage::delete('public/users_profile_images/' . $this->profile->image->url);
+        Storage::delete($this->profile->image->url);
         $this->profile->image->update([
-            'url' => 'default.svg'
+            'url' => 'storage/users_profile_images/default.svg'
         ]);
 
         Utility::sendAlert('warning', 'Se eliminó tu foto de perfil');

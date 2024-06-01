@@ -2,9 +2,9 @@
     <div class="">
         <div class="flex py-4">
             <img class="size-8 redondo mr-3"
-                @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
+                @if ($profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                     @else
-                    src="{{ $profile->image->url }}" alt="" @endif>
+                    src="{{ $profile->google_avatar }}" alt="" @endif>
 
             <h2 class="text-2xl">{{ $profile->user->name }}</h2>
         </div>
@@ -52,7 +52,7 @@
                         @foreach ($post->images as $image)
                             <div class="flex-none w-64 mx-2">
                                 <div class="border rounded-lg p-4 shadow-md">
-                                    <img src="{{ asset('/storage/posts_images/' . $image->url) }}" alt="">
+                                    <img src="{{ asset('/storage/posts_images/' . $post->user->username . '/' . $image->url) }}" alt="">
                                 </div>
                             </div>
                         @endforeach

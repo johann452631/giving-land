@@ -1,7 +1,9 @@
 <?php
 namespace App\MyOwn\classes;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class Utility
 {
@@ -19,5 +21,20 @@ class Utility
         session(['plain' => $code]);
         // Mail::to($email)->send(new ValidationMailable($code));
         return Hash::make($code);
+    }
+
+    public static function generateUsername(string $name): string
+    {
+        $username = Str::slug($name);
+        $originalUsername = $username;
+
+        // Verificar si el nombre de usuario ya existe en la base de datos
+        $counter = 1;
+        while (User::where('username', $username)->exists()) {
+            $username = $originalUsername . $counter;
+            $counter++;
+        }
+
+        return $username;
     }
 }

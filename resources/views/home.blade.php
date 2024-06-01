@@ -43,7 +43,7 @@
                 <div class="tarjeta bg-gris-claro">
                     <div class="foto-tarjeta bg-gris">
                         @foreach ($post->images as $image)
-                            <img src={{ asset("storage/posts_images/{$image->url}") }} alt="">
+                            <img src={{ asset("storage/posts_images/" . $post->user->username . "/" . $image->url) }} alt="">
                         @endforeach
                     </div>
                     <div class="info-tarjeta relative">

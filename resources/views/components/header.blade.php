@@ -24,9 +24,9 @@
             @auth
                 <div class="dropdown relative">
                     <img class="size-10 redondo cursor-pointer dropdown-button" data-toggle-node="dropdown"
-                        @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
+                        @if ($user->profile->google_avatar == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
                     @else
-                    src="{{ $user->profile->image->url }}" alt="" @endif>
+                    src="{{ $user->profile->google_avatar }}"  @endif alt="">
 
                     <div
                         class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg hidden">

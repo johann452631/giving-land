@@ -5,9 +5,9 @@
                 <img class="size-48 redondo mb-6 mx-auto" src="{{ $photo->temporaryUrl() }}">
             @else
                 <img class="size-48 redondo mb-6 mx-auto"
-                    @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
+                    @if ($profile->google_avatar == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
                 @else
-                src="{{ $profile->image->url }}" alt="" @endif
+                src="{{ $profile->google_avatar }}" alt="" @endif
                     id="imagenSeleccionada">
             @endif
             <div>
@@ -16,9 +16,10 @@
             </div>
 
             <div class="mt-4 min-w-16 flex flex-between">
-                <button class="boton-base verde-blanco disabled:opacity-75 mr-6" type="submit" @disabled($submitDisabled)>Guardar</button>
-                <button class="boton-base bg-gray-500 text-white" type="reset"
-                    x-on:click="show = false" wire:click='cancel'>Cancelar</button>
+                <button class="boton-base verde-blanco disabled:opacity-75 mr-6" type="submit"
+                    @disabled($submitDisabled)>Guardar</button>
+                <button class="boton-base bg-gray-500 text-white" type="reset" x-on:click="show = false"
+                    wire:click='cancel'>Cancelar</button>
             </div>
         </form>
     </x-popup-livewire>
@@ -36,14 +37,13 @@
     <div>
         <div class="flex w-full items-center">
             <img class="size-16 redondo mr-4"
-                @if ($profile->user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
-                @else
-                src="{{ $profile->image->url }}" alt="" @endif>
+                @if ($profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
+                    @else
+                    src="{{ $profile->google_avatar }}" alt="" @endif>
             <div>
                 <i class="p-2 rounded cursor-pointer bg-yellow-300 mr-4 fa-solid fa-pen" wire:click='edit'></i>
-                @if ($profile->image->url != 'default.svg')
-                    <i class="p-2 rounded cursor-pointer bg-red-500 fa-solid fa-trash"
-                        wire:click='dialogDeletePhoto'></i>
+                @if(($profile->image !== null && $profile->image->url != 'default.svg' ) || $profile->google_avatar !== null)
+                    <i class="p-2 rounded cursor-pointer bg-red-500 fa-solid fa-trash" wire:click='dialogDelete'></i>
                 @endif
             </div>
         </div>

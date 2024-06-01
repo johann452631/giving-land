@@ -6,9 +6,9 @@
             'border-l-4 border-green-700' => $section == 'profile',
         ]) href="{{ route('profile.show', $user->username) }}" >
             <img class="size-8 redondo"
-                @if ($user->google_id == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
+                @if ($user->profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
             @else
-            src="{{ $user->profile->image->url }}" alt="" @endif>
+            src="{{ $user->profile->google_avatar }}" alt="" @endif>
             <p>{{ $user->name }}</p>
         </a>
         @isset($section)
