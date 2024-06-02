@@ -36,21 +36,24 @@ class ContactInformation extends Component
         $this->resetValidation();
     }
 
-    public function editOrCreate($item = null){
-        if(isset($item)){
-            $this->fill((new ModelsContactInformation($item))->only(['name','info','is_link']));
+    public function editOrCreate($item = null)
+    {
+        if (isset($item)) {
+            $this->fill((new ModelsContactInformation($item))->only(['name', 'info', 'is_link']));
             $this->id = $item['id'];
-        }else{
+        } else {
             $this->mount();
         }
         $this->editOrCreateDisplayed = true;
     }
 
-    public function onChange(){
+    public function onChange()
+    {
         $this->resetValidation();
     }
 
-    public function cancel(){
+    public function cancel()
+    {
         $this->editOrCreateDisplayed = false;
     }
 
@@ -59,7 +62,7 @@ class ContactInformation extends Component
         $this->validate(
             [
                 'name' => 'required',
-                'info' => 'required'
+                'info' => ($this->is_link) ? 'required|url' : 'required'
             ],
             [
                 'info.required' => 'La :attribute es requerida.',
@@ -68,11 +71,12 @@ class ContactInformation extends Component
                 'info' => 'información',
             ]
         );
-        $this->profile->contactInformation()->updateOrCreate($this->only('id'),$this->only(['name', 'info','is_link']));
+        $this->profile->contactInformation()->updateOrCreate($this->only('id'), $this->only(['name', 'info', 'is_link']));
         $this->editOrCreateDisplayed = false;
     }
 
-    public function dialogDestroy(ModelsContactInformation $item){
+    public function dialogDestroy(ModelsContactInformation $item)
+    {
         $this->deleteDisplayed = true;
         $this->item = $item;
     }

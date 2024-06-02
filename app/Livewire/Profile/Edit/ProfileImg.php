@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Profile\Edit;
 
+use App\Models\Image;
 use App\MyOwn\classes\Utility;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,8 @@ class ProfileImg extends Component
         $this->editDisplayed = true;
     }
 
-    public function photoLoaded(){
+    public function photoLoaded()
+    {
         $this->submitDisabled = false;
     }
 
@@ -44,15 +46,24 @@ class ProfileImg extends Component
     public function update()
     {
         // dd($this->photo);
-        if ($this->profile->image->url != 'storage/users_profile_images/default.svg') {
+        if ($this->profile->google_avatar !== null) {
+            $this->profile->update(['google_avatar' => null]);
+
+            $this->profile->image()->save(Image::create());
+        }
+
+        if ($this->profile->image->url != 'default.svg' && $this->profile->image->url !== null) {
             Storage::delete('public/users_profile_images/' . $this->profile->image->url);
         }
+
         $imgName = "image_" . Str::uuid() . "." . $this->photo->getClientOriginalExtension();
-        $this->profile->image->update([
-            'url' => $imgName
-        ]);
+
+        $this->profile->image->update(['url' => $imgName]);
+
         $this->photo->storeAs('public/users_profile_images', $imgName);
+
         Utility::sendAlert('success', 'Se actualizó la foto de perfil');
+
         return to_route('profile.edit');
     }
 
@@ -63,12 +74,20 @@ class ProfileImg extends Component
 
     public function delete()
     {
-        Storage::delete($this->profile->image->url);
-        $this->profile->image->update([
-            'url' => 'storage/users_profile_images/default.svg'
-        ]);
-
         Utility::sendAlert('warning', 'Se eliminó tu foto de perfil');
+
+        if ($this->profile->google_avatar !== null) {
+            $this->profile->update(['google_avatar' => null]);
+
+            $this->profile->image()->save(Image::create(['url' => 'default.svg']));
+
+            return to_route('profile.edit');
+        }
+
+
+        Storage::delete("public/users_profile_images/" . $this->profile->image->url);
+
+        $this->profile->image->update(['url' => 'default.svg']);
 
         return to_route('profile.edit');
     }

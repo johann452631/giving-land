@@ -16,10 +16,11 @@ class ContactInformationFactory extends Factory
      */
     public function definition(): array
     {
+        $is_link = fake()->randomElement([0,1]);
         return [
             'name' => fake()->words(rand(1,3),true),
-            'info' => fake()->url(),
-            'is_link' => rand(0,1),
+            'info' => ($is_link) ? fake()->url() : fake()->word(),
+            'is_link' => $is_link,
         ];
     }
 }

@@ -41,13 +41,13 @@
     @endif
 
     {{-- botón para agregar info --}}
-    <buton @class([
-        'bg-blue-700 boton-base text-white mb-4 rounded',
-        'hidden' => $editOrCreateDisplayed,
-    ]) wire:click='editOrCreate()'>
-        Agregar
-    </buton>
+    @if (!$editOrCreateDisplayed && count($profile->contactInformation) < 5)
+        <buton class="bg-blue-700 boton-base text-white mb-4 rounded" wire:click='editOrCreate()'>
+            Agregar
+        </buton>
+    @endif
 
+    {{-- Crear o editar una información de contacto --}}
     @if ($editOrCreateDisplayed)
         <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='updateOrStore()'>
             <div class="grid mb-4" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
@@ -67,7 +67,7 @@
                         <label class="text-lg" title="Se podrá navegar con un click">
                             <i class="fa-solid fa-circle-question fa-xs"></i>
                             Es enlace
-                            <input class="text-gray-900" type="checkbox" wire:model='is_link'
+                            <input class="text-gray-900" type="checkbox" wire:model='is_link' tabindex="-1"
                                 @checked($is_link)>
                         </label>
                     </div>
@@ -88,9 +88,9 @@
     {{-- Pop up diálogo de confirmación de eliminación --}}
     @if ($item !== null && $deleteDisplayed)
         <x-popup-livewire max-width="md" wire:model='deleteDisplayed'>
-            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{$item}})'>
+            <form class="bg-gris-claro rounded-lg p-8" wire:submit='destroy({{ $item }})'>
                 <div class="flex flex-wrap mb-3 text-lg">
-                    ¿Estás segura/o de eliminar&nbsp;<b>{{ $item->name." : ".$item->info }}</b>?
+                    ¿Estás segura/o de eliminar&nbsp;<b>{{ $item->name . ' : ' . $item->info }}</b>?
                 </div>
                 <button type="submit" class="boton-base bg-red-500 mr-3">Eliminar</button>
                 <button type="button" class="boton-base bg-gris text-white" x-on:click="show = false">Cancelar</button>

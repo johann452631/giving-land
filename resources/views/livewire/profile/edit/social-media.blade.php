@@ -35,12 +35,11 @@
     @endif
 
     <!-- Botón para agregar red social -->
-    <buton @class([
-        'bg-blue-700 boton-base text-white mb-4 rounded',
-        'hidden' => !count($createSocialMedia) || $createDisplayed,
-    ]) wire:click='create'>
-        Agregar
-    </buton>
+    @if (count($createSocialMedia) && !$createDisplayed)
+        <buton class="bg-blue-700 boton-base text-white mb-4 rounded" wire:click='create'>
+            Agregar
+        </buton>
+    @endif
 
     @if ($createDisplayed)
         <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='store()'>

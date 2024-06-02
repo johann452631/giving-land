@@ -9,7 +9,11 @@
 
     <div class="contenido-main screen-size">
         {{-- <livewire:profile.profile-section /> --}}
-        <livewire:profile.profile-nav :$profile :$section />
+        <div>
+            @auth
+                <livewire:profile.profile-nav :$profile :$section />
+            @endauth
+        </div>
         <div>
             @switch($section)
                 @case('favorites')
