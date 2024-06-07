@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
-    public function home(?string $category = null){
-        $posts= isset($category) ? Category::where('name',$category)->first()->posts : Post::all();
-        return view('home',[
-            'categories' => Category::all(),
-            'posts'=> $posts,
-        ]);
+    public function home(){
+        $posts = Post::all();
+        $categories = Category::all();
+        return view('home',compact('posts','categories'));
     }
 
     public static function logout()

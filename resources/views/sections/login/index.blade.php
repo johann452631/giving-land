@@ -4,7 +4,7 @@
     </x-simple-header>
 
     <div class="h-screen pt-16 grid place-items-center px-4">
-        <x-form ruta-siguiente="login.authenticate" class="auth-form shadow shadow-gray-400">
+        <x-form ruta-siguiente="login.authenticate" class="auth-form shadow shadow-gray-400 bg-gris-claro">
             <h2 class="text-center texto-verde text-3xl mb-6">Inicio de sesión</h2>
 
             <x-forms.input type="email" name="email" label-text="Correo electrónico:" class="mb-10" autofocus />

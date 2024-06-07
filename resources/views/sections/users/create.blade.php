@@ -2,7 +2,7 @@
     <x-simple-header />
 
     <div class="h-screen pt-16 grid place-items-center px-4">
-        <x-form ruta-siguiente="users.store" class="auth-form shadow shadow-gray-400">
+        <x-form ruta-siguiente="users.store" class="auth-form shadow shadow-gray-400 bg-gris-claro">
             <h2 class="text-center texto-verde text-3xl mb-6">Registro de datos</h2>
             <p class="text-gray-800 mb-5">
                 <font class="text-red-600">*</font> Indica que es obligatorio.

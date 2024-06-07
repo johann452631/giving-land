@@ -3,8 +3,7 @@
     'parametro' => null,
     'metodo' => null,
 ])
-<form action={{ route($rutaSiguiente, $parametro) }} method="POST"
-    {{ $attributes->merge(['class' => 'bg-gris-claro']) }}>
+<form action={{ route($rutaSiguiente, $parametro) }} method="POST" {{$attributes}}>
     @csrf
     @isset($metodo)
         @method($metodo)

@@ -1,5 +1,5 @@
 <div class="menu-opciones-lateral">
-    <a class="inline-block boton-base verde-blanco mb-4" href="">Publicar artículo</a>
+    <a class="inline-block boton-base verde-blanco mb-4" href="{{route('posts.create')}}">Publicar artículo</a>
     <div class="flex flex-col">
         <a wire:navigate @class([
             'hover-gris-claro p-2 rounded flex items-center',

@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChangeEmailController;
 use App\Http\Controllers\CodeValidationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SettlementController;
@@ -77,8 +79,6 @@ Route::get('/google-auth/redirect', function () {
 
 Route::get('/google-auth/callback', function () {
     $user_google = Socialite::driver('google')->stateless()->user();
-    // dd($user_google);
-    // dd($user_google);
     $user = User::where('email', $user_google->email)->get()->first();
     if ($user === null) {
         $user = User::create([
@@ -88,7 +88,6 @@ Route::get('/google-auth/callback', function () {
         $user->update(['username' => Utility::generateUsername($user->name)]);
         $user->profile()->save(Profile::create(['google_avatar' => $user_google->avatar]));
     }
-    // dd($user->profile);
     Utility::sendAlert('success', 'Se ingresó con su cuenta de Google');
     Auth::login($user);
     Session()->regenerate();
@@ -96,7 +95,7 @@ Route::get('/google-auth/callback', function () {
 });
 
 Route::controller(AppController::class)->group(function () {
-    Route::get('/posts/{category?}', 'home')->name('home');
+    Route::get('/', 'home')->name('home');
     Route::post('/logout', 'logout')->name('app.logout');
 });
 
@@ -120,6 +119,10 @@ Route::controller(SignupController::class)->group(function () {
     Route::get('/signup/code-form/{token}', 'codeForm')->name('signup.codeForm');
     Route::post('/signup/verify-code', 'verifyCode')->name('signup.verifyCode');
 });
+
+Route::resource('categories', CategoryController::class)->only(['show']);
+
+Route::resource('posts', PostController::class);
 
 Route::get('users/create/{token}', [UserController::class, 'create'])->name('users.create');
 

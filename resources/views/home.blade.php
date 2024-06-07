@@ -16,9 +16,7 @@
         {{-- Filtro lateral --}}
         <div class="menu-opciones-lateral">
             @auth
-                <a class="btn-publicar boton-base block pt-2 pb-2 gris-blanco text-center hover-verde" href="#">
-                    Publicar artículo
-                </a>
+            <a class="inline-block boton-base verde-blanco mb-4" href="{{route('posts.create')}}">Publicar artículo</a>
             @endauth
             <div class="bg-gris-claro mt-3 ps-2 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
@@ -31,7 +29,7 @@
             <ul class="flex flex-col">
                 <a href="{{ route('home') }}">Ver todo</a>
                 @foreach ($categories as $category)
-                    <a href="{{ route('home', $category->name) }}">{{ $category->name }}</a>
+                    <a href="{{ route('categories.show', $category->name) }}">{{ $category->name }}</a>
                 @endforeach
             </ul>
         </div>

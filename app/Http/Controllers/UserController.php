@@ -36,9 +36,10 @@ class UserController extends Controller
         session()->forget('token');
         $request->merge(['password' => Hash::make($request->password)]);
         $user = User::create($request->except('_token'));
-        $user->update(['username' => str_replace(" ", "_", strtolower($user->name)) . "_" . $user->id]);
+        // $user->update(['username' => str_replace(" ", "_", strtolower($user->name)) . "_" . $user->id]);
+        $user->update(['username' => Utility::generateUsername($user->name)]);
         $user->profile()->save(Profile::create());
-        $user->profile->image()->save(Image::create(['url' => 'storage/default.svg']));
+        $user->profile->image()->save(Image::create(['url' => 'default.svg']));
         Auth::login($user);
         $request->session()->regenerate();
         Utility::sendAlert('success', 'Se registró y se inició sesión.');
