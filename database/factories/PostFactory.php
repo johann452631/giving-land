@@ -18,9 +18,11 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $purpose = fake()->randomElement(['d','i']);
         return [
             'name' => fake()->words(4,true),
-            'purpose' => fake()->randomElement(['Intercambio','Donación']),
+            'purpose' => $purpose,
+            'expected_item' => ($purpose == 'd') ? null : fake()->words(5,true),
             'description' => fake()->text(),
             'location' => fake()->city(),
             'user_id' => User::all()->random()->id,

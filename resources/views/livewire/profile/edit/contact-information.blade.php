@@ -50,7 +50,7 @@
     {{-- Crear o editar una información de contacto --}}
     @if ($editOrCreateDisplayed)
         <form class="bg-gris-claro rounded-lg border-2 p-2" wire:submit='updateOrStore()'>
-            <div class="grid mb-4" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+            <div class="grid mb-4" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
                 <div class="div-form-input mr-4">
                     <label class="texto-verde text-lg" for="contact_information_input_name">Nombre</label>
                     <input class="w-full text-gray-900 placeholder:text-base" type="text" wire:model="name"

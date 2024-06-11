@@ -1,6 +1,6 @@
 <x-html>
     @pushOnce('links')
-        <link rel="stylesheet" href="{{ asset('css/profile-index.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/profile/index.css') }}">
     @endPushOnce
 
     @persist('header')

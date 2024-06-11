@@ -1,4 +1,5 @@
 <div class="pb-4">
+    {{-- Pop up cambiar imagen --}}
     <x-popup-livewire max-width="sm" wire:model='editDisplayed'>
         <form class="rounded py-8 px-2 flex flex-col items-center" wire:submit='update'>
             @if ($photo)
@@ -33,6 +34,7 @@
         </form>
     </x-popup-livewire>
 
+    {{-- ver imagen y acciones --}}
     <h2 class="texto-verde mb-2 text-2xl">Imagen de perfil:</h2>
     <div>
         <div class="flex w-full items-center">

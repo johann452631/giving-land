@@ -14,6 +14,14 @@ class Post extends Model
 {
     use HasFactory;
 
+    // public static function getPurpuseValues()
+    // {
+    //     return [
+    //         'd' => 'donación',
+    //         'i' => 'intercambio',
+    //     ];
+    // }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
