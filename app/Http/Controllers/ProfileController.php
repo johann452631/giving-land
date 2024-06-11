@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
     public function show($username)
     {
-        $profile = User::where('username',$username)->first()->profile;
+        $profile = ($username) ?  User::where('username',$username)->first()->profile : Auth::user()->profile;
         return view('sections.profile.index',[
             'profile' => $profile,
             'section' => 'profile'

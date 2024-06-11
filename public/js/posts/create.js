@@ -1,7 +1,7 @@
+//para imágenes
 const imageInput = document.getElementById('image_input');
 const bigLabelImages = document.getElementById('big_label_images');
 const smallLabelImages = document.getElementById('small_label_images');
-
 let files = [];
 const imagesContainer = document.getElementById('images_container');
 const prevBtn = document.getElementById('prevBtn');
@@ -9,6 +9,11 @@ const nextBtn = document.getElementById('nextBtn');
 let images = [];
 let currentIndex = 0;
 
+//select para el propósito de la publicación
+const purposeSelect = document.getElementById('purpose_select');
+let inputExpectedItem = document.getElementById('input_expected_item');
+
+//métodos para las imágenes
 imageInput.addEventListener('input', () => {
     if (files.concat(Array.from(imageInput.files)).length > 5) {
         alert('Sólo puedes subir hasta 5 imágenes');
@@ -16,7 +21,6 @@ imageInput.addEventListener('input', () => {
     }
     
     files = files.concat(Array.from(imageInput.files));
-    console.log(files);
     images = files.map(file => URL.createObjectURL(file));
     if (images.length) {
         bigLabelImages.classList.add('hidden');
@@ -68,7 +72,6 @@ function updateCarousel() {
     });
 
     containerChildren[currentIndex].classList.remove('hidden');
-    console.log(containerChildren[currentIndex]);
 
     if (currentIndex != 0) {
         prevBtn.classList.remove('hidden');
@@ -81,8 +84,6 @@ function updateCarousel() {
     } else {
         nextBtn.classList.remove('hidden');
     }
-
-    // console.log(imagesContainer.querySelectorAll('div'));
 }
 
 window.removeImage = (index) => {
@@ -97,3 +98,17 @@ window.removeImage = (index) => {
         smallLabelImages.classList.remove('hidden');
     }
 };
+
+//métodos para el select del propósito
+purposeSelect.addEventListener('change',(event) => {
+    if(event.target.value == 'i'){
+        inputExpectedItem.classList.remove('hidden');
+    }else{
+        inputExpectedItem.classList.add('hidden');
+    }
+});
+
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.searchable-select').select2();
+});
