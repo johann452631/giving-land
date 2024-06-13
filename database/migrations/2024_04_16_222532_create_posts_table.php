@@ -20,12 +20,12 @@ return new class extends Migration
             $table->enum('purpose',['d','i']);
             $table->string('expected_item',100)->nullable();
             $table->string('description');
-            $table->string('location',80);
             $table->boolean('draft')->default(1);
             $table->boolean('reported')->default(0);
             $table->boolean('banned')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('location_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

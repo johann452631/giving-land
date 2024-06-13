@@ -2,7 +2,9 @@
 
     @pushOnce('links')
         <link rel="stylesheet" href="{{ asset('css/posts/create.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @endPushOnce
 
     {{-- header --}}
@@ -36,20 +38,27 @@
                 </div>
                 <div class="max-w-96">
                     <x-forms.input label-text="Nombre del artículo" name="name" class="mb-6" />
-                    <select name="purpose" id="purpose_select"
-                        class="outline-none bg-transparent w-full mb-6 text-lg texto-verde font-bold">
+                    <select name="purpose" id="purpose_select" class="outline-none bg-transparent w-full mb-6 text-lg">
+                        <option value="0" disabled selected>Propósito de la publicación</option>
                         <option value="d" class="text-gray-900">Donación</option>
                         <option value="i" class="text-gray-900">Intercambio</option>
                     </select>
-                    <x-forms.input label-text="Producto de interés a recibir" name="expected_item"
+                    <x-forms.input label-text="Artículo de interés a recibir" name="expected_item"
                         id="input_expected_item" class="mb-6 hidden" />
-                    <textarea name="description" id="" rows="3" placeholder="Descripción del artículo"></textarea>
-                    <select class="searchable-select" id="mySelect">
-                        <option value="apple">Apple</option>
-                        <option value="banana">Banana</option>
-                        <option value="orange">Orange</option>
-                        <option value="grape">Grape</option>
-                        <option value="kiwi">Kiwi</option>
+                    <textarea class="mb-6" name="description" id="" rows="3" placeholder="Descripción del artículo"></textarea>
+                    <select name="location" class="searchable-select w-full">
+                        <option value="0" disabled selected>Seleccione una ubicación</option>
+                        @foreach ($locationData as $item)
+                            <option class="text-gray-900" value="{{ $item->id }}">
+                                {{ $item->municipio . ' (' . $item->departamento . ')' }}</option>
+                        @endforeach
+                    </select>
+                    <select name="category" id="category_select"
+                        class="outline-none bg-transparent w-full mb-6 text-lg">
+                        <option value="0" disabled selected>Seleccione una categoría</option>
+                        @foreach ($categories as $category)
+                            <option class="text-gray-900" value="{{ $category->id }}">{{$category->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </form>
@@ -59,6 +68,5 @@
     {{-- footer --}}
     <x-footer />
     <script src="{{ asset('js/posts/create.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </x-html>

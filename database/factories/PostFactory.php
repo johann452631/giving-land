@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,9 +25,9 @@ class PostFactory extends Factory
             'purpose' => $purpose,
             'expected_item' => ($purpose == 'd') ? null : fake()->words(5,true),
             'description' => fake()->text(),
-            'location' => fake()->city(),
             'user_id' => User::all()->random()->id,
             'category_id' => Category::all()->random()->id,
+            'location_id' => Location::all()->random()->id,
         ];
     }
 }

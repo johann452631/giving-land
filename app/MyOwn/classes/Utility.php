@@ -2,6 +2,7 @@
 namespace App\MyOwn\classes;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -36,5 +37,9 @@ class Utility
         }
 
         return $username;
+    }
+
+    public static function getLocationData(){
+        return DB::table('departamentos_municipios')->get();
     }
 }
