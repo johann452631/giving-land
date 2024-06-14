@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\Location;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -22,7 +22,7 @@ return new class extends Migration
         });
         $data = array_map('str_getcsv', file(storage_path('app/default/departamentos_municipios.csv')));
         foreach ($data as $row) {
-            DB::table('locations')->insert([
+            Location::insert([
                 'region' => $row[0],
                 'codigo_dane_departamento' => $row[1],
                 'departamento' => $row[2],

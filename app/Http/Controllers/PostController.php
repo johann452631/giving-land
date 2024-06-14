@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUpdatePostRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Category;
 use App\Models\Location;
+use DragonCode\Support\Facades\Helpers\Arr;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,10 +17,19 @@ class PostController extends Controller
     }
 
     public function create(){
-        $locationData = Location::all();
+        $locations = Location::all();
         $categories = Category::all();
-        // dd($locationData);
-        return view('sections.posts.create',compact('locationData','categories'));
-        
+        return view('sections.posts.create',compact('locations','categories'));
+    }
+
+    public function store(Request $request){
+        // $request->except()
+        // dd($request);
+        if ($request->has('expected_item')) {
+            $request->validate(StoreUpdatePostRequest::rules());
+        }else{
+            $request->validate(Arr::except(StoreUpdatePostRequest::rules(),'expected_item'));
+        }
+        dd($request);
     }
 }

@@ -12,6 +12,7 @@ let currentIndex = 0;
 //select para el propósito de la publicación
 const purposeSelect = document.getElementById('purpose_select');
 let inputExpectedItem = document.getElementById('input_expected_item');
+let divExpectedItem = document.getElementById('div_expected_item');
 
 //métodos para las imágenes
 imageInput.addEventListener('input', () => {
@@ -100,11 +101,16 @@ window.removeImage = (index) => {
 };
 
 //métodos para el select del propósito
+if (purposeSelect.value == 'i') {
+    inputExpectedItem.disabled = false;
+}
 purposeSelect.addEventListener('change',(event) => {
     if(event.target.value == 'i'){
-        inputExpectedItem.classList.remove('hidden');
+        divExpectedItem.classList.remove('hidden');
+        inputExpectedItem.disabled = false;
     }else{
-        inputExpectedItem.classList.add('hidden');
+        divExpectedItem.classList.add('hidden');
+        inputExpectedItem.disabled = true;
     }
 });
 

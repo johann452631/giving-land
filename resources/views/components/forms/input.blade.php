@@ -1,8 +1,11 @@
 @props([
     'labelText' => '',
-    'isRequired' => false
+    'isRequired' => false,
+    'divId' => null,
     ])
-<div {{ $attributes->merge(['class' => 'div-form-input']) }}>
+<div {{ $attributes->whereStartsWith('class')->class(['div-form-input']) }} @isset($divId)
+    id="{{$divId}}"
+@endisset>
     <label class="texto-verde text-lg">
         <span @class(['text-red-600', 'hidden' => !$isRequired])>*</span> {{ $labelText }}
         {{-- <br> --}}

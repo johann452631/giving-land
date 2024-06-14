@@ -20,7 +20,6 @@ return new class extends Migration
             $table->enum('purpose',['d','i']);
             $table->string('expected_item',100)->nullable();
             $table->string('description');
-            $table->boolean('draft')->default(1);
             $table->boolean('reported')->default(0);
             $table->boolean('banned')->default(0);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
