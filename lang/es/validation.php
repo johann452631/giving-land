@@ -187,7 +187,10 @@ return [
         'email' => 'correo electrónico',
         'password' => 'contraseña',
         'password_confirmation' => 'confirmación de contraseña',
-        'username' => 'nombre de usuario'
+        'username' => 'nombre de usuario',
+        'description' => 'descripción',
+        'location' => 'ubicación',
+        'category' => 'categoría',
     ],
 
 ];

@@ -46,51 +46,59 @@
                             <label class="texto-verde text-lg">
                                 Propósito de la publicación
                                 <select name="purpose" id="purpose_select"
-                                    class="outline-none rounded border border-gray-400 w-full text-gray-900">
+                                    class="outline-none rounded border border-gray-400 w-full text-gray-900 cursor-pointer">
                                     <option value="" class="text-gray-500">Seleccione el propósito</option>
-                                    <option value="d" class="text-gray-900" @selected(old('purpose') == 'd')>Donación</option>
-                                    <option value="i" class="text-gray-900" @selected(old('purpose') == 'i')>Intercambio</option>
+                                    <option value="d" class="text-gray-900" @selected(old('purpose') == 'd')>Donación
+                                    </option>
+                                    <option value="i" class="text-gray-900" @selected(old('purpose') == 'i')>
+                                        Intercambio</option>
                                 </select>
                             </label>
                             @error('purpose')
-                                <p class="text-red-500 input-error">*{{$message}}</p>
+                                <p class="text-red-500 input-error">*{{ $message }}</p>
                             @enderror
                         </div>
                         <x-forms.input label-text="Artículo de interés a recibir" name="expected_item"
-                            id="input_expected_item" @class(['mb-6', 'hidden' => old('purpose') != 'i']) disabled div-id="div_expected_item"/>
+                            id="input_expected_item" @class(['mb-6', 'hidden' => old('purpose') != 'i']) disabled div-id="div_expected_item" />
                         <div class="mb-6">
                             <label class="texto-verde text-lg">
                                 Descripción
-                                <textarea class="text-gray-900" name="description" id="" rows="3">{{old('description')}}</textarea>
+                                <textarea class="text-gray-900" name="description" id="" rows="3">{{ old('description') }}</textarea>
                             </label>
                             @error('description')
-                                <p class="text-red-500 input-error">*{{$message}}</p>
+                                <p class="text-red-500 input-error">*{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="mb-6">
                             <label class="texto-verde text-lg">
                                 Ubicación
-                                <select name="location" class="outline-none text-gray-900 searchable-select w-full">
-                                    <option value="0" disabled selected>Seleccione una ubicación</option>
+                                <select name="location_id" class="searchable-select">
+                                    <option value="">Seleccione una ubicación</option>
                                     @foreach ($locations as $location)
-                                        <option value="{{ $location->id }}">
+                                        <option value="{{ $location->id }}" @selected(old('location_id') == $location->id)>
                                             {{ $location->municipio . ' (' . $location->departamento . ')' }}</option>
                                     @endforeach
                                 </select>
                             </label>
+                            @error('location_id')
+                                <p class="text-red-500 input-error">*{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="texto-verde text-lg">
                                 Categoría
-                                <select name="category"
-                                    class="outline-none bg-transparent w-full mb-6 text-lg text-gray-900">
-                                    <option value="0" disabled selected>Seleccione una categoría</option>
+                                <select name="category_id"
+                                    class="outline-none rounded border border-gray-400 w-full text-gray-900 cursor-pointer">
+                                    <option value="" class="text-gray-500">Seleccione una categoría</option>
                                     @foreach ($categories as $category)
-                                        <option class="text-gray-900" value="{{ $category->id }}">{{ $category->name }}
-                                        </option>
+                                        <option class="text-gray-900" value="{{ $category->id }}"
+                                            @selected(old('category_id') == $category->id)>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </label>
+                            @error('category_id')
+                                <p class="text-red-500 input-error">*{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>

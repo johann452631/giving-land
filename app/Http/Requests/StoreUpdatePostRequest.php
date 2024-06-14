@@ -22,11 +22,12 @@ class StoreUpdatePostRequest extends FormRequest
     public static function rules(): array
     {
         return [
-            'name' => 'required|alpha_dash|max:100',
+            'name' => 'required|max:100|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
             'purpose' => 'required',
-            'expected_item' => 'required|alpha_dash|max:100',
-            'description' => 'required|alpha_dash|max:255',
-            // 'location' => 'required'
+            'expected_item' => 'required|max:100|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
+            'description' => 'required|max:255|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
+            'location_id' => 'required',
+            'category_id' => 'required'
         ];
     }
 }

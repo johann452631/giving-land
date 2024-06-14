@@ -14,13 +14,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    // public static function getPurpuseValues()
-    // {
-    //     return [
-    //         'd' => 'donación',
-    //         'i' => 'intercambio',
-    //     ];
-    // }
+    protected $fillable = [
+        'name',
+        'purpose',
+        'expected_item',
+        'description',
+        'location_id',
+        'category_id',
+    ];
 
     public function category(): BelongsTo
     {
