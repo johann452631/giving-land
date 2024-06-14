@@ -13,9 +13,6 @@ let currentIndex = 0;
 const purposeSelect = document.getElementById('purpose_select');
 let inputExpectedItem = document.getElementById('input_expected_item');
 
-//select para la categoría de la publicación
-const categorySelect = document.getElementById('category_select');
-
 //métodos para las imágenes
 imageInput.addEventListener('input', () => {
     if (files.concat(Array.from(imageInput.files)).length > 5) {
@@ -104,8 +101,6 @@ window.removeImage = (index) => {
 
 //métodos para el select del propósito
 purposeSelect.addEventListener('change',(event) => {
-    event.target.classList.add('texto-verde');
-    event.target.classList.add('font-bold');
     if(event.target.value == 'i'){
         inputExpectedItem.classList.remove('hidden');
     }else{
@@ -113,12 +108,9 @@ purposeSelect.addEventListener('change',(event) => {
     }
 });
 
-categorySelect.addEventListener('change',(event) => {
-    event.target.classList.add('texto-verde');
-    event.target.classList.add('font-bold');
-});
 
 // In your Javascript (external .js resource or <script> tag)
 $(document).ready(function() {
     $('.searchable-select').select2();
+    $('.searchable-select+span').css('width','100%');
 });
