@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreUpdatePostRequest extends FormRequest
 {
@@ -22,10 +23,14 @@ class StoreUpdatePostRequest extends FormRequest
     public static function rules(): array
     {
         return [
-            'name' => 'required|max:100|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
+            'imagesUrls' => 'required|array|max:5',
+            // 'images.*' => [
+            //     File::image()->min('10kb')->max('10mb'),
+            // ],
+            'name' => 'required|max:100|regex:/^[\p{L}\p{N}\sñÑáéíóúÁÉÍÓÚüÜ.,:;-_()]+$/u',
             'purpose' => 'required',
-            'expected_item' => 'required|max:100|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
-            'description' => 'required|max:255|regex:/^[\p{L}ñÑáéíóúÁÉÍÓÚüÜ0-9\s]+$/u',
+            'expected_item' => 'exclude_unless:purpose,i|required|max:100|regex:/^[\p{L}\p{N}\sñÑáéíóúÁÉÍÓÚüÜ.,:;-_()]+$/u',
+            'description' => 'required|max:255|regex:/^[\p{L}\p{N}\sñÑáéíóúÁÉÍÓÚüÜ.,:;-_()]+$/u',
             'location_id' => 'required',
             'category_id' => 'required'
         ];

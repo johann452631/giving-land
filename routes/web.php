@@ -37,25 +37,12 @@ use Laravel\Socialite\Facades\Socialite;
 // Route::view('/', 'welcome');
 
 Route::get('p', function () {
-    // $credentials = array(
-    //     'email' => 'alejoimbachihoyos@gmail.com',
-    //     'password' => 'buenas'
-    // );
-    // Auth::attempt($credentials);
-    // Auth::logout();
-    // return session()->invalidate();
-    // session(['hola'=>'valor']);
-    // session(['hola_timeout'=>now()->addSeconds(10)]);
-    // if (now() > session('hola_timeout')) {
-    //     session()->forget('hola');
-    //     session()->forget('hola_timeout');
-    // }
     return bin2hex(random_bytes(16));
 });
 
 
 Route::get('/all', function () {
-    return session()->all();
+    dd(session()->all());
 });
 Route::get('/invalidate', function () {
     return session()->invalidate();
@@ -122,7 +109,7 @@ Route::controller(SignupController::class)->group(function () {
 
 Route::resource('categories', CategoryController::class)->only(['show']);
 
-Route::resource('posts', PostController::class)->only(['create', 'store']);
+Route::resource('posts', PostController::class)->only(['create','edit']);
 
 Route::get('users/create/{token}', [UserController::class, 'create'])->name('users.create');
 

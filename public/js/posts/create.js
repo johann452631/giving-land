@@ -10,109 +10,110 @@ let images = [];
 let currentIndex = 0;
 
 //select para el propósito de la publicación
-const purposeSelect = document.getElementById('purpose_select');
-let inputExpectedItem = document.getElementById('input_expected_item');
-let divExpectedItem = document.getElementById('div_expected_item');
+// const purposeSelect = document.getElementById('purpose_select');
+// let inputExpectedItem = document.getElementById('input_expected_item');
+// let divExpectedItem = document.getElementById('div_expected_item');
 
 //métodos para las imágenes
-imageInput.addEventListener('input', () => {
-    if (files.concat(Array.from(imageInput.files)).length > 5) {
-        alert('Sólo puedes subir hasta 5 imágenes');
-        return;
-    }
+// imageInput.addEventListener('input', () => {
+//     // console.log(Array.from(imageInput.files).length);
+//     if (files.concat(Array.from(imageInput.files)).length > 5) {
+//         alert('Sólo puedes subir hasta 5 imágenes');
+//         return;
+//     }
     
-    files = files.concat(Array.from(imageInput.files));
-    images = files.map(file => URL.createObjectURL(file));
-    if (images.length) {
-        bigLabelImages.classList.add('hidden');
-        smallLabelImages.classList.remove('hidden');
-    }
+//     files = files.concat(Array.from(imageInput.files));
+//     images = files.map(file => URL.createObjectURL(file));
+//     if (images.length) {
+//         bigLabelImages.classList.add('hidden');
+//         smallLabelImages.classList.remove('hidden');
+//     }
 
-    if(images.length > 4){
-        smallLabelImages.classList.add('hidden');
-    }
+//     if(images.length > 4){
+//         smallLabelImages.classList.add('hidden');
+//     }
 
-    renderImages();
-});
+//     renderImages();
+// });
 
-prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-    }
-});
+// prevBtn.addEventListener('click', () => {
+//     if (currentIndex > 0) {
+//         currentIndex--;
+//         updateCarousel();
+//     }
+// });
 
-nextBtn.addEventListener('click', () => {
-    if (currentIndex < images.length - 1) {
-        currentIndex++;
-        updateCarousel();
-    }
-});
+// nextBtn.addEventListener('click', () => {
+//     if (currentIndex < images.length - 1) {
+//         currentIndex++;
+//         updateCarousel();
+//     }
+// });
 
-function renderImages() {
-    imagesContainer.innerHTML = images.map((src, index) => `
-                <div class="relative w-full">
-                    <div class="flex justify-center items-center h-72">
-                        <img src="${src}" class="max-w-fit" style="height: 120%;">
-                    </div>
-                    <button class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full" onclick="removeImage(${index})">x</button>
-                </div>
-    `).join('');
+// function renderImages() {
+//     imagesContainer.innerHTML = images.map((src, index) => `
+//                 <div class="relative w-full">
+//                     <div class="flex justify-center items-center h-72">
+//                         <img src="${src}" class="max-w-fit" style="height: 120%;">
+//                     </div>
+//                     <button class="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full" onclick="removeImage(${index})">x</button>
+//                 </div>
+//     `).join('');
 
-    if(images.length){
-        currentIndex = 0;
-        updateCarousel();
-    }
-}
+//     if(images.length){
+//         currentIndex = 0;
+//         updateCarousel();
+//     }
+// }
 
-function updateCarousel() {
-    // imagesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-    const containerChildren = Array.from(imagesContainer.children);
-    containerChildren.forEach((child) => {
-        child.classList.add('hidden');
-    });
+// function updateCarousel() {
+//     // imagesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+//     const containerChildren = Array.from(imagesContainer.children);
+//     containerChildren.forEach((child) => {
+//         child.classList.add('hidden');
+//     });
 
-    containerChildren[currentIndex].classList.remove('hidden');
+//     containerChildren[currentIndex].classList.remove('hidden');
 
-    if (currentIndex != 0) {
-        prevBtn.classList.remove('hidden');
-    } else {
-        prevBtn.classList.add('hidden');
-    }
+//     if (currentIndex != 0) {
+//         prevBtn.classList.remove('hidden');
+//     } else {
+//         prevBtn.classList.add('hidden');
+//     }
 
-    if (currentIndex == images.length - 1) {
-        nextBtn.classList.add('hidden');
-    } else {
-        nextBtn.classList.remove('hidden');
-    }
-}
+//     if (currentIndex == images.length - 1) {
+//         nextBtn.classList.add('hidden');
+//     } else {
+//         nextBtn.classList.remove('hidden');
+//     }
+// }
 
-window.removeImage = (index) => {
-    images.splice(index, 1);
-    files.splice(index, 1);
-    renderImages();
+// window.removeImage = (index) => {
+//     images.splice(index, 1);
+//     files.splice(index, 1);
+//     renderImages();
 
-    if (!images.length) {
-        bigLabelImages.classList.remove('hidden');
-        smallLabelImages.classList.add('hidden');
-    }else{
-        smallLabelImages.classList.remove('hidden');
-    }
-};
+//     if (!images.length) {
+//         bigLabelImages.classList.remove('hidden');
+//         smallLabelImages.classList.add('hidden');
+//     }else{
+//         smallLabelImages.classList.remove('hidden');
+//     }
+// };
 
 //métodos para el select del propósito
-if (purposeSelect.value == 'i') {
-    inputExpectedItem.disabled = false;
-}
-purposeSelect.addEventListener('change',(event) => {
-    if(event.target.value == 'i'){
-        divExpectedItem.classList.remove('hidden');
-        inputExpectedItem.disabled = false;
-    }else{
-        divExpectedItem.classList.add('hidden');
-        inputExpectedItem.disabled = true;
-    }
-});
+// if (purposeSelect.value == 'i') {
+//     inputExpectedItem.disabled = false;
+// }
+// purposeSelect.addEventListener('change',(event) => {
+//     if(event.target.value == 'i'){
+//         divExpectedItem.classList.remove('hidden');
+//         inputExpectedItem.disabled = false;
+//     }else{
+//         divExpectedItem.classList.add('hidden');
+//         inputExpectedItem.disabled = true;
+//     }
+// });
 
 
 // In your Javascript (external .js resource or <script> tag)

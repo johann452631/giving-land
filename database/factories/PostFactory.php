@@ -4,7 +4,9 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Location;
+use App\Models\Post;
 use App\Models\User;
+use App\MyOwn\classes\Utility;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -12,6 +14,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PostFactory extends Factory
 {
+    public function configure(): static
+    {
+        return $this->afterMaking(function (Post $post) {
+            if ($post->purpose == 'i') {
+                $post->expected_item = fake()->words(5,true);
+            }
+            $post->user_post_index = count($post->user->posts);
+            $post->save();
+        });
+    }
     /**
      * Define the model's default state.
      *
@@ -19,11 +31,9 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $purpose = fake()->randomElement(['d','i']);
         return [
             'name' => fake()->words(4,true),
-            'purpose' => $purpose,
-            'expected_item' => ($purpose == 'd') ? null : fake()->words(5,true),
+            'purpose' => fake()->randomElement(['d','i']),
             'description' => fake()->text(),
             'user_id' => User::all()->random()->id,
             'category_id' => Category::all()->random()->id,

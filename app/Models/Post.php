@@ -19,8 +19,10 @@ class Post extends Model
         'purpose',
         'expected_item',
         'description',
+        'user_post_index',
         'location_id',
         'category_id',
+
     ];
 
     public function category(): BelongsTo

@@ -1,19 +1,28 @@
 @props([
+    'name' => null,
     'labelText' => '',
     'isRequired' => false,
     'divId' => null,
-    ])
-<div {{ $attributes->whereStartsWith('class')->class(['div-form-input']) }} @isset($divId)
-    id="{{$divId}}"
+    'noTimeout' => false,
+])
+<div {{ $attributes->whereStartsWith('class')->class(['div-form-input']) }}
+    @isset($divId)
+    id="{{ $divId }}"
 @endisset>
     <label class="texto-verde text-lg">
         <span @class(['text-red-600', 'hidden' => !$isRequired])>*</span> {{ $labelText }}
         {{-- <br> --}}
-        <input class="w-full pt-2 pl-1 mb-1 text-base text-gray-900" {{ $attributes->whereDoesntStartWith('class')->merge(['value' => old($attributes->get('name'))]) }}>
+        <input class="w-full pt-2 pl-1 mb-1 text-base text-gray-900" {{ $attributes->whereDoesntStartWith('class') }}
+            @isset($name)
+                name="{{$name}}"
+                value="{{old($name)}}"
+            @endisset>
     </label>
-    @error($attributes->get('name'))
-        <p class="input-error text-red-500">* {{ $message }}</p>
-    @enderror
+    @isset ($name)
+        @error($name)
+            <span @class(['text-red-500', 'input-error' => !$noTimeout])>* {{ $message }}</span>
+        @enderror
+    @endisset
     @if ($slot->hasActualContent())
         {{ $slot }}
     @endif

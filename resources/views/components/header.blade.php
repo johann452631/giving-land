@@ -1,4 +1,4 @@
-@props(['user' => Illuminate\Support\Facades\Auth::user()])
+@props(['user' => auth()->user()])
 <div {{ $attributes->merge(['class' => 'z-10 fixed top-0 py-2 bg-gris-claro w-full']) }}>
     <div class="navigation-header screen-size">
         {{-- Logo --}}

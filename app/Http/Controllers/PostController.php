@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdatePostRequest;
-use App\Http\Requests\StoreUserRequest;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Location;
 use App\Models\Post;
-use App\Models\User;
 use App\MyOwn\classes\Utility;
 use DragonCode\Support\Facades\Helpers\Arr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -23,27 +23,13 @@ class PostController extends Controller
 
     public function create()
     {
-        $locations = Location::all();
-        $categories = Category::all();
-        return view('sections.posts.create', compact('locations', 'categories'));
+        $post = null;
+        return view('sections.posts.create-edit', compact('post'));
     }
 
-    public function store(Request $request)
+    public function edit($index)
     {
-        $rules = $request->has('expected_item') ? StoreUpdatePostRequest::rules() : Arr::except(StoreUpdatePostRequest::rules(), 'expected_item');
-        $validated = Validator::make(
-            $request->all(),
-            $rules,
-            [
-                'purpose.required' => 'El propósito es requerido',
-                'expected_item.required' => 'El artículo de interés es requerido',
-                'location_id.required' => 'La ubicación es requerida',
-                'category_id.required' => 'La categoría es requerida',
-            ]
-        )->validate();
-        $post = Post::create($validated);
-        Auth::user()->posts()->save($post);
-        Utility::sendAlert('success','Se publicó el artículo');
-        return to_route('profile.show',Auth::user()->username);
+        $post = auth()->user()->posts->where('user_post_index',$index)->first();
+        return ($post) ? view('sections.posts.create-edit',compact('post')) : to_route('posts.create');
     }
 }
