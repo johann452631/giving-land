@@ -22,6 +22,8 @@
 
     {{ $slot }}
 
+    @stack('modals')
+
     @livewireScripts
 
     @stack('scripts')

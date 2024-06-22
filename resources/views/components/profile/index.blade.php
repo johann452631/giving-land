@@ -7,17 +7,13 @@
         <x-header />
     @endpersist
 
-    <div class="contenido-main screen-size">
+    <main class="screen-size contenido-main flex justify-center md:justify-between gap-x-4">
         {{-- <livewire:profile.profile-section /> --}}
-        <div>
-            @auth
-                <livewire:profile.profile-nav :$section />
-            @endauth
-        </div>
-        <div>
+        <livewire:profile.profile-nav />
+        <div class="max-w-2xl min-w-80">
             {{$slot}}
         </div>
         <x-publicidad-lateral />
-    </div>
+    </main>
 
 </x-html>

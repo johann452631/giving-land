@@ -17,6 +17,12 @@ class Profile extends Model
         'google_avatar'
         // 'user_id'
     ];
+
+    public function getProfileImageUrl(): string
+    {
+        $profile = auth()->user()->profile;
+        return ($profile->google_avatar) ? $profile->google_avatar : 'storage/users_profile_images/' . $profile->image->url;
+    }
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

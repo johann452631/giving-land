@@ -1,40 +1,29 @@
-<div class="menu-opciones-lateral">
-    <a class="inline-block boton-base verde-blanco mb-4" href="{{route('posts.create')}}">Publicar artículo</a>
-    <div class="flex flex-col">
+@auth
+    <div class="menu-opciones-lateral hidden md:block">
+        <a class="inline-block boton-base verde-blanco text-lg" href="{{ route('posts.create') }}">Publicar artículo</a>
+        <hr class="my-4">
         <a wire:navigate @class([
-            'hover-gris-claro p-2 rounded flex items-center',
-            'border-l-4 border-green-700' => request()->routeIs('profile.show'),
-        ]) href="{{ route('profile.show', $user->username) }}" >
-            <img class="size-8 redondo"
-                @if ($user->profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
-            @else
-            src="{{ $user->profile->google_avatar }}" alt="" @endif>
-            <p>{{ $user->name }}</p>
+            'hover-gris-claro p-2 rounded flex items-center w-full',
+            'border-l-4 border-green-700' => request('username') == $user->username,
+        ]) href="{{ route('profile.show', $user->username) }}">
+            <img class="size-8 redondo mr-2"
+                src="{{$user->profile->getProfileImageUrl()}}">
+            <h4>{{ $user->name }}</h4>
         </a>
-        @auth
+        @owner($visitedProfile)
             <a wire:navigate @class([
-                'hover-gris-claro p-2 rounded flex items-center',
+                'hover-gris-claro p-2 rounded flex items-center w-full',
                 'border-l-4 border-green-700' => request()->routeIs('favorites.index'),
-            ])
-                href="{{ route('profile.section', [
-                    'username' => $user->username,
-                    'section' => 'favorites',
-                ]) }}"
-                >
+            ]) href="{{ route('favorites.index') }}">
                 Favoritos
             </a>
 
             <a wire:navigate @class([
-                'hover-gris-claro p-2 rounded flex items-center',
-                'border-l-4 border-green-700' => $section == 'settlements-history',
-            ])
-                href="{{ route('profile.section', [
-                    'username' => $user->username,
-                    'section' => 'settlements-history',
-                ]) }}"
-                >
+                'hover-gris-claro p-2 rounded flex items-center w-full',
+                'border-l-4 border-green-700' => request()->routeIs('settlements.index'),
+            ]) href="{{ route('settlements.index') }}">
                 Historial de movimientos
             </a>
-        @endauth
+        @endowner
     </div>
-</div>
+@endauth

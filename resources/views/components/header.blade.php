@@ -19,17 +19,14 @@
             <input class="w-100" type="text" name="txtbuscador" placeholder="Buscar">
         </div>
 
-        {{-- atenticado --}}
+        {{-- autenticado --}}
         <div class="navigation-header-options relative">
             @auth
                 <div class="dropdown relative">
-                    <img class="size-10 redondo cursor-pointer dropdown-button" data-toggle-node="dropdown"
-                        @if ($user->profile->google_avatar == null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
-                    @else
-                    src="{{ $user->profile->google_avatar }}"  @endif alt="">
-
-                    <div
-                        class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg hidden">
+                    <img class="size-10 redondo cursor-pointer dropdown-button"
+                        src="{{ $user->profile->getProfileImageUrl() }}"
+                        alt="">
+                    <div class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg hidden">
                         <div class="py-1" role="none">
                             <a href="{{ route('profile.show', $user->username) }}"
                                 class="text-gray-700 block px-4 py-2 text-sm">Perfil</a>

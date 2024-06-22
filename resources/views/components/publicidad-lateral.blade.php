@@ -1,3 +1,3 @@
-<div {{$attributes}} {{$attributes->merge(['class' => 'publicidad-lateral'])}}>
+<div {{$attributes->merge(['class' => 'publicidad-lateral hidden md:block'])}}>
     {{$slot}}
 </div>

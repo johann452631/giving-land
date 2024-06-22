@@ -153,21 +153,6 @@
     display: flex;
 }
 
-@media(width<1044px){
-    .texto-logo{
-        display: none;
-    }
-}
-
-@media(width<572px){
-    .navigation-header-options,.menu-opciones-lateral,.publicidad-lateral{
-        display: none !important;
-    }
-    .contenido-main{
-        display: block !important;
-    }
-}
-
 .screen-size{
     max-width: 1336px;
     margin: 0 auto;
@@ -184,12 +169,15 @@
     z-index: 2;
     height: calc(100vh - 7rem);
     overflow-y: auto;
-    width: 100%;
+    max-width: 280px;
+    min-width: 200px;
+    /* width: minmax(200px,260px); */
 }
 
 .publicidad-lateral {
     position: sticky;
-    width: 100%;
+    max-width: 220px;
+    min-width: 180px;
     top: 5rem;
     right: 0;
     z-index: 2;

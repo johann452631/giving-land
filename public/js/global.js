@@ -1,15 +1,12 @@
 var dropdowns;
+var dropdownMenus;
 window.addEventListener('load',()=>{
-    dropdowns = document.querySelectorAll(".dropdown-menu");
-    let dropdownButtons = document.querySelectorAll('[data-toggle-node="dropdown"]');
-    dropdownButtons.forEach(element => {
-        element.addEventListener('click', (event) => {
-            let openDropdown = getOpenDropdown();
-            if (openDropdown !== null && openDropdown !== event.target.nextElementSibling) {
-                openDropdown.classList.add('hidden');
-            }
-    
-            event.target.nextElementSibling.classList.toggle('hidden');
+    dropdowns = document.querySelectorAll(".dropdown");
+    dropdownMenus = document.querySelectorAll(".dropdown-menu");
+    dropdowns.forEach(dropdown => {
+        let button = dropdown.querySelector('.dropdown-button');
+        button.addEventListener('click', () => {
+            dropdown.querySelector('.dropdown-menu').classList.toggle('hidden');
         });
     });
     setTimeout(() => {
@@ -26,24 +23,22 @@ window.addEventListener('load',()=>{
 
 
 function getOpenDropdown() {
-    let dropdown = null;
-    dropdowns.forEach(element => {
-        if (!element.classList.contains('hidden')) {
-            dropdown = element;
+    let dropdownReturn = null;
+    dropdowns.forEach(dropdown => {
+        if (!dropdown.querySelector('.dropdown-menu').classList.contains('hidden')) {
+            dropdownReturn = dropdown;
         }
     });
-    
-    return dropdown;
+    return dropdownReturn;   
 }
 
 //Cerrar dropdown cuando se hace fuera de él o en el mismo botón
-window.addEventListener('click', event => {
+window.addEventListener('click', (event) => {
 
+    console.log(getOpenDropdown());
     let openDropdown = getOpenDropdown();
-    if (openDropdown !== null) {
-        if (event.target != openDropdown && event.target != openDropdown.previousElementSibling) {
-            openDropdown.classList.add('hidden');
-        }
+    if(openDropdown != null && event.target != openDropdown.querySelector('.dropdown-menu') && event.target != openDropdown.querySelector('.dropdown-button')){
+        openDropdown.querySelector('.dropdown-menu').classList.add('hidden');
     }
 });
 

@@ -1,12 +1,10 @@
-<div class="flex flex-col">
+<x-profile.index>
     <div class="">
         <div class="flex py-4">
-            <img class="size-8 redondo mr-3"
-                @if ($profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $profile->image->url) }}"
-                    @else
-                    src="{{ $profile->google_avatar }}" alt="" @endif>
+            <img class="size-8 redondo mr-3" src="{{$profile->getProfileImageUrl()}}" alt="">
 
             <h2 class="text-2xl">{{ $profile->user->name }}</h2>
+            {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex aspernatur quisquam est omnis sit saepe excepturi temporibus aliquid maxime. Quaerat error nesciunt consectetur veritatis repudiandae hic doloribus autem fugiat consequuntur?</p> --}}
         </div>
         @if (count($profile->socialMedia))
             <hr>
@@ -51,7 +49,7 @@
                 <div class="flex mt-8 border-4">
                     <div class="flex overflow-x-auto scrollbar-hide">
                         @foreach ($post->images as $image)
-                            <div class="flex-none w-64 mx-2">
+                            <div class="flex-none mx-2">
                                 <div class="border rounded-lg p-4 shadow-md">
                                     <img src="{{ asset('/storage/posts_images/' . $post->user->username . '/' . $image->url) }}"
                                         alt="">
@@ -68,29 +66,14 @@
                         <p>{{ $post->location }}</p>
                     </div>
                 </div>
+                @pushOnce('modals')
+                    <x-popup>
+
+                    </x-popup>
+                @endPushOnce
             @endforeach
         @else
             <p class="text-2xl font-bold">No has hecho ninguna publicación aún</p>
         @endif
     </div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.querySelector('.overflow-x-auto');
-        const scrollRight = () => {
-            container.scrollBy({
-                left: 200, // Cambia este valor según sea necesario para ajustar la cantidad de desplazamiento
-                behavior: 'smooth',
-            });
-        };
-        const scrollLeft = () => {
-            container.scrollBy({
-                left: -
-                    200, // Cambia este valor según sea necesario para ajustar la cantidad de desplazamiento
-                behavior: 'smooth',
-            });
-        };
-        document.querySelector('.scroll-right').addEventListener('click', scrollRight);
-        document.querySelector('.scroll-left').addEventListener('click', scrollLeft);
-    });
-</script>
+</x-profile.index>

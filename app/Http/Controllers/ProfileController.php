@@ -18,7 +18,7 @@ class ProfileController extends Controller
             return to_route('home');
         }
         $profile = User::where('username', $username)->first()->profile;
-        return view('sections.profile.index', compact('profile',));
+        return view('sections.profile.show', compact('profile',));
     }
 
     public function edit()
