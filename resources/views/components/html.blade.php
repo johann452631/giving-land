@@ -6,12 +6,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $tituloPagina }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css','resources/js/app.js'])
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     @livewireStyles
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
     <link rel="icon" type="image/svg+xml" href="{{ asset('appicons/logo-sm.svg') }}">
-    @stack('links')
     <script src={{ asset('js/global.js') }}></script>
+    @stack('links')
 </head>
 
 <body>

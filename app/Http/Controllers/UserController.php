@@ -17,12 +17,13 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(EnsureTokenIsValid::class)->only('create');
-        $this->middleware('guest')->only(['create','store']);
-        $this->middleware('auth')->only(['update','destroy']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(EnsureTokenIsValid::class)->only('create');
+    //     $this->middleware('guest')->only(['create','store']);
+    //     $this->middleware('auth')->only(['update','destroy']);
+    // }
+
     public function create(Request $request)
     {
         return view('sections.users.create')->with([
