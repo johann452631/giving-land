@@ -21,6 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'username',
         'name',
         'email',
         'password',
@@ -56,9 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function favorites(): HasMany
+    public function favorites(): BelongsToMany
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Post::class,'favorites');
     }
 
     public function notifications(): HasMany

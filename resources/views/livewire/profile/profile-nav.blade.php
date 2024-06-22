@@ -3,7 +3,7 @@
     <div class="flex flex-col">
         <a wire:navigate @class([
             'hover-gris-claro p-2 rounded flex items-center',
-            'border-l-4 border-green-700' => $section == 'profile',
+            'border-l-4 border-green-700' => request()->routeIs('profile.show'),
         ]) href="{{ route('profile.show', $user->username) }}" >
             <img class="size-8 redondo"
                 @if ($user->profile->google_avatar === null) src="{{ asset('/storage/users_profile_images/' . $user->profile->image->url) }}"
@@ -11,10 +11,10 @@
             src="{{ $user->profile->google_avatar }}" alt="" @endif>
             <p>{{ $user->name }}</p>
         </a>
-        @isset($section)
+        @auth
             <a wire:navigate @class([
                 'hover-gris-claro p-2 rounded flex items-center',
-                'border-l-4 border-green-700' => $section == 'favorites',
+                'border-l-4 border-green-700' => request()->routeIs('favorites.index'),
             ])
                 href="{{ route('profile.section', [
                     'username' => $user->username,
@@ -35,6 +35,6 @@
                 >
                 Historial de movimientos
             </a>
-        @endisset
+        @endauth
     </div>
 </div>

@@ -15,6 +15,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\EnsureTokenIsValid;
 use App\Models\Image;
 use App\Models\Profile;
+use App\Models\Settlement;
 use App\Models\User;
 use App\MyOwn\classes\Utility;
 use Illuminate\Contracts\Session\Session;
@@ -125,9 +126,13 @@ Route::resource('users', UserController::class)->only(['store', 'update', 'destr
 // });
 Route::singleton('profile', ProfileController::class)->only('edit');
 
+Route::resource('favorites',FavoriteController::class)->middleware('auth');
+
+Route::resource('settlements',Settlement::class)->middleware('auth');
+
 Route::get('{username}', [ProfileController::class, 'show'])->name('profile.show');
 
-Route::get('{username}/{section}', [ProfileController::class, 'goToSection'])->name('profile.section');
+Route::get('{username}/{section}', [ProfileController::class, 'goToSection'])->middleware('auth')->name('profile.section');
 
 
 // Route::resource('favorites', FavoriteController::class)->only(['index']);

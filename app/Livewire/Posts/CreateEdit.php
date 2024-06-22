@@ -152,7 +152,7 @@ class CreateEdit extends Component
         $post = $user->posts()->updateOrCreate($this->only('id'), $this->only(['name', 'purpose', 'expected_item', 'description', 'location_id', 'category_id']));
         foreach ($this->newImagesNames as $imageName) {
             $post->images()->create(['url' => $imageName]);
-            Storage::move('public/livewire-tmp/' . $imageName, 'public/posts_images/' . $user->username . '/' .$imageName);
+            Storage::move('public/livewire-tmp/' . $imageName, 'public/posts_images/' . $user->username . '/' . $imageName);
         }
         if ($this->id !== null) {
             $currentPostImages = Post::find($this->id)->images;
@@ -161,11 +161,11 @@ class CreateEdit extends Component
                 Storage::delete('public/posts_images/' . $user->username . '/' . $imageName);
             }
         } else {
-            $post->update(['user_post_index' => (count($user->posts)) ? ($user->posts[count($user->posts) - 2]->user_post_index + 1) : 0]);
+            $post->update(['user_post_index' => (count($user->posts) > 1) ? ($user->posts[count($user->posts) - 2]->user_post_index + 1) : 0]);
         }
         Storage::deleteDirectory('public/livewire-tmp');
-        Utility::sendAlert('success',($this->id) ? 'Se editó correctamente' : 'Se publicó el artículo');
-        return to_route('profile.show',$user->username);
+        Utility::sendAlert('success', ($this->id) ? 'Se editó correctamente' : 'Se publicó el artículo');
+        return to_route('profile.show', $user->username);
     }
 
     public function updated($inputImages)

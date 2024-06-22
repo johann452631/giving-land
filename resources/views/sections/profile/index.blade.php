@@ -11,7 +11,7 @@
         {{-- <livewire:profile.profile-section /> --}}
         <div>
             @auth
-                <livewire:profile.profile-nav :$profile :$section />
+                <livewire:profile.profile-nav :$section />
             @endauth
         </div>
         <div>

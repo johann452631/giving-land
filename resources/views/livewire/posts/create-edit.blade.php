@@ -46,8 +46,6 @@
                     class="boton-base bg-blue-700 text-white inline-block mt-3">Agregar</label>
             @endif
             <input type="file" accept="image/*" multiple id="image_input" wire:model='inputImages' hidden />
-
-            <button type="button" wire:click='see'>see</button>
         </div>
         <div class="max-w-96">
             <x-forms.input label-text="Nombre del artículo" name='name' wire:model='name' maxlenght="100"

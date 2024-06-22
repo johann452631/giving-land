@@ -14,24 +14,38 @@ class ProfileController extends Controller
 {
     public function show($username)
     {
-        $profile = ($username) ?  User::where('username',$username)->first()->profile : Auth::user()->profile;
-        return view('sections.profile.index',[
-            'profile' => $profile,
-            'section' => 'profile'
-        ]);
+        if (!User::where('username', $username)->exists()) {
+            return to_route('home');
+        }
+        $profile = User::where('username', $username)->first()->profile;
+        return view('sections.profile.index', compact('profile',));
     }
 
     public function edit()
     {
         $username = Auth::user()->username;
-        return view('sections.profile.edit',compact('username'));
+        return view('sections.profile.edit', compact('username'));
     }
 
-    public function goToSection($username,$section){
-        if(Auth::user()->username !=$username){
-            return to_route('profile.show',Auth::user()->username);
-        }
-        $profile = Auth::user()->profile;
-        return view('sections.profile.index',compact('section','profile'));
-    }
+    // public function goToSection($username, $section)
+    // {
+    //     switch ($section) {
+    //         case 'favorites':
+    //             # code...
+    //             break;
+    //         case 'settlements-history':
+    //             # code...
+    //             break;
+    //         case 'security-privacy':
+    //             # code...
+    //             break;
+
+    //         default:
+    //             return to_route('home');
+    //             break;
+    //     }
+
+    //     $profile = Auth::user()->profile;
+    //     return view('sections.profile.index', compact('section', 'profile'));
+    // }
 }

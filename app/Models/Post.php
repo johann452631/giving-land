@@ -35,9 +35,9 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function favorites(): HasMany
+    public function favorites(): BelongsToMany
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(User::class,'favorites');
     }
 
     public function images(): MorphMany
