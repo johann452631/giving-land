@@ -21,7 +21,7 @@ class Profile extends Model
     public function getProfileImageUrl(): string
     {
         $profile = auth()->user()->profile;
-        return ($profile->google_avatar) ? $profile->google_avatar : 'storage/users_profile_images/' . $profile->image->url;
+        return ($profile->google_avatar) ? $profile->google_avatar : asset('storage/users_profile_images/' . $profile->image->url);
     }
     public function user(): BelongsTo
     {
