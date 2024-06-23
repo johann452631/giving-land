@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $tituloPagina }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ asset('fontawesome/css/fontawesome.css') }}" rel="stylesheet" />
+    <link href="{{ asset('fontawesome/css/brands.css') }}" rel="stylesheet" />
+    <link href="{{asset('fontawesome/css/solid.css')}}" rel="stylesheet" />
     @livewireStyles
     <link rel="stylesheet" href={{ asset('css/global.css') }}>
     <link rel="icon" type="image/svg+xml" href="{{ asset('appicons/logo-sm.svg') }}">
@@ -27,7 +30,6 @@
     @livewireScripts
 
     @stack('scripts')
-    <script src="https://kit.fontawesome.com/0062b0aa7f.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
