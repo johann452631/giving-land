@@ -8,11 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteController extends Controller
 {
     public function index(){
-        $user = Auth::user();
-        // dd($user->profile->social_media->first());
-        return view('sections.profile.index',[
-            'profile' => $user->profile,
-            'section' => 'favorites'
-        ]);
+        $favorites = auth()->user()->favorites;
+        return view('sections.favorites.index',compact('favorites'));
     }
 }

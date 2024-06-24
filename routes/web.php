@@ -126,7 +126,7 @@ Route::resource('users', UserController::class)->only(['store', 'update', 'destr
 // });
 Route::singleton('profile', ProfileController::class)->only('edit');
 
-Route::resource('favorites',FavoriteController::class)->middleware('auth');
+Route::resource('favorites',FavoriteController::class)->middleware('auth')->only('index');
 
 Route::resource('settlements',Settlement::class)->middleware('auth');
 

@@ -95,3 +95,12 @@ function mostrarPopup(event) {
 function cerrarPopup(event) {
     document.querySelector(event.target.getAttribute('data-close-popup')).classList.add('hidden');
 }
+
+function toggleFill(element) {
+    let path = element.querySelector('path');
+    if (path.getAttribute('fill') === 'none') {
+        path.setAttribute('fill', 'red');
+    } else {
+        path.setAttribute('fill', 'none');
+    }
+}

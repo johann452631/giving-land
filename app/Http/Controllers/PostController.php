@@ -33,13 +33,13 @@ class PostController extends Controller
         return ($post) ? view('sections.posts.create-edit', compact('post')) : to_route('posts.create');
     }
 
-    public function destroy($id)
+    public function destroy($index)
     {
         $user = auth()->user();
-        if (!$user->posts->find($id)) {
+        if (!$user->posts->where('user_post_index',$index)->first()) {
             return to_route('home');
         }
-        Post::destroy($id);
+        Post::destroy($user->posts->where('user_post_index',$index)->first()->id);
         // $user->posts->where('user_post_index',$index)->first()->delete();
         $posts = Post::where('user_id',$user->id)->get();
         $index = 0;

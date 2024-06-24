@@ -185,3 +185,7 @@
     overflow-y: auto;
     background-color: #F1F0F8;
 }
+
+.boton-favorito:checked+svg {
+    fill-rule: nonzero;
+}

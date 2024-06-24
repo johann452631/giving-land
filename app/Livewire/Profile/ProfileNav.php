@@ -10,7 +10,8 @@ class ProfileNav extends Component
     public function render()
     {
         $user = auth()->user();
-        $visitedProfile = User::where('username',request('username'))->first()->profile;
-        return view('livewire.profile.profile-nav', compact('user','visitedProfile'));
+        // dd(request('username'));
+        $username = request('username') ? request('username') : $user->username;
+        return view('livewire.profile.profile-nav', compact('user','username'));
     }
 }
