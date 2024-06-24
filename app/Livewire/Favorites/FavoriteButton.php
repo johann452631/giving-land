@@ -11,7 +11,12 @@ class FavoriteButton extends Component
     #[Locked]
     public $postId;
 
-    public $isFavorite = false;
+    public $isFavorite;
+
+    public function mount()
+    {
+       $this->isFavorite = auth()->user()->favorites()->where('post_id',$this->postId)->exists();
+    }
 
     public function toggleFavorite()
     {

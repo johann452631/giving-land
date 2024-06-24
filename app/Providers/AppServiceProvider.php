@@ -23,11 +23,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::if('owner', function ($username) {
-            return Auth::check() && Auth::user()->username === $username;
+            return auth()->check() && auth()->user()->username === $username;
         });
         
         Blade::if('notOwner', function ($username) {
-            return Auth::check() && Auth::user()->username !== $username;
+            return auth()->check() && auth()->user()->username != $username;
         });
     }
 }
