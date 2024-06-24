@@ -18,7 +18,10 @@ class ProfileController extends Controller
             return to_route('home');
         }
         $profile = User::where('username', $username)->first()->profile;
-        return view('sections.profile.show', compact('profile',));
+        $posts = $profile->user->posts->sortByDesc('created_at');
+        // $posts = $profile->user->posts;
+        // dd($posts);
+        return view('sections.profile.show', compact('profile','posts'));
     }
 
     public function edit()

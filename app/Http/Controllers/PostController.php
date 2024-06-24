@@ -29,7 +29,27 @@ class PostController extends Controller
 
     public function edit($index)
     {
-        $post = auth()->user()->posts->where('user_post_index',$index)->first();
-        return ($post) ? view('sections.posts.create-edit',compact('post')) : to_route('posts.create');
+        $post = auth()->user()->posts->where('user_post_index', $index)->first();
+        return ($post) ? view('sections.posts.create-edit', compact('post')) : to_route('posts.create');
+    }
+
+    public function destroy($id)
+    {
+        $user = auth()->user();
+        if (!$user->posts->find($id)) {
+            return to_route('home');
+        }
+        Post::destroy($id);
+        // $user->posts->where('user_post_index',$index)->first()->delete();
+        $posts = Post::where('user_id',$user->id)->get();
+        $index = 0;
+        foreach ($posts as $post) {
+            $post->user_post_index = $index;
+            $post->save();
+            $index++;
+        }
+        // dd($user->posts);
+        Utility::sendAlert('warning', 'Se eliminó la publicación');
+        return to_route('profile.show', $user->username);
     }
 }

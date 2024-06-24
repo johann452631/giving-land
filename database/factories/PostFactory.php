@@ -18,7 +18,7 @@ class PostFactory extends Factory
     {
         return $this->afterMaking(function (Post $post) {
             if ($post->purpose == 'i') {
-                $post->expected_item = fake()->words(5,true);
+                $post->expected_item = fake()->words(rand(1,5),true);
             }
             $post->user_post_index = count($post->user->posts);
             $post->save();

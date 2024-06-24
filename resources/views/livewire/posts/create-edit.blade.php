@@ -114,7 +114,7 @@
         </div>
     </div>
     <div class="flex justify-end">
-        <a href="/" class="boton-base bg-gray-400 mr-6">Cancelar</a>
+        <a href="{{($isCreate) ? route('home') : route('profile.show',auth()->user()->username)}}" class="boton-base bg-gray-400 mr-6">Cancelar</a>
         <button type="submit" class="boton-base verde-blanco">
             @if ($isCreate)
                 Publicar

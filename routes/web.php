@@ -110,7 +110,7 @@ Route::controller(SignupController::class)->group(function () {
 
 Route::resource('categories', CategoryController::class)->only(['show']);
 
-Route::resource('posts', PostController::class)->only(['create','edit']);
+Route::resource('posts', PostController::class)->only(['create','edit','destroy']);
 
 Route::get('users/create/{token}', [UserController::class, 'create'])->name('users.create');
 

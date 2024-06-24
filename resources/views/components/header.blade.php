@@ -1,5 +1,5 @@
 @props(['user' => auth()->user()])
-<div {{ $attributes->merge(['class' => 'z-10 fixed top-0 py-2 bg-gris-claro w-full']) }}>
+<div {{ $attributes->merge(['class' => 'z-40 fixed top-0 py-2 bg-gris-claro w-full']) }}>
     <div class="navigation-header screen-size">
         {{-- Logo --}}
         <a class="flex items-center" href="{{ route('home') }}">
@@ -27,14 +27,14 @@
                         src="{{ $user->profile->getProfileImageUrl() }}"
                         alt="">
                     <div class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg hidden">
-                        <div class="py-1" role="none">
+                        <div class="py-1">
                             <a href="{{ route('profile.show', $user->username) }}"
-                                class="text-gray-700 block px-4 py-2 text-sm">Perfil</a>
+                                class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Perfil</a>
                             <hr>
                             <form method="POST" action={{ route('app.logout') }}>
                                 @csrf
                                 <a onclick="this.closest('form').submit()" type="submit"
-                                    class="text-gray-700 block w-full px-4 py-2 text-left text-sm cursor-pointer">Signout</a>
+                                    class="text-gray-700 block w-full px-4 py-2 text-left text-sm cursor-pointer hover:bg-gray-100">Signout</a>
                             </form>
                         </div>
                     </div>

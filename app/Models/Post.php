@@ -25,6 +25,11 @@ class Post extends Model
 
     ];
 
+    public function getPurpose(): string
+    {
+        return ($this->purpose == 'd') ? 'donación' : 'intercambio';
+    }
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

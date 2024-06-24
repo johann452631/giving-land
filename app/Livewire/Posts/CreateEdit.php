@@ -76,7 +76,7 @@ class CreateEdit extends Component
             $this->category_id = '';
             $this->isCreate = true;
         }
-        $this->locations = Location::all();
+        $this->locations = Location::all()->sortBy('municipio');
         $this->categories = Category::all();
         Storage::deleteDirectory('public/livewire-tmp');
     }

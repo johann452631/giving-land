@@ -1,27 +1,81 @@
+//definiciones para dropdowns
 var dropdowns;
-var dropdownMenus;
-window.addEventListener('load',()=>{
+
+window.addEventListener('load', () => {
+    //DROPDOWNS
     dropdowns = document.querySelectorAll(".dropdown");
-    dropdownMenus = document.querySelectorAll(".dropdown-menu");
-    dropdowns.forEach(dropdown => {
-        let button = dropdown.querySelector('.dropdown-button');
-        button.addEventListener('click', () => {
-            dropdown.querySelector('.dropdown-menu').classList.toggle('hidden');
+    if (dropdowns.length) {
+        dropdowns.forEach(dropdown => {
+            let button = dropdown.querySelector('.dropdown-button');
+            button.addEventListener('click', () => {
+                let dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                dropdownMenu.classList.toggle('hidden');
+                const buttonRect = button.getBoundingClientRect();
+                const dropdownHeight = dropdownMenu.offsetHeight;
+                if (window.innerHeight - buttonRect.bottom >= dropdownHeight) {
+                    dropdownMenu.classList.remove('bottom-full');
+                    dropdownMenu.classList.add('top-full');
+                } else {
+                    // If not, position the dropdown above the button
+                    dropdownMenu.classList.remove('top-full');
+                    dropdownMenu.classList.add('bottom-full');
+                }
+            });
+        });
+    }
+
+    //Cerrar dropdown cuando se hace fuera de él o en el mismo botón
+    window.addEventListener('click', (event) => {
+        let openDropdown = getOpenDropdown();
+        if (openDropdown != null && event.target != openDropdown.querySelector('.dropdown-menu') && event.target != openDropdown.querySelector('.dropdown-button')) {
+            openDropdown.querySelector('.dropdown-menu').classList.add('hidden');
+        }
+    });
+
+    //POPUPS
+    let popups = document.querySelectorAll('.popup');
+
+    popups.forEach(popup => {
+        let closers = popup.querySelectorAll('.popup-closer');
+        closers.forEach(closer => {
+            closer.addEventListener('click',() => {
+                popup.classList.add('hidden');
+            });
         });
     });
+
+    if (popups.length) {
+        let popupShowers = document.querySelectorAll('[data-show-popup]');
+        // let popupClosers = document.querySelectorAll('[data-close-popup]');
+
+        popupShowers.forEach(element => {
+            element.addEventListener('click', mostrarPopup);
+        });
+
+        // popupClosers.forEach(element => {
+        //     element.addEventListener('click', cerrarPopup);
+        // });
+
+        //Cerrar popup cuando se hace click fuera de él
+        popups.forEach(element => {
+            element.addEventListener('click', (event) => {
+                if (event.target.classList.contains('popup')) {
+                    event.target.classList.add('hidden');
+                }
+            });
+        });
+    }
+
+    //MENSAJES DE ERROR
+    //quitar después de 3.5 s
     setTimeout(() => {
         document.querySelectorAll(".input-error").forEach(p => {
             p.remove();
         });
     }, 3500);
 });
-// var popups = document.querySelectorAll('.popup');
-// var popupShowers = document.querySelectorAll('[data-show-popup]');
-// var popupClosers = document.querySelectorAll('[data-close-popup]');
 
-
-
-
+//Se llama el dropdown que actualmente está abierto
 function getOpenDropdown() {
     let dropdownReturn = null;
     dropdowns.forEach(dropdown => {
@@ -29,40 +83,15 @@ function getOpenDropdown() {
             dropdownReturn = dropdown;
         }
     });
-    return dropdownReturn;   
+    return dropdownReturn;
 }
 
-//Cerrar dropdown cuando se hace fuera de él o en el mismo botón
-window.addEventListener('click', (event) => {
+//para evento click de un botón y luego abrir su respectivo pupup
+function mostrarPopup(event) {
+    document.querySelector(event.target.getAttribute('data-show-popup')).classList.remove('hidden');
+}
 
-    console.log(getOpenDropdown());
-    let openDropdown = getOpenDropdown();
-    if(openDropdown != null && event.target != openDropdown.querySelector('.dropdown-menu') && event.target != openDropdown.querySelector('.dropdown-button')){
-        openDropdown.querySelector('.dropdown-menu').classList.add('hidden');
-    }
-});
-
-//Cerrar popup cuando se hace click fuera de él
-// popups.forEach(element => {
-//     element.addEventListener('click', (event) => {
-//         if (event.target.classList.contains('popup')) {
-//             event.target.classList.add('hidden');
-//         }
-//     });
-// });
-
-// function mostrarPopup(event) {
-//     document.querySelector(event.target.getAttribute('data-show-popup')).classList.remove('hidden');
-// }
-
-// function cerrarPopup(event) {
-//     document.querySelector(event.target.getAttribute('data-close-popup')).classList.add('hidden');
-// }
-
-// popupShowers.forEach(element => {
-//     element.addEventListener('click', mostrarPopup);
-// });
-
-// popupClosers.forEach(element => {
-//     element.addEventListener('click', cerrarPopup);
-// });
+//para evento click de un botón y luego cerrar su respectivo pupup
+function cerrarPopup(event) {
+    document.querySelector(event.target.getAttribute('data-close-popup')).classList.add('hidden');
+}
