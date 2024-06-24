@@ -51,7 +51,7 @@
                 @foreach ($posts as $post)
                     <div class="mt-10 rounded w-full bg-gris-claro shadow-md">
                         <div class="relative w-full h-72 overflow-y-hidden" data-carousel="static">
-    
+
                             <!-- Carousel wrapper -->
                             <div class="relative overflow-hidden rounded-lg h-96">
                                 @foreach ($post->images as $image)
@@ -98,22 +98,27 @@
                             @endif
                         </div>
                         <div class="px-6 py-4 md:px-8 relative">
-                            @owner($profile->user->username)
-                                <div class="dropdown absolute right-2">
-                                    <i
-                                        class="fa-solid fa-ellipsis text-xl leading-none bg-gray-300 rounded-md px-2 cursor-pointer dropdown-button"></i>
-                                    <div
-                                        class="dropdown-menu absolute right-0 my-2 w-56 top-full z-30 rounded-md bg-white shadow-lg hidden">
-                                        <div class="py-1">
+                            <div class="dropdown absolute right-2">
+                                <i
+                                    class="fa-solid fa-ellipsis text-xl leading-none bg-gray-300 rounded-md px-2 cursor-pointer dropdown-button"></i>
+                                <div
+                                    class="dropdown-menu absolute right-0 my-2 w-56 top-full z-30 rounded-md bg-white shadow-lg hidden">
+                                    <div class="py-1">
+                                        @owner($profile->user->username)
                                             <a href="{{ route('posts.edit', $post->user_post_index) }}"
                                                 class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
                                             <hr>
                                             <button data-show-popup="#popup_post_{{ $post->user_post_index }}"
                                                 class="text-gray-700 w-full text-start px-4 py-2 text-sm hover:bg-gray-100">Eliminar</button>
-                                        </div>
+                                        @endowner
+                                        @notOwner($profile->user->username)
+                                            <a href="#"
+                                                class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Reportar</a>
+                                            <hr>
+                                        @endnotOwner
                                     </div>
                                 </div>
-                            @endowner
+                            </div>
                             <h2 class="text-gray-800 text-3xl font-bold mb-2">{{ $post->name }}</h2>
                             <p class="py-1 text-ellipsis overflow-hidden max-h-32 md:max-h-20 mb-2">
                                 {{ $post->description }}</p>
@@ -126,7 +131,7 @@
                             @endisset
                             <p class="my-3"><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
                                 {{ $post->location->municipio . ' (' . $post->location->departamento . ')' }}</p>
-    
+
                             @owner($profile->user->username)
                                 <p class="font-bold">{{ $post->category->name }}</p>
                             @endowner
@@ -151,6 +156,6 @@
             @endif
         </div>
     @endpersist
-    <script src="{{ asset('js/profile/show.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="{{ asset('js/profile/show.js') }}"></script>
 </x-profile.index>

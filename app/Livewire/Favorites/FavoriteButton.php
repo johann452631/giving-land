@@ -6,7 +6,7 @@ use App\Models\Post;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
-class Favorite extends Component
+class FavoriteButton extends Component
 {
     #[Locked]
     public $postId;
@@ -20,6 +20,6 @@ class Favorite extends Component
 
     public function render()
     {
-        return view('livewire.favorites.favorite');
+        return view('livewire.favorites.favorite-button');
     }
 }
