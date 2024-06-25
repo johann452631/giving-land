@@ -18,10 +18,9 @@ class Profile extends Model
         // 'user_id'
     ];
 
-    public function getProfileImageUrl(): string
+    public function getImageUrl(): string
     {
-        $profile = auth()->user()->profile;
-        return ($profile->google_avatar) ? $profile->google_avatar : asset('storage/users_profile_images/' . $profile->image->url);
+        return asset('storage/users_profile_images/' . $this->image->url);
     }
     public function user(): BelongsTo
     {
@@ -33,12 +32,12 @@ class Profile extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function contactInformation():HasMany
+    public function contactInformation(): HasMany
     {
         return $this->hasMany(ContactInformation::class);
     }
 
-    public function socialMedia():BelongsToMany
+    public function socialMedia(): BelongsToMany
     {
         return $this->belongsToMany(SocialMedia::class)->withPivot('username');
     }

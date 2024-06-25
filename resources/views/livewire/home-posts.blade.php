@@ -1,7 +1,7 @@
-<div class="posts w-full">
+<div class="posts w-full px-4">
     {{-- <div>{{dd(request()->routeIs('posts'))}}</div> --}}
     @foreach ($posts as $post)
-        <div class="w-full rounded bg-gris-claro shadow-md min-w-72">
+        <div class="rounded bg-gris-claro shadow-md w-64 mx-auto">
             <div class="relative w-full h-60 overflow-y-hidden" data-carousel="static">
 
                 <!-- Carousel wrapper -->
@@ -56,17 +56,8 @@
                     <div
                         class="dropdown-menu absolute right-0 my-2 w-56 top-full z-30 rounded-md bg-white shadow-lg hidden">
                         <div class="py-1">
-                            @owner($username)
-                                <a href="{{ route('posts.edit', $post->user_post_index) }}"
-                                    class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
-                                <hr>
-                                <button data-show-popup="#popup_post_{{ $post->user_post_index }}"
-                                    class="text-gray-700 w-full text-start px-4 py-2 text-sm hover:bg-gray-100">Eliminar</button>
-                            @endowner
-                            @notOwner($username)
-                                <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Reportar</a>
-                                <hr>
-                            @endnotOwner
+                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Reportar</a>
+                            <hr>
                         </div>
                     </div>
                 </div>

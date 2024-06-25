@@ -24,7 +24,7 @@
             @auth
                 <div class="dropdown relative">
                     <img class="size-10 redondo cursor-pointer dropdown-button"
-                        src="{{ $user->profile->getProfileImageUrl() }}"
+                        src="{{ $user->profile->getImageUrl() }}"
                         alt="">
                     <div class="dropdown-menu absolute right-0 mt-2 w-56 top-8 rounded-md bg-white shadow-lg hidden">
                         <div class="py-1">

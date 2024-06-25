@@ -8,14 +8,12 @@
     <main class="screen-size contenido-main flex justify-center md:justify-between gap-x-4">
         {{-- <livewire:profile.profile-section /> --}}
         <x-profile.profile-nav />
-        <div class="max-w-sm min-w-80 md:max-w-xl">
-            {{$slot}}
+        <div class="w-full grid place-items-center">
+            <div class="max-w-sm min-w-80 md:max-w-xl">
+                {{ $slot }}
+            </div>
         </div>
-        <x-publicidad-lateral>
-            <a href="#">
-                <img class="h-full w-full" src="{{asset('images/publicity.png')}}" alt="">
-            </a>
-        </x-publicidad-lateral>
+        <x-publicidad-lateral />
     </main>
 
 </x-html>

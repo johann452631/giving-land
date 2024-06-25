@@ -1,7 +1,7 @@
 <x-profile.index>
     <div class="border-b pb-4">
         <div class="flex py-4 items-center">
-            <img class="size-12 redondo mr-3" src="{{ $profile->getProfileImageUrl() }}" alt="">
+            <img class="size-12 redondo mr-3" src="{{ $profile->getImageUrl() }}" alt="">
 
             <h2 class="text-2xl">{{ $profile->user->name }}</h2>
             {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex aspernatur quisquam est omnis sit saepe excepturi temporibus aliquid maxime. Quaerat error nesciunt consectetur veritatis repudiandae hic doloribus autem fugiat consequuntur?</p> --}}
