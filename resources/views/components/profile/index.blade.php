@@ -8,7 +8,7 @@
     <main class="screen-size contenido-main flex justify-center md:justify-between gap-x-4">
         {{-- <livewire:profile.profile-section /> --}}
         <x-profile.profile-nav />
-        <div class="max-w-xl min-w-80">
+        <div class="max-w-sm min-w-80 md:max-w-xl">
             {{$slot}}
         </div>
         <x-publicidad-lateral>

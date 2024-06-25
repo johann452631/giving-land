@@ -1,17 +1,14 @@
-@props(['post', 'username' => auth()->user()->username, 'home' => false])
-<div @class([
-    'mt-10 rounded bg-gris-claro shadow-md',
-    'w-full' => !$home,
-    'max-w-72' => $home,
-])>
-    <div class="relative w-full h-72 overflow-y-hidden" data-carousel="static">
+@props(['post', 'username' => null])
+<div class="mt-10 rounded bg-gris-claro shadow-md">
+    <div class="relative w-full h-60 md:h-72 overflow-y-hidden" data-carousel="static">
 
         <!-- Carousel wrapper -->
         <div class="relative overflow-hidden rounded-lg h-96">
             @foreach ($post->images as $image)
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img src="{{ asset('storage/posts_images/' . $post->user->username . '/' . $image->url) }}"
-                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                        class="absolute block w-full md:top-1/2 md:-translate-y-1/2 -translate-x-1/2  left-1/2"
+                        alt="...">
                 </div>
             @endforeach
         </div>
@@ -50,29 +47,29 @@
             </button>
         @endif
     </div>
-    <div @class(['px-2 py-4 relative', 'md:px-6' => !$home,])>
-        @auth
-            <div class="dropdown absolute right-2">
-                <i
-                    class="fa-solid fa-ellipsis text-xl leading-none bg-gray-300 rounded-md px-2 cursor-pointer dropdown-button"></i>
-                <div class="dropdown-menu absolute right-0 my-2 w-56 top-full z-30 rounded-md bg-white shadow-lg hidden">
-                    <div class="py-1">
-                        @owner($username)
-                            <a href="{{ route('posts.edit', $post->user_post_index) }}"
-                                class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
-                            <hr>
-                            <button data-show-popup="#popup_post_{{ $post->user_post_index }}"
-                                class="text-gray-700 w-full text-start px-4 py-2 text-sm hover:bg-gray-100">Eliminar</button>
-                        @endowner
-                        @notOwner($username)
-                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Reportar</a>
-                            <hr>
-                        @endnotOwner
-                    </div>
+    @auth
+        <div class="dropdown relative z-30">
+            <i
+                class="fa-solid fa-ellipsis absolute right-0 top-1 text-lg leading-none bg-gray-300 rounded-md px-2 cursor-pointer dropdown-button"></i>
+            <div class="dropdown-menu absolute right-0 my-2 w-56 top-full z-30 rounded-md bg-white shadow-lg hidden">
+                <div class="py-1">
+                    @owner($username)
+                        <a href="{{ route('posts.edit', $post->user_post_index) }}"
+                            class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Editar</a>
+                        <hr>
+                        <button data-show-popup="#popup_post_{{ $post->user_post_index }}"
+                            class="text-gray-700 w-full text-start px-4 py-2 text-sm hover:bg-gray-100">Eliminar</button>
+                    @endowner
+                    @notOwner($username)
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100">Reportar</a>
+                        <hr>
+                    @endnotOwner
                 </div>
             </div>
-        @endauth
-        <h2 class="text-gray-800 text-3xl font-bold mb-2">{{ $post->name }}</h2>
+        </div>
+    @endauth
+    <div class="px-2 md:px-6 py-4 relative z-20">
+        <h2 class="text-gray-800 text-2xl md:text-3xl font-bold mb-2">{{ $post->name }}</h2>
         <p class="py-1 text-ellipsis overflow-hidden max-h-32 md:max-h-20 mb-2">
             {{ $post->description }}</p>
         <span class="texto-verde font-bold text-xl capitalize">{{ $post->getPurpose() }}</span>

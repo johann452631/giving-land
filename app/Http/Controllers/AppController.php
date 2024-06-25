@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class AppController extends Controller
 {
     public function home(){
-        $posts = Post::all()->orderBy('created_at','desc');
+        // $posts = Post::all()->sortByDesc('created_at');
         $categories = Category::all();
-        return view('home',compact('posts','categories'));
+        return view('home',compact('categories'));
     }
 
     public static function logout()

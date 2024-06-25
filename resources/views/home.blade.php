@@ -1,12 +1,6 @@
 <x-html titulo-pagina="Giving Land">
     @pushOnce('links')
         <link rel="stylesheet" href={{ asset('css/home.css') }}>
-        @auth
-            <link rel="stylesheet" href={{ asset('css/auth-home.css') }}>
-        @endauth
-        @guest
-            <link rel="stylesheet" href={{ asset('css/guest-home.css') }}>
-        @endguest
     @endPushOnce
     <x-header />
     {{-- <x-simple-header/> --}}
@@ -34,23 +28,14 @@
             </ul>
         </div>
         {{-- posts --}}
-        <div class="max-w-2xl min-w-80 flex flex-wrap justify-between">
-            <div class="info-main w-full m-2 rounded"></div>
-            {{-- <div>{{dd(request()->routeIs('posts'))}}</div> --}}
-            @foreach ($posts as $post)
-                <x-post :$post home/>
-            @endforeach
-        </div>
+        <livewire:home-posts />
+        
         {{-- publicidad lateral --}}
         <x-publicidad-lateral />
     </main>
 
     {{-- footer --}}
     <x-footer />
-    @auth
-        <script src={{ asset('js/auth-home.js') }}></script>
-    @endauth
-    @guest
-        <script src={{ asset('js/guest-home.js') }}></script>
-    @endguest
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
 </x-html>

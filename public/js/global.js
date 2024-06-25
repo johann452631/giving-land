@@ -13,12 +13,12 @@ window.addEventListener('load', () => {
                 const buttonRect = button.getBoundingClientRect();
                 const dropdownHeight = dropdownMenu.offsetHeight;
                 if (window.innerHeight - buttonRect.bottom >= dropdownHeight) {
-                    dropdownMenu.classList.remove('bottom-full');
-                    dropdownMenu.classList.add('top-full');
+                    dropdownMenu.classList.remove('-top-14');
+                    dropdownMenu.classList.add('top-4');
                 } else {
                     // If not, position the dropdown above the button
-                    dropdownMenu.classList.remove('top-full');
-                    dropdownMenu.classList.add('bottom-full');
+                    dropdownMenu.classList.remove('top-4');
+                    dropdownMenu.classList.add('-top-14');
                 }
             });
         });
