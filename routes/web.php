@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SecurityPrivacyController;
 use App\Http\Controllers\SettlementController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\UserController;
@@ -108,15 +109,15 @@ Route::controller(SignupController::class)->group(function () {
     Route::post('/signup/verify-code', 'verifyCode')->name('signup.verifyCode');
 });
 
-Route::resource('categories', CategoryController::class)->only(['show']);
-
-Route::resource('posts', PostController::class)->only(['create','edit','destroy']);
-
 Route::get('users/create/{token}', [UserController::class, 'create'])->name('users.create');
 
-Route::get('users/security-privacy', [UserController::class, 'securityPrivacy'])->name('users.securityPrivacy');
-
 Route::resource('users', UserController::class)->only(['store', 'update', 'destroy']);
+
+Route::singleton('profile', ProfileController::class)->only('edit');
+
+Route::resource('categories', CategoryController::class)->only(['show']);
+
+Route::resource('posts', PostController::class)->only(['create','edit','destroy'])->middleware('auth');
 
 // Route::controller(ChangeEmailController::class)->group(function () {
 //     Route::get('/users/{username}/edit-email', 'index')->name('changeEmail.index');
@@ -124,17 +125,11 @@ Route::resource('users', UserController::class)->only(['store', 'update', 'destr
 //     Route::get('/users/{username}/edit-email/code-form', 'codeForm')->name('changeEmail.codeForm');
 //     Route::get('/users/edit-email/change', 'change')->name('changeEmail.change');
 // });
-Route::singleton('profile', ProfileController::class)->only('edit');
 
-Route::resource('favorites',FavoriteController::class)->middleware('auth')->only('index');
+Route::resource('favorites',FavoriteController::class)->only(['index','destroy'])->middleware('auth');
 
-Route::resource('settlements',Settlement::class)->middleware('auth');
+// Route::resource('settlements',Settlement::class)->middleware('auth');
+
+Route::resource('security-privacy',SecurityPrivacyController::class)->only('index')->middleware('auth');
 
 Route::get('{username}', [ProfileController::class, 'show'])->name('profile.show');
-
-Route::get('{username}/{section}', [ProfileController::class, 'goToSection'])->middleware('auth')->name('profile.section');
-
-
-// Route::resource('favorites', FavoriteController::class)->only(['index']);
-
-// Route::resource('settlements', SettlementController::class)->only(['index']);

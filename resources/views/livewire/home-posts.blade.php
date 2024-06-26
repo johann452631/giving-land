@@ -1,5 +1,4 @@
 <div class="posts w-full px-4">
-    {{-- <div>{{dd(request()->routeIs('posts'))}}</div> --}}
     @foreach ($posts as $post)
         <div class="rounded bg-gris-claro shadow-md w-64 mx-auto">
             <div class="relative w-full h-60 overflow-y-hidden" data-carousel="static">

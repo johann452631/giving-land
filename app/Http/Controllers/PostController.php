@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->only(['create', 'edit']);
-    }
-
     public function create()
     {
         $post = null;
@@ -36,10 +31,14 @@ class PostController extends Controller
     public function destroy($index)
     {
         $user = auth()->user();
-        if (!$user->posts->where('user_post_index',$index)->first()) {
+        $post = $user->posts->where('user_post_index',$index)->first();
+        if (!$post) {
             return to_route('home');
         }
-        Post::destroy($user->posts->where('user_post_index',$index)->first()->id);
+        foreach ($post->images as $image) {
+            Storage::delete('public/posts_images/' . $user->username . '/' . $image->url);
+        }
+        Post::destroy($post->id);
         // $user->posts->where('user_post_index',$index)->first()->delete();
         $posts = Post::where('user_id',$user->id)->get();
         $index = 0;

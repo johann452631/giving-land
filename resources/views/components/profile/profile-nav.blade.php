@@ -24,9 +24,9 @@
 
             <a @class([
                 'hover-gris-claro p-2 rounded flex items-center w-full',
-                'border-l-4 border-green-700' => request()->routeIs('settlements.index'),
-            ]) href="{{ route('settlements.index') }}">
-                Historial de movimientos
+                'border-l-4 border-green-700' => request()->routeIs('security-privacy.index'),
+            ]) href="{{ route('security-privacy.index') }}">
+                Seguridad y privacidad
             </a>
         @endowner
     </div>

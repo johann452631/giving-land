@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware(EnsureTokenIsValid::class)->only('create');
-    //     $this->middleware('guest')->only(['create','store']);
-    //     $this->middleware('auth')->only(['update','destroy']);
-    // }
+    public function __construct()
+    {
+        $this->middleware(EnsureTokenIsValid::class)->only('create');
+        $this->middleware('guest')->only(['create','store']);
+        // $this->middleware('auth')->only(['update','destroy']);
+    }
 
     public function create(Request $request)
     {
@@ -54,13 +54,6 @@ class UserController extends Controller
     //     Utility::sendAlert('exito', 'Se actualizaron los datos');
     //     return to_route('users.show', $user->username);
     // }
-
-    public function securityPrivacy(){
-        return view('sections.profile.index',[
-            'profile' => Auth::user()->profile,
-            'section' => 'security-privacy'
-        ]);
-    }
 
     public function destroy($id){
         User::destroy($id);

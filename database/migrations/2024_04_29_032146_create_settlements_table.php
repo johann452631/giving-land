@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('settlements', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('other_user_involved_id',false,true);
-            $table->foreign('other_user_involved_id')->references('id')->on('users');
-            $table->foreignId('post_id')->constrained();
+            $table->bigInteger('other_user_involved_id',false,true)->nullable();
+            $table->foreign('other_user_involved_id')->references('id')->on('users')->nullOnDelete();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
