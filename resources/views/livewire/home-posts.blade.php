@@ -1,10 +1,10 @@
 <div class="posts w-full px-4">
     @foreach ($posts as $post)
         <div class="rounded bg-gris-claro shadow-md w-64 mx-auto">
-            <div class="relative w-full h-60 overflow-y-hidden" data-carousel="static">
+            <div class="relative w-full h-52 overflow-y-hidden" data-carousel="static">
 
                 <!-- Carousel wrapper -->
-                <div class="relative overflow-hidden rounded-lg h-96">
+                <div class="relative overflow-hidden rounded-lg h-56">
                     @foreach ($post->images as $image)
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
                             <img src="{{ asset('storage/posts_images/' . $post->user->username . '/' . $image->url) }}"
@@ -62,8 +62,8 @@
                 </div>
             @endauth
             <div class="px-3 py-4 relative z-20">
-                <h2 class="text-gray-800 text-2xl md:text-2xl font-bold mb-2 w-full">{{ $post->name }}</h2>
-                <span class="texto-verde font-bold text-xl capitalize">{{ $post->getPurpose() }}</span>
+                <h2 class="text-gray-800 text-xl font-semibold mb-2 w-full">{{ $post->name }}</h2>
+                <span class="texto-verde font-semibold text-lg capitalize">{{ $post->getPurpose() }}</span>
                 <p class="mt-3"><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
                     {{ $post->location->municipio . ' (' . $post->location->departamento . ')' }}</p>
 

@@ -184,6 +184,7 @@
     height: calc(100vh - 7rem);
     overflow-y: auto;
     background-color: #F1F0F8;
+    max-height: 700px;
 }
 
 .posts,.favorites {

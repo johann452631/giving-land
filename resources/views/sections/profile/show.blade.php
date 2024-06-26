@@ -1,6 +1,6 @@
 <x-profile.index>
-    <div @class(['grid place-items-center', 'w-full' => !auth()->check()])>
-        <div class="max-w-sm min-w-80 md:max-w-xl">
+    <div @class(['w-full', 'max-w-2xl' => auth()->check()])>
+        <div @class(['max-w-sm min-w-80 md:max-w-xl', 'mx-auto' => !auth()->check()])>
     
             <div class="border-b pb-4">
                 <div class="flex py-4 items-center">
