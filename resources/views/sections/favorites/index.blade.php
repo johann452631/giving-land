@@ -62,10 +62,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="px-3 pt-4 pb-2 relative z-20">
+                        <div class="px-3 pt-4 pb-2 relative z-20 flex flex-col gap-y-1">
                             <a href="{{route('posts.show',$favorite->id)}}" class="text-gray-800 text-xl font-semibold w-full">{{ $favorite->name }}</a>
                             <span class="texto-verde font-semibold text-lg capitalize">{{ $favorite->getPurpose() }}</span>
-                            <p class="mt-1"><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
+                            <p><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
+
+
                                 {{ $favorite->location->municipio . ' (' . $favorite->location->departamento . ')' }}</p>
     
                         </div>

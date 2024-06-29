@@ -62,7 +62,7 @@
                 </div>
             @endauth
             <div class="px-3 py-4 relative z-20">
-                <h2 class="text-gray-800 text-xl font-semibold mb-2 w-full">{{ $post->name }}</h2>
+                <a href="{{route('user.posts.show',[$post->user->username,$post->user_post_index])}}" class="text-gray-800 text-xl font-semibold mb-2 w-full block">{{ $post->name }}</a>
                 <span class="texto-verde font-semibold text-lg capitalize">{{ $post->getPurpose() }}</span>
                 <p class="mt-3"><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
                     {{ $post->location->municipio . ' (' . $post->location->departamento . ')' }}</p>

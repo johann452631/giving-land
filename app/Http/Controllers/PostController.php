@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Image;
 use App\Models\Location;
 use App\Models\Post;
+use App\Models\User;
 use App\MyOwn\classes\Utility;
 use DragonCode\Support\Facades\Helpers\Arr;
 use Illuminate\Http\Request;
@@ -16,13 +17,15 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
-    public function show($id)
+    public function show($username,$index)
     {
-        if(auth()->check() && auth()->user()->posts->find($id)){
+        // dd(auth()->user()->posts()->where('user_post_index',$index)->exists());
+        if(auth()->check() && auth()->user()->username == $username){
             return to_route('home');
         }
-        $post = Post::find($id);
-        return view('sections.posts.show',compact('post'));
+        $user = User::where('username',$username)->first();
+        $post = $user->posts->where('user_post_index',$index)->first();
+        return view('sections.posts.show',compact('user','post'));
     }
     public function create()
     {
