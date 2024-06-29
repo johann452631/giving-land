@@ -187,16 +187,6 @@
     max-height: 700px;
 }
 
-.posts,.favorites {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    column-gap: 32px;
-    row-gap: 48px;
-}
-
-.favorites {
-    align-content: space-between;
-}
 
 .boton-favorito:checked+svg {
     fill-rule: nonzero;

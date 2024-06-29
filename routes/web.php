@@ -117,7 +117,7 @@ Route::singleton('profile', ProfileController::class)->only('edit');
 
 Route::resource('categories', CategoryController::class)->only(['show']);
 
-Route::resource('posts', PostController::class)->only(['create','edit','destroy'])->middleware('auth');
+Route::resource('posts', PostController::class)->except(['update','store','index'])->middleware('auth');
 
 // Route::controller(ChangeEmailController::class)->group(function () {
 //     Route::get('/users/{username}/edit-email', 'index')->name('changeEmail.index');

@@ -16,6 +16,14 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    public function show($id)
+    {
+        if(auth()->check() && auth()->user()->posts->find($id)){
+            return to_route('home');
+        }
+        $post = Post::find($id);
+        return view('sections.posts.show',compact('post'));
+    }
     public function create()
     {
         $post = null;

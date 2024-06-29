@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
             ContactInformationSeeder::class,
             PostSeeder::class,
+            FavoriteSeeder::class,
             ImageSeeder::class
         ]);
     }
