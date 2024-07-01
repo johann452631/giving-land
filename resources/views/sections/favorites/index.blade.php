@@ -63,7 +63,7 @@
                             </div>
                         </div>
                         <div class="px-3 pt-4 pb-2 relative z-20 flex flex-col gap-y-1">
-                            <a href="{{route('posts.show',$favorite->id)}}" class="text-gray-800 text-xl font-semibold w-full">{{ $favorite->name }}</a>
+                            <a href="{{route('user.posts.show',[$favorite->user->username,$favorite->user_post_index])}}" class="text-gray-800 text-xl font-semibold w-full">{{ $favorite->name }}</a>
                             <span class="texto-verde font-semibold text-lg capitalize">{{ $favorite->getPurpose() }}</span>
                             <p><i class="fa-solid fa-location-dot text-gray-700 mr-1"></i>
 
@@ -78,6 +78,4 @@
             <h2 class="text-3xl text-center font-bold">No tienes favoritos aún</h2>
         @endif
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </x-profile.index>
