@@ -22,6 +22,7 @@ use App\MyOwn\classes\Utility;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -39,7 +40,7 @@ use Laravel\Socialite\Facades\Socialite;
 // Route::view('/', 'welcome');
 
 Route::get('p', function () {
-    return bin2hex(random_bytes(16));
+    dd(Http::get('test.com/v1/prueba')->body());
 });
 
 
@@ -89,8 +90,8 @@ Route::controller(AppController::class)->group(function () {
 });
 
 Route::controller(LoginController::class)->group(function () {
-    Route::get('/login/index', 'index')->name('login.index');
-    Route::post('/login/authenticate', 'authenticate')->name('login.authenticate');
+    Route::get('/login', 'index')->name('login.index');
+    Route::post('/login', 'attempt')->name('login.attempt');
 });
 
 Route::controller(ResetPasswordController::class)->group(function () {

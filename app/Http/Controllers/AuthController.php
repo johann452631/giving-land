@@ -18,8 +18,8 @@ class AuthController extends Controller
             $message = 'El correo electrónico o la contraseña son incorrectos.';
             return response()->json([
                 'message' => $message,
-                'errors' => ['email' => $message]
-            ]);
+                'errors' => ['email' => [$message]]
+            ],401);
         }
         // $request->session()->regenerate();
         $user = User::where('email',$request->email)->firstOrFail();
