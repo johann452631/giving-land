@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    public function index()
+    {
+        return response()->json(Post::all());
+    }
     public function show($username,$index)
     {
         // dd(auth()->user()->posts()->where('user_post_index',$index)->exists());
