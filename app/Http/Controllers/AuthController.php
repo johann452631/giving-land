@@ -16,17 +16,12 @@ class AuthController extends Controller
     {
         if (!Auth::attempt($request->only(['email', 'password']))) {
             $message = 'El correo electrónico o la contraseña son incorrectos.';
-            return response()->json([
-                'message' => $message,
-                'errors' => ['email' => [$message]]
-            ],401);
+            $errors = ['email' => $message];
+            return response()->json(compact('message','errors'),401);
         }
         // $request->session()->regenerate();
         $user = User::where('email',$request->email)->firstOrFail();
-        $token = $user->createToken('auth_token')->plainTextToken;
-        return response()->json([
-            'user' => $user,
-            'accessToken' => $token,
-        ]);
+        $accessToken = $user->createToken('auth_token')->plainTextToken;
+        return response()->json(compact('user','accessToken'));
     }
 }
