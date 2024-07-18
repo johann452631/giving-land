@@ -25,6 +25,11 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('guest');
 
 Route::apiResource('posts',PostController::class)->only('index');
 
+Route::get('image/{publicPath}',function (){
+    // $path = env('app_url') . ;
+    return response()->json(compact('path'));
+});
+
 
 
 Route::get('/prueba',function (){
